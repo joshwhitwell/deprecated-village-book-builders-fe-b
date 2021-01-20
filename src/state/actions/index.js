@@ -71,8 +71,30 @@ export const fetchHeadmasterProfile = id => dispatch => {
     .catch(err => console.dir(err));
 };
 
-export const fetchHeadmasterSchool = () => dispatch => {
-  dispatch({ type: actionTypes.FETCH_HEADMASTER_SCHOOL });
+export const fetchHeadmasterSchool = id => dispatch => {
+  axiosWithAuth()
+    .get(`/school/${id}`)
+    .then(res => {
+      console.log('fetchHeadMasterSchool action --> ', res.data);
+      dispatch({
+        type: actionTypes.FETCH_HEADMASTER_SCHOOL,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
+};
+
+export const fetchPendingTeachers = id => dispatch => {
+  axiosWithAuth()
+    .get(`/teacher?schoolId=${id}&account_status=Inactive`)
+    .then(res => {
+      console.log('fetchHeadMasterSchool action --> ', res.data);
+      dispatch({
+        type: actionTypes.FETCH_HEADMASTER_SCHOOL,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
 };
 
 export const fetchVillage = id => dispatch => {
