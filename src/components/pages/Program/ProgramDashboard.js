@@ -21,6 +21,7 @@ import {
 } from '../Headmaster/HeadmasterDashboard.style';
 
 import Logout from '../../Logout';
+import MenteeForm from '../Headmaster/Mentees/MenteeForm';
 
 function ProgramDashboard() {
   const [visible, setVisible] = useState(true);
@@ -54,6 +55,7 @@ function ProgramDashboard() {
     <div>
       <Dashboard>
         <Switch>
+          <Route path="/signup" component={MenteeForm} />
           <Route path="/logout" component={Logout} />
         </Switch>
       </Dashboard>
