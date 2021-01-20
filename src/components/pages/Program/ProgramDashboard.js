@@ -22,7 +22,7 @@ import {
 
 import Logout from '../../Logout.js';
 
-function HeadmasterDashboard() {
+function ProgramDashboard() {
   const [visible, setVisible] = useState(true);
   const [desktop, setDesktop] = useState(true);
 
@@ -136,4 +136,4 @@ function HeadmasterDashboard() {
 // };
 
 // export default connect(mapStateToProps, {})(HeadmasterDashboard);
-export default HeadmasterDashboard;
+export default ProgramDashboard;
