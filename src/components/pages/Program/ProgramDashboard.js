@@ -12,15 +12,15 @@ import {
 
 import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import './HeadmasterDashboard.css'; //Change this later to be named as a general dashboard
+import '../Headmaster/HeadmasterDashboard.css'; //Change this later to be named as a general dashboard
 import {
   menuButton,
   menuIcon,
   menuMove,
   Dashboard,
-} from './HeadmasterDashboard.style';
+} from '../Headmaster/HeadmasterDashboard.style';
 
-import Logout from '../../Logout.js';
+import Logout from '../../Logout';
 
 function ProgramDashboard() {
   const [visible, setVisible] = useState(true);
@@ -54,21 +54,6 @@ function ProgramDashboard() {
     <div>
       <Dashboard>
         <Switch>
-          <Route path="/mentor-pairings" component={Mentees} />
-          <Route exact path="/profile" component={HeadmasterProfile} />
-          <Route path="/profile/edit/:id" component={ProfileForm} />
-          <Route path="/mentor-advisor" />
-          <Route path="/school-village">
-            <Village />
-            <Schools />
-          </Route>
-          <Route
-            exact
-            path="/village/edit/:villageId"
-            component={VillageForm}
-          />
-          <Route exact path="/school/edit/:schoolId" component={SchoolForm} />
-          <Route path="/library" />
           <Route path="/logout" component={Logout} />
         </Switch>
       </Dashboard>
@@ -96,25 +81,10 @@ function ProgramDashboard() {
           width={desktop ? 300 : 500}
           height={500}
         >
-          <h2>Hello, Headmaster!</h2>
+          <h2>Hello, Program!</h2>
 
-          <NavLink to="/dashboard" onClick={() => setVisible(true)}>
-            <button className="btn l2-btn menuLinks">Home</button>
-          </NavLink>
-          <NavLink to="/profile" onClick={() => setVisible(true)}>
-            <button className="btn l2-btn menuLinks">Profile</button>
-          </NavLink>
-          <NavLink to={'/mentor-pairings'} onClick={() => setVisible(true)}>
-            <button className="btn l2-btn menuLinks">Mentor Pairings</button>
-          </NavLink>
-          <NavLink to="/mentor-advisor" onClick={() => setVisible(true)}>
-            <button className="btn l2-btn menuLinks">Mentor Advisor</button>
-          </NavLink>
-          <NavLink to="/school-village" onClick={() => setVisible(true)}>
-            <button className="btn l2-btn menuLinks">School/Village</button>
-          </NavLink>
-          <NavLink to="/library" onClick={() => setVisible(true)}>
-            <button className="btn l2-btn menuLinks">Library</button>
+          <NavLink to="/signup" onClick={() => setVisible(true)}>
+            <button className="btn l2-btn menuLinks">Mentee Sign Up</button>
           </NavLink>
           <Link to="/logout" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Logout</button>
