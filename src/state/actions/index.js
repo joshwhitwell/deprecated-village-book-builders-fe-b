@@ -170,7 +170,7 @@ export const addLibrary = (id, data) => dispatch => {
 
 export const editteacherProfile = (id, data) => dispatch => {
   axiosWithAuth()
-    .put(`/teacher/${id}/profile`, data)
+    .put(`/teacher/${id}`, data)
     .then(res => {
       // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
       window.location.replace('/profile/');
@@ -179,7 +179,7 @@ export const editteacherProfile = (id, data) => dispatch => {
 };
 export const fetchteacherProfile = id => dispatch => {
   axiosWithAuth()
-    .get(`/teacher/${id}/profile`) // change this later
+    .get(`/teacher/${id}`) // change this later
     .then(res => {
       console.log('fetchteacherProfile action --> ', res.data);
       dispatch({
