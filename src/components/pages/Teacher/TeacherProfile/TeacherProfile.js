@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import { fetchTeacherProfile } from '../../../../state/actions';
 
 import { Profile, Label } from '../../../common/ProfileStyle';
-import { Button } from '../../../common/';
+import { Button } from '../../../common';
 import { ComponentTitle } from '../../../common';
 
 // const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
