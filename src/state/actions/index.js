@@ -142,6 +142,20 @@ export const editSchool = (id, data) => dispatch => {
     .catch(err => console.dir(err));
 };
 
+// -----------------------
+// Mentee
+// -----------------------
+export const editStudentProfile = (id, data) => dispatch => {
+  axiosWithAuth()
+    .put(`/mentee/${id}`, data)
+    .then(res => {
+      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
+      // window.location.replace('/profile/');
+      console.log(res);
+    })
+    .catch(err => console.dir(err));
+};
+
 // ----------------
 // ADMIN
 // ----------------

@@ -3,14 +3,33 @@ import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
 import { Button, Divider, Input, Modal, List, Avatar } from 'antd';
 import { connect } from 'react-redux';
 import { checkToken, fetchMentees } from '../../../../state/actions/index';
+import { editStudentProfile } from '../../../../state/actions';
 import MenteeForm from './MenteeForm';
 import MenteeProfile from './MenteeProfile';
+
+const initialState = {
+  first_name: '',
+  last_name: '',
+  gender: '',
+  email: '',
+  primary_language: '',
+  dob: '',
+  mentee_picture: '',
+  english_lvl: '',
+  math_lvl: '',
+  reading_lvl: '',
+  school_lvl: '',
+  academic_description: '',
+  support_needed: '',
+};
+
 const Mentees = props => {
   let menteesSelection = [...props.mentees];
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
   const [currentMentee, setCurrentMentee] = useState({});
+  const [formData, setFormData] = useState(initialState);
 
   const editingHandler = e => {
     setEditing(!editing);
@@ -29,6 +48,13 @@ const Mentees = props => {
       setCurrentMentee(menteeData);
       // console.log(menteeData);
     }
+  };
+
+  const handleSubmit = async () => {
+    // debugLog(props.formData);
+    // props.editHeadmasterProfile(params, formData);
+    console.log('inside submit');
+    props.editStudentProfile(currentMentee.id, props.formData);
   };
 
   if (Array.isArray(menteesSelection)) {
@@ -123,7 +149,7 @@ const Mentees = props => {
             Delete
           </Button>,
           editing ? (
-            <Button key="submit" type="primary" onClick={moreInfoHandler}>
+            <Button key="submit" type="primary" onClick={handleSubmit}>
               Submit
             </Button>
           ) : (
@@ -134,7 +160,11 @@ const Mentees = props => {
         ]}
       >
         {editing ? (
-          <MenteeForm />
+          <MenteeForm
+            currentMentee={currentMentee}
+            formData={formData}
+            setFormData={setFormData}
+          />
         ) : (
           <MenteeProfile currentMentee={currentMentee} />
         )}
@@ -151,4 +181,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { checkToken, fetchMentees })(Mentees);
+export default connect(mapStateToProps, {
+  checkToken,
+  fetchMentees,
+  editStudentProfile,
+})(Mentees);
