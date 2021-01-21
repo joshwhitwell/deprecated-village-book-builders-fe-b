@@ -22,6 +22,7 @@ import {
 
 import Logout from '../../Logout';
 import MenteeForm from '../Headmaster/Mentees/MenteeForm';
+import Mentees from '../Headmaster/Mentees/Mentees';
 
 function ProgramDashboard() {
   const [visible, setVisible] = useState(true);
@@ -55,7 +56,7 @@ function ProgramDashboard() {
     <div>
       <Dashboard>
         <Switch>
-          <Route path="/signup" component={MenteeForm} />
+          <Route path="/signup" component={Mentees} />
           <Route path="/logout" component={Logout} />
         </Switch>
       </Dashboard>

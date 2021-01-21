@@ -45,13 +45,13 @@ const Mentees = props => {
 
   return (
     <div className="menteeContainer">
-      <h1 id="menteeTittle">Mentee Management</h1>
+      <h1 id="menteeTittle">Mentee Sign Up</h1>
       <div className="exploreWrapper">
         <Button
           style={{ width: '80%', marginBottom: '10pt', alignSelf: 'center' }}
           align="center"
         >
-          Create New Library
+          Create New Account
         </Button>
         <Input.Search
           value={search}
