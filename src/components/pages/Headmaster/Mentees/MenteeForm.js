@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Form, Input, DatePicker, Radio } from 'antd';
+import { Form, Input, DatePicker, Radio, Select } from 'antd';
 import moment from 'moment';
 
 import { editHeadmasterProfile } from '../../../../state/actions';
@@ -18,20 +18,33 @@ import { debugLog } from '../../../../utils/debugMode';
 const initialState = {
   first_name: '',
   last_name: '',
-  gender: '',
+  subjects: [],
+  grade: '',
   email: '',
-  primary_language: '',
+  first_language: '',
   dob: '',
-  mentee_picture: '',
-  english_lvl: '',
-  math_lvl: '',
-  reading_lvl: '',
+  home_country: '',
+  home_time_zone: '',
+  phone: '',
   school_lvl: '',
   academic_description: '',
   support_needed: '',
 };
 
-const genders = ['Male', 'Female', 'Other'];
+const { Option } = Select;
+const subjectOptions = [
+  <Option key="English" value="English">
+    English
+  </Option>,
+  <Option key="Math" value="Math">
+    Math
+  </Option>,
+  <Option key="Reading" value="Reading">
+    Reading
+  </Option>,
+];
+
+console.log(subjectOptions);
 
 const MenteeForm = props => {
   const [formData, setFormData] = useState(initialState);
@@ -51,15 +64,17 @@ const MenteeForm = props => {
 
   const handleChange = e => {
     // debugLog(e);
+    console.log(e);
     if (moment.isMoment(e)) {
       setFormData({ ...formData, dob: moment.utc(e).format() });
       debugLog(moment.utc(e).format());
-    } else if (e.target.name === 'gender') {
-      setFormData({ ...formData, gender: genders[e.target.value] });
+    } else if (Array.isArray(e)) {
+      setFormData({ ...formData, subjects: e });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
+
   //   const handleChange = e => {
   //     debugLog(moment.isMoment(e));
   //   };
@@ -92,6 +107,29 @@ const MenteeForm = props => {
             onChange={e => handleChange(e)}
           />
         </Form.Item>
+        <Select
+          mode="multiple"
+          allowClear
+          style={{ width: '50%' }}
+          placeholder="Please select"
+          defaultValue={[]}
+          value={formData.subjects}
+          onChange={handleChange}
+        >
+          {subjectOptions}
+        </Select>
+
+        <br />
+        {/* <Select
+          mode="multiple"
+          disabled
+          style={{ width: '50%' }}
+          placeholder="Please select"
+          defaultValue={[]}
+          onChange={e => handleChange(e)}
+        >
+          {subjectOptions}
+        </Select> */}
         <Form.Item
           label="Date of Birth"
           name="dob"
