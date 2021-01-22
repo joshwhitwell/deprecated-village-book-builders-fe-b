@@ -35,21 +35,15 @@ import { debugLog } from '../../../../utils/debugMode';
 const genders = ['Male', 'Female', 'Other'];
 
 const MenteeForm = props => {
-  // const [props.formData, setFormData] = useState(initialState);
-  //   const [value, setValue] = useState(1);
-  // const params = useParams().id;
+  // const [formData, setFormData] = useState(initialState);
+  const [value, setValue] = useState(1);
+  const params = useParams().id;
   const [form] = Form.useForm();
 
-  //   const onChange = e => {
-  //     console.log('radio checked', e.target.value);
-  //     setValue(e.target.value);
-  //   };
-  // const handleSubmit = async () => {
-  //   // debugLog(props.formData);
-  //   // props.editHeadmasterProfile(params, formData);
-  //   console.log('inside submit');
-  //   props.editStudentProfile(props.currentMentee.id, props.formData);
-  // };
+  const handleSubmit = () => {
+    console.log('inside submit');
+    props.editStudentProfile(props.currentMentee.id, props.formData);
+  };
 
   const handleChange = e => {
     // debugLog(e);
@@ -62,13 +56,11 @@ const MenteeForm = props => {
       props.setFormData({ ...props.formData, [e.target.name]: e.target.value });
     }
   };
-  //   const handleChange = e => {
-  //     debugLog(moment.isMoment(e));
-  //   };
+
   return (
     <FormContainer>
       <Form.Item {...tailLayout}></Form.Item>
-      <Form form={form} {...layout}>
+      <Form form={form} {...layout} onSubmit={props.handleSubmit}>
         <Form.Item
           label="First Name"
           name="first_name"

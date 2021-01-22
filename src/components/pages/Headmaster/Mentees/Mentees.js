@@ -1,39 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
+// import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
 import { Button, Divider, Input, Modal, List, Avatar } from 'antd';
 import { connect } from 'react-redux';
 import { checkToken, fetchMentees } from '../../../../state/actions/index';
 import { editStudentProfile } from '../../../../state/actions';
-import MenteeForm from './MenteeForm';
-import MenteeProfile from './MenteeProfile';
+// import MenteeForm from './MenteeForm';
+// import MenteeProfile from './MenteeProfile';
+import MenteeModal from './MenteeModal';
 
-const initialState = {
-  first_name: '',
-  last_name: '',
-  gender: '',
-  email: '',
-  primary_language: '',
-  dob: '',
-  mentee_picture: '',
-  english_lvl: '',
-  math_lvl: '',
-  reading_lvl: '',
-  school_lvl: '',
-  academic_description: '',
-  support_needed: '',
-};
+// const initialState = {
+//   first_name: '',
+//   last_name: '',
+//   gender: '',
+//   email: '',
+//   primary_language: '',
+//   dob: '',
+//   mentee_picture: '',
+//   english_lvl: '',
+//   math_lvl: '',
+//   reading_lvl: '',
+//   school_lvl: '',
+//   academic_description: '',
+//   support_needed: '',
+// };
 
 const Mentees = props => {
   let menteesSelection = [...props.mentees];
+  console.log('render');
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
   const [currentMentee, setCurrentMentee] = useState({});
-  const [formData, setFormData] = useState(initialState);
+  // const [formData, setFormData] = useState(initialState);
 
   const editingHandler = e => {
     setEditing(!editing);
-    console.log(e);
   };
   const searchHandler = e => setSearch(e.target.value);
   const moreInfoHandler = (e, menteeData) => {
@@ -50,12 +51,12 @@ const Mentees = props => {
     }
   };
 
-  const handleSubmit = async () => {
-    // debugLog(props.formData);
-    // props.editHeadmasterProfile(params, formData);
-    console.log('inside submit');
-    props.editStudentProfile(currentMentee.id, props.formData);
-  };
+  // const handleSubmit = async () => {
+  //   // debugLog(props.formData);
+  //   // props.editHeadmasterProfile(params, formData);
+  //   console.log('inside submit');
+  //   props.editStudentProfile(currentMentee.id, formData);
+  // };
 
   if (Array.isArray(menteesSelection)) {
     menteesSelection = menteesSelection.filter(
@@ -65,9 +66,12 @@ const Mentees = props => {
     );
   }
 
+  const { fetchMentees } = props;
+
   useEffect(() => {
-    props.fetchMentees();
-  }, []);
+    fetchMentees();
+    console.log('api call');
+  }, [fetchMentees]);
 
   return (
     <div className="menteeContainer">
@@ -90,7 +94,7 @@ const Mentees = props => {
           itemLayout="horizontal"
           dataSource={menteesSelection}
           renderItem={item => (
-            <List.Item>
+            <List.Item key={item.id}>
               <div className="listItemWrapper">
                 <div className="listItemMeta">
                   <List.Item.Meta
@@ -131,13 +135,22 @@ const Mentees = props => {
         />
         ,
       </div>
-      <Modal
+      <MenteeModal
+        showModal={showModal}
+        editing={editing}
+        editingHandler={editingHandler}
+        moreInfoHandler={moreInfoHandler}
+        currentMentee={currentMentee}
+      />
+      {/* <Modal
         className="menteeModal"
         visible={showModal}
         title="Mentee Profile"
-        onCancel={moreInfoHandler}
-        maskClosable
-        destroyOnClose
+        // onCancel={moreInfoHandler}
+        // maskClosable
+        // destroyOnClose
+        key={currentMentee.id}
+        // footer={null}
         footer={[
           <Button
             key="back"
@@ -149,7 +162,7 @@ const Mentees = props => {
             Delete
           </Button>,
           editing ? (
-            <Button key="submit" type="primary" onClick={handleSubmit}>
+            <Button key="submit" type="primary">
               Submit
             </Button>
           ) : (
@@ -162,13 +175,14 @@ const Mentees = props => {
         {editing ? (
           <MenteeForm
             currentMentee={currentMentee}
-            formData={formData}
-            setFormData={setFormData}
+            editing={editing}
+            editingHandler={editingHandler}
+            moreInfoHandler={moreInfoHandler}
           />
         ) : (
-          <MenteeProfile currentMentee={currentMentee} />
+          <MenteeProfile currentMentee={currentMentee}/>
         )}
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

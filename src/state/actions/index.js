@@ -146,6 +146,7 @@ export const editSchool = (id, data) => dispatch => {
 // Mentee
 // -----------------------
 export const editStudentProfile = (id, data) => dispatch => {
+  dispatch({ type: 'UPDATE_MENTEE_START', payload: data });
   axiosWithAuth()
     .put(`/mentee/${id}`, data)
     .then(res => {
