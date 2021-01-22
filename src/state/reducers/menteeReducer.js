@@ -1,8 +1,9 @@
+//initializes mentee reducer state
 const initialState = {
   mentees: {},
 };
 
-const reducer = (state = initialState, action) => {
+const menteeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'UPDATE_MENTEE_START':
       console.log(action.type, action.payload);
@@ -12,4 +13,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default menteeReducer;

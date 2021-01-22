@@ -1,63 +1,45 @@
+//dependencies
 import React, { useEffect, useState } from 'react';
-// import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
-import { Button, Divider, Input, Modal, List, Avatar } from 'antd';
+import { Button, Divider, Input, List, Avatar } from 'antd';
 import { connect } from 'react-redux';
+
+//actions
 import { checkToken, fetchMentees } from '../../../../state/actions/index';
-import { editStudentProfile } from '../../../../state/actions';
-// import MenteeForm from './MenteeForm';
-// import MenteeProfile from './MenteeProfile';
+
+//components
 import MenteeModal from './MenteeModal';
 
-// const initialState = {
-//   first_name: '',
-//   last_name: '',
-//   gender: '',
-//   email: '',
-//   primary_language: '',
-//   dob: '',
-//   mentee_picture: '',
-//   english_lvl: '',
-//   math_lvl: '',
-//   reading_lvl: '',
-//   school_lvl: '',
-//   academic_description: '',
-//   support_needed: '',
-// };
-
 const Mentees = props => {
+  //deconstructs mentee list from redux
   let menteesSelection = [...props.mentees];
-  console.log('render');
+  //deconstructs fetchMentees from redux
+  const { fetchMentees } = props;
+
+  //initializes state
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
   const [currentMentee, setCurrentMentee] = useState({});
-  // const [formData, setFormData] = useState(initialState);
 
-  const editingHandler = e => {
-    setEditing(!editing);
-  };
+  //opens and closes MenteeForm in MenteeModal
+  const editingHandler = () => setEditing(!editing);
+
+  //updates search state value
   const searchHandler = e => setSearch(e.target.value);
+
+  //opens and closes MenteeModal
   const moreInfoHandler = (e, menteeData) => {
     if (showModal) {
-      // Closing Modal
       setShowModal(false);
       setCurrentMentee({});
       setEditing(false);
     } else {
-      // Opening Modal
       setShowModal(true);
       setCurrentMentee(menteeData);
-      // console.log(menteeData);
     }
   };
 
-  // const handleSubmit = async () => {
-  //   // debugLog(props.formData);
-  //   // props.editHeadmasterProfile(params, formData);
-  //   console.log('inside submit');
-  //   props.editStudentProfile(currentMentee.id, formData);
-  // };
-
+  //handles search bar filtering logic
   if (Array.isArray(menteesSelection)) {
     menteesSelection = menteesSelection.filter(
       item =>
@@ -66,22 +48,20 @@ const Mentees = props => {
     );
   }
 
-  const { fetchMentees } = props;
-
+  //fetches mentee list on initial render
   useEffect(() => {
     fetchMentees();
-    console.log('api call');
   }, [fetchMentees]);
 
   return (
     <div className="menteeContainer">
-      <h1 id="menteeTittle">Mentee Sign Up</h1>
+      <h1 id="menteeTitle">Mentee Sign Up</h1>
       <div className="exploreWrapper">
         <Button
           style={{ width: '80%', marginBottom: '10pt', alignSelf: 'center' }}
           align="center"
         >
-          Create New Account
+          Create Account
         </Button>
         <Input.Search
           value={search}
@@ -94,7 +74,7 @@ const Mentees = props => {
           itemLayout="horizontal"
           dataSource={menteesSelection}
           renderItem={item => (
-            <List.Item key={item.id}>
+            <List.Item>
               <div className="listItemWrapper">
                 <div className="listItemMeta">
                   <List.Item.Meta
@@ -142,47 +122,6 @@ const Mentees = props => {
         moreInfoHandler={moreInfoHandler}
         currentMentee={currentMentee}
       />
-      {/* <Modal
-        className="menteeModal"
-        visible={showModal}
-        title="Mentee Profile"
-        // onCancel={moreInfoHandler}
-        // maskClosable
-        // destroyOnClose
-        key={currentMentee.id}
-        // footer={null}
-        footer={[
-          <Button
-            key="back"
-            onClick={editing ? editingHandler : moreInfoHandler}
-          >
-            Return
-          </Button>,
-          <Button key="delete" onClick={() => console.log('delete')}>
-            Delete
-          </Button>,
-          editing ? (
-            <Button key="submit" type="primary">
-              Submit
-            </Button>
-          ) : (
-            <Button key="edit" type="primary" onClick={editingHandler}>
-              Edit
-            </Button>
-          ),
-        ]}
-      >
-        {editing ? (
-          <MenteeForm
-            currentMentee={currentMentee}
-            editing={editing}
-            editingHandler={editingHandler}
-            moreInfoHandler={moreInfoHandler}
-          />
-        ) : (
-          <MenteeProfile currentMentee={currentMentee}/>
-        )}
-      </Modal> */}
     </div>
   );
 };
@@ -195,8 +134,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {
-  checkToken,
-  fetchMentees,
-  editStudentProfile,
-})(Mentees);
+export default connect(mapStateToProps, { checkToken, fetchMentees })(Mentees);

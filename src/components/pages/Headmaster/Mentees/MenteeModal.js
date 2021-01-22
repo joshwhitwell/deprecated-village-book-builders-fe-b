@@ -1,26 +1,17 @@
-import React, { useState } from 'react';
-import { Modal, Button } from 'antd';
+//dependencies
+import React from 'react';
+import { Modal, Button, Form } from 'antd';
+
+//components
 import MenteeForm from './MenteeForm';
 import MenteeProfile from './MenteeProfile';
 
-const initialState = {
-  first_name: '',
-  last_name: '',
-  gender: '',
-  email: '',
-  primary_language: '',
-  dob: '',
-  mentee_picture: '',
-  english_lvl: '',
-  math_lvl: '',
-  reading_lvl: '',
-  school_lvl: '',
-  academic_description: '',
-  support_needed: '',
-};
-
 function MenteeModal(props) {
-  const [formData, setFormData] = useState(initialState);
+  //form is initialized inside of Modal so that we can make use
+  //of the form.submit hook onOk
+  const [form] = Form.useForm();
+
+  //props drilled from Mentees
   const {
     showModal,
     editing,
@@ -28,16 +19,18 @@ function MenteeModal(props) {
     moreInfoHandler,
     currentMentee,
   } = props;
+
   return (
     <Modal
       className="menteeModal"
       visible={showModal}
       title="Mentee Profile"
-      // onCancel={moreInfoHandler}
-      // maskClosable
-      // destroyOnClose
+      onCancel={moreInfoHandler}
+      //form.submit hook invokes onFinish handler inside MenteeForm
+      onOk={form.submit}
+      maskClosable
+      destroyOnClose
       key={currentMentee.id}
-      // footer={null}
       footer={[
         <Button key="back" onClick={editing ? editingHandler : moreInfoHandler}>
           Return
@@ -46,7 +39,7 @@ function MenteeModal(props) {
           Delete
         </Button>,
         editing ? (
-          <Button key="submit" type="primary">
+          <Button key="submit" type="primary" htmlType="submit">
             Submit
           </Button>
         ) : (
@@ -62,8 +55,8 @@ function MenteeModal(props) {
           editing={editing}
           editingHandler={editingHandler}
           moreInfoHandler={moreInfoHandler}
-          formData={formData}
-          setFormData={setFormData}
+          //pass form down so that the form.submit hook is connected to MenteeForm
+          form={form}
         />
       ) : (
         <MenteeProfile currentMentee={currentMentee} />

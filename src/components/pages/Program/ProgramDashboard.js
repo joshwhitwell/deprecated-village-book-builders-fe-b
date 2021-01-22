@@ -1,18 +1,11 @@
-//Used Headmaster as a skeleton
+//dependencies
 import React, { useState, useEffect } from 'react';
-// import { connect } from 'react-redux';
-import {
-  Link,
-  NavLink,
-  // Redirect,
-  // BrowserRouter as Router,
-  Route,
-  Switch,
-} from 'react-router-dom';
-
+import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import '../Headmaster/HeadmasterDashboard.css'; //Change this later to be named as a general dashboard
+
+//styles
+import '../Headmaster/HeadmasterDashboard.css';
 import {
   menuButton,
   menuIcon,
@@ -20,14 +13,15 @@ import {
   Dashboard,
 } from '../Headmaster/HeadmasterDashboard.style';
 
+//components
 import Logout from '../../Logout';
-import MenteeForm from '../Headmaster/Mentees/MenteeForm';
 import Mentees from '../Headmaster/Mentees/Mentees';
 
 function ProgramDashboard() {
   const [visible, setVisible] = useState(true);
   const [desktop, setDesktop] = useState(true);
 
+  //handles responsive layout of menu drawer
   useEffect(() => {
     if (window.innerWidth <= 800 || document.documentElement.width <= 800) {
       setDesktop(false);
@@ -37,11 +31,6 @@ function ProgramDashboard() {
     }
   }, []);
 
-  const onClose = () => {
-    setVisible(false);
-  };
-
-  // Todo: this needs to be converted to a mediaquery and removed from here
   window.addEventListener('resize', () => {
     if (window.innerWidth <= 800 || document.documentElement.width <= 800) {
       setDesktop(false);
@@ -51,6 +40,9 @@ function ProgramDashboard() {
       setVisible(true);
     }
   });
+
+  //handles drawer close functionality
+  const onClose = () => setVisible(false);
 
   return (
     <div>
@@ -62,11 +54,12 @@ function ProgramDashboard() {
       </Dashboard>
 
       {desktop ? null : (
-        // inline style to force animation
+        //forces slide out animation of drawer
         <div style={visible ? menuMove : menuIcon}>
           <Button
             type="primary"
-            style={menuButton} // inline style to override Ant Design
+            //overrides Ant Design style default
+            style={menuButton}
             onClick={() => setVisible(!visible)}
             icon={<MenuOutlined />}
           >
@@ -84,7 +77,7 @@ function ProgramDashboard() {
           width={desktop ? 300 : 500}
           height={500}
         >
-          <h2>Hello, Program!</h2>
+          <h2>Welcome Program Admin!</h2>
 
           <NavLink to="/signup" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentee Sign Up</button>
@@ -93,20 +86,9 @@ function ProgramDashboard() {
             <button className="btn l2-btn menuLinks">Logout</button>
           </Link>
         </Drawer>
-
-        {/* <HeadmasterNav /> */}
       </div>
     </div>
   );
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     loggedIn: state.authReducer.loggedIn,
-//     // userId: state.authReducer.userId,
-//     // role: state.authReducer.role,
-//   };
-// };
-
-// export default connect(mapStateToProps, {})(HeadmasterDashboard);
 export default ProgramDashboard;

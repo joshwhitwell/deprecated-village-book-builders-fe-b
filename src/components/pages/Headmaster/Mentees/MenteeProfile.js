@@ -1,13 +1,9 @@
-import { List, Avatar, Divider, Skeleton, Table, Tag } from 'antd';
-import moment from 'moment';
+//dependencies
 import React from 'react';
-import { debugLog } from '../../../../utils/debugMode';
+import { Avatar, Divider, Skeleton, Table, Tag } from 'antd';
+import moment from 'moment';
+
 const MenteeProfile = ({ currentMentee }) => {
-  debugLog(
-    'Prop drilled from Mentees.js',
-    currentMentee,
-    moment.utc(currentMentee.dob).format('dddd, MMMM Do of YYYY')
-  );
   const columns = [
     {
       title: 'Contact Hours - From',
@@ -32,7 +28,7 @@ const MenteeProfile = ({ currentMentee }) => {
         <>
           {tags.map(tag => {
             return (
-              <Tag color="geekblue" key={tags.indexOf(tag)}>
+              <Tag color="geekblue" key={tags?.indexOf(tag)}>
                 {tag.toUpperCase()}
               </Tag>
             );
@@ -41,6 +37,7 @@ const MenteeProfile = ({ currentMentee }) => {
       ),
     },
   ];
+
   return (
     <div className="menteeProfileWrapper">
       {!currentMentee ? (
