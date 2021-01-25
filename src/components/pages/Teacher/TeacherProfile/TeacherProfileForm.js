@@ -90,7 +90,7 @@ const ProfileForm = props => {
           <Input
             type="text"
             name="first_name"
-            defaultValue="Mr Teacher" // Change this
+            defaultValue="Your First Name"
             value={formData.first_name}
             onChange={e => handleChange(e)}
           />
@@ -104,6 +104,7 @@ const ProfileForm = props => {
           <Input
             type="text"
             name="last_name"
+            defaultValue="Your Last Name"
             value={formData.last_name}
             onChange={e => handleChange(e)}
           />
@@ -194,20 +195,6 @@ const ProfileForm = props => {
         </Form.Item>
 
         <Form.Item
-          label="Mentor Program Goals"
-          name="goals_mentor_program"
-          rules={[
-            { required: true, message: 'Goals of mentor program is required.' },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.goals_mentor_program}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
           label="Personal Goals"
           name="goals_personal"
           rules={[{ required: true, message: 'Personal goals are required.' }]}
@@ -232,23 +219,6 @@ const ProfileForm = props => {
           <Input
             type="text"
             value={formData.goals_school_community}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Mentor Advisor Point of Contact"
-          name="mentor_advisor_point_of_contact"
-          rules={[
-            {
-              required: true,
-              message: 'Mentor advisor point of contact is required.',
-            },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.mentor_advisor_point_of_contact}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
