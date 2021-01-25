@@ -1,72 +1,111 @@
+//dependencies
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
-
-import { Form, Input, DatePicker, Radio } from 'antd';
+import { Form, Input, DatePicker, Select } from 'antd';
 import moment from 'moment';
 
-import { editHeadmasterProfile } from '../../../../state/actions';
+//styles
 import {
   layout,
   FormContainer,
   tailLayout,
   Required,
 } from '../../../common/FormStyle';
-import Button from '../../../common/Button';
-import { debugLog } from '../../../../utils/debugMode';
 
+//actions
+import { editMentee } from '../../../../state/actions';
+
+//initializes mentee form
 const initialState = {
   first_name: '',
   last_name: '',
-  gender: '',
+  subjects: [],
+  grade: '',
   email: '',
-  primary_language: '',
   dob: '',
-  mentee_picture: '',
-  english_lvl: '',
-  math_lvl: '',
-  reading_lvl: '',
-  school_lvl: '',
-  academic_description: '',
-  support_needed: '',
+  home_country: '',
+  home_time_zone: '',
+  phone: '',
+  first_language: '',
+  other_fluent_languages: [],
 };
 
-const genders = ['Male', 'Female', 'Other'];
+const { Option } = Select;
+const subjectOptions = [
+  <Option key="English" value="English" name="subjects">
+    English
+  </Option>,
+  <Option key="Math" value="Math">
+    Math
+  </Option>,
+  <Option key="Reading" value="Reading">
+    Reading
+  </Option>,
+];
+
+const fluentLanguages = [
+  <Option key="English" value="English">
+    English
+  </Option>,
+  <Option key="Spanish" value="Spanish">
+    Spanish
+  </Option>,
+  <Option key="Nepali" value="Nepali">
+    Nepali
+  </Option>,
+];
 
 const MenteeForm = props => {
+  //initializes form state
   const [formData, setFormData] = useState(initialState);
-  //   const [value, setValue] = useState(1);
-  const params = useParams().id;
-  const [form] = Form.useForm();
 
-  //   const onChange = e => {
-  //     console.log('radio checked', e.target.value);
-  //     setValue(e.target.value);
-  //   };
-
-  const handleSubmit = async () => {
-    debugLog(formData);
-    props.editHeadmasterProfile(params, formData);
+  //handles mentee form submit; invoked by onFinish prop on Form
+  const handleSubmit = () => {
+    props.editMentee(props.currentMentee.id, formData);
   };
 
+  //controls form field values
   const handleChange = e => {
-    // debugLog(e);
+    console.log(e);
+
     if (moment.isMoment(e)) {
       setFormData({ ...formData, dob: moment.utc(e).format() });
-      debugLog(moment.utc(e).format());
-    } else if (e.target.name === 'gender') {
-      setFormData({ ...formData, gender: genders[e.target.value] });
+    } else if (Array.isArray(e)) {
+      setFormData({ ...formData, subjects: e });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
-  //   const handleChange = e => {
-  //     debugLog(moment.isMoment(e));
-  //   };
+
+  //Create handleChange for dropdown
+  const handleMultiChange = (value, e) => {
+    if (
+      e.name === 'grade' ||
+      e.name === 'home_country' ||
+      e.name === 'home_time_zone' ||
+      e.name === 'first_language'
+    ) {
+      setFormData({ ...formData, [e.name]: e.value });
+    }
+  };
+
+  const handleLanguageChange = e => {
+    if (Array.isArray(e)) {
+      setFormData({ ...formData, other_fluent_languages: e });
+    }
+  };
+
   return (
     <FormContainer>
       <Form.Item {...tailLayout}></Form.Item>
-      <Form onFinish={handleSubmit} form={form} {...layout}>
+      {/*onFinish attribute connects to form.submit hook in MenteeModal*/}
+      {/*id attribute connects to form attribute on submit button in MenteeModal*/}
+      <Form
+        id="menteeForm"
+        form={props.form}
+        {...layout}
+        onFinish={handleSubmit}
+      >
         <Form.Item
           label="First Name"
           name="first_name"
@@ -79,7 +118,6 @@ const MenteeForm = props => {
             onChange={e => handleChange(e)}
           />
         </Form.Item>
-
         <Form.Item
           label="Last Name"
           name="last_name"
@@ -92,6 +130,70 @@ const MenteeForm = props => {
             onChange={e => handleChange(e)}
           />
         </Form.Item>
+
+        <h4>Subjects</h4>
+        <Select
+          mode="multiple"
+          allowClear
+          style={{ width: '50%' }}
+          placeholder="Please select Subjects"
+          defaultValue={[]}
+          value={formData.subjects}
+          onChange={handleChange}
+        >
+          {subjectOptions}
+        </Select>
+
+        <br />
+        <br />
+        <h4>Select Grade</h4>
+        <Select
+          style={{ width: 120 }}
+          onChange={handleMultiChange}
+          value={formData.grade}
+          onSelect={(value, event) => handleMultiChange(value, event)}
+        >
+          <Option value="Kindergarten" name="grade">
+            Kindergarten
+          </Option>
+          <Option value="1st Grade" name="grade">
+            1st Grade
+          </Option>
+          <Option value="2nd Grade" name="grade">
+            2nd Grade
+          </Option>
+          <Option value="3rd Grade" name="grade">
+            3rd Grade
+          </Option>
+          <Option value="4th Grade" name="grade">
+            4th Grade
+          </Option>
+          <Option value="5th Grade" name="grade">
+            5th Grade
+          </Option>
+          <Option value="6th Grade" name="grade">
+            6th Grade
+          </Option>
+          <Option value="7th Grade" name="grade">
+            7th Grade
+          </Option>
+          <Option value="8th Grade" name="grade">
+            8th Grade
+          </Option>
+          <Option value="9th Grade" name="grade">
+            9th Grade
+          </Option>
+          <Option value="10th Grade" name="grade">
+            10th Grade
+          </Option>
+          <Option value="11th Grade" name="grade">
+            11th Grade
+          </Option>
+          <Option value="12th Grade" name="grade">
+            12th Grade
+          </Option>
+        </Select>
+
         <Form.Item
           label="Date of Birth"
           name="dob"
@@ -100,221 +202,107 @@ const MenteeForm = props => {
           <DatePicker name="dob" onChange={e => handleChange(e)} />
         </Form.Item>
         <Form.Item
-          label="email"
+          label="Email"
           name="email"
-          rules={[{ required: true, message: 'email is required.' }]}
+          rules={[{ required: true, message: 'Email is required.' }]}
         >
           <Input
-            type="text"
+            type="email"
             name="email"
             value={formData.email}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
 
-        <Form.Item
-          label="Primary Language"
-          name="primary_language"
-          rules={[{ required: true, message: 'Phone Number is required.' }]}
+        <h4>Select Home Country</h4>
+        <Select
+          style={{ width: 120 }}
+          onChange={handleMultiChange}
+          value={formData.home_country}
+          onSelect={(value, event) => handleMultiChange(value, event)}
         >
+          <Option value="Belize" name="home_country">
+            Belize
+          </Option>
+          <Option value="Ghana" name="home_country">
+            Ghana
+          </Option>
+          <Option value="Mexico" name="home_country">
+            Mexico
+          </Option>
+          <Option value="Nepal" name="home_country">
+            Nepal
+          </Option>
+          <Option value="Peru" name="home_country">
+            Peru
+          </Option>
+        </Select>
+        <br />
+        <br />
+        <h4>Select Time Zone</h4>
+        <Select
+          style={{ width: 300 }}
+          onChange={handleMultiChange}
+          value={formData.home_time_zone}
+          onSelect={(value, event) => handleMultiChange(value, event)}
+        >
+          <Option value="Central Standard Time" name="home_time_zone">
+            Central Standard Time
+          </Option>
+          <Option value="Greenwich Mean Time" name="home_time_zone">
+            Greenwich Mean Time
+          </Option>
+          <Option value="Nepal Standard Time" name="home_time_zone">
+            Nepal Standard Time
+          </Option>
+          <Option value="Peru Standard Time" name="home_time_zone">
+            Peru Standard Time
+          </Option>
+        </Select>
+
+        <Form.Item label="Phone" name="phone" rules={[{ required: false }]}>
           <Input
-            type="text"
-            name="primary_language"
-            value={formData.primary_language}
+            type="tel"
+            name="phone"
+            value={formData.phone}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
 
-        <Form.Item label="Gender" name="gender">
-          <Radio.Group
-            name="gender"
-            value={formData.gender}
-            onChange={e => handleChange(e)}
-          >
-            <Radio value={0}>Male</Radio>
-            <Radio value={1}>Female</Radio>
-            <Radio value={2}>Other</Radio>
-          </Radio.Group>
-        </Form.Item>
+        <br />
+        <br />
+        <h4>Select First Language</h4>
+        <Select
+          style={{ width: 300 }}
+          onChange={handleMultiChange}
+          value={formData.first_language}
+          onSelect={(value, event) => handleMultiChange(value, event)}
+        >
+          <Option value="English" name="first_language">
+            English
+          </Option>
+          <Option value="Spanish" name="first_language">
+            Spanish
+          </Option>
+          <Option value="Nepali" name="first_language">
+            Nepali
+          </Option>
+        </Select>
 
-        <Form.Item
-          label="Picture URL"
-          name="mentee_picture"
-          rules={[{ required: true, message: 'Bio is required.' }]}
+        <h4>Other Fluent Languages</h4>
+        <Select
+          mode="multiple"
+          allowClear
+          style={{ width: '50%' }}
+          placeholder="Please select other fluent languages"
+          defaultValue={[]}
+          value={formData.other_fluent_languages}
+          onChange={handleLanguageChange}
         >
-          <Input
-            type="text"
-            name="mentee_picture"
-            value={formData.mentee_picture}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="English Level"
-          name="english_lvl"
-          rules={[{ required: true, message: 'english level is required.' }]}
-        >
-          <Input
-            type="text"
-            name="english_lvl"
-            value={formData.english_lvl}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Math Level"
-          name="math_lvl"
-          rules={[{ required: true, message: 'Math level is required.' }]}
-        >
-          <Input
-            type="text"
-            name="math_lvl"
-            value={formData.math_lvl}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Reading Level"
-          name="reading_lvl"
-          rules={[{ required: true, message: 'reading level is required.' }]}
-        >
-          <Input
-            type="text"
-            name="reading_lvl"
-            value={formData.reading_lvl}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="school Level"
-          name="school_lvl"
-          rules={[{ required: true, message: 'school level is required.' }]}
-        >
-          <Input
-            type="text"
-            name="school_lvl"
-            value={formData.school_lvl}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Academic Description"
-          name="academic_description"
-          rules={[
-            {
-              required: true,
-              message: 'academic description level is required.',
-            },
-          ]}
-        >
-          <Input
-            type="text"
-            name="academic_description"
-            value={formData.academic_description}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Support Needed"
-          name="support_needed"
-          rules={[
-            { required: true, message: 'Support needed level is required.' },
-          ]}
-        >
-          <Input
-            type="text"
-            name="support_needed"
-            value={formData.support_needed}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-        <Form.Item
-          label="General Availability"
-          name="general_availability"
-          rules={[
-            { required: true, message: 'General Availability is required' },
-          ]}
-        >
-          <Input
-            type="text"
-            name="general_availability"
-            value={formData.general_availability}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Mentor Program Goals"
-          name="goals_mentor_program"
-          rules={[
-            { required: true, message: 'Goals of mentor program is required.' },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.goals_mentor_program}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Personal Goals"
-          name="goals_personal"
-          rules={[{ required: true, message: 'Personal goals are required.' }]}
-        >
-          <Input
-            type="text"
-            value={formData.goals_personal}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="School Community Goals"
-          name="goals_school_community"
-          rules={[
-            {
-              required: true,
-              message: 'Goals for schools community are required.',
-            },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.goals_school_community}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Mentor Advisor Point of Contact"
-          name="mentor_advisor_point_of_contact"
-          rules={[
-            {
-              required: true,
-              message: 'Mentor advisor point of contact is required.',
-            },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.mentor_advisor_point_of_contact}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
+          {fluentLanguages}
+        </Select>
 
         <Form.Item {...tailLayout}>
-          <Button
-            className="l2-btn btn"
-            htmlType="submit"
-            buttonText="Submit"
-          />
           <Required id="requiredMsg">
             Fields with <span id="required">&#42;</span> are required.
           </Required>
@@ -324,4 +312,4 @@ const MenteeForm = props => {
   );
 };
 
-export default connect(null, { editHeadmasterProfile })(MenteeForm);
+export default connect(null, { editMentee })(MenteeForm);
