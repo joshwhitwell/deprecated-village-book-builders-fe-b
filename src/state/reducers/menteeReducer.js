@@ -18,7 +18,6 @@ const menteeReducer = (state = initialState, action) => {
     case FETCH_MENTEE_START:
       return { ...state };
     case FETCH_MENTEE_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         mentees: action.payload,
@@ -26,13 +25,10 @@ const menteeReducer = (state = initialState, action) => {
     case FETCH_MENTEE_FAILURE:
       return { ...state };
     case EDIT_MENTEE_START:
-      console.log(action.type, action.payload);
       return { ...state };
     case EDIT_MENTEE_SUCCESS:
-      console.log(action.type, action.payload);
       return { ...state };
     case EDIT_MENTEE_FAILURE:
-      console.log(action.type, action.payload);
       return { ...state };
     default:
       return state;
