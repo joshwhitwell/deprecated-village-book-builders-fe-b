@@ -20,25 +20,21 @@ const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 
 const initialState = {
   first_name: '',
+  last_name: '',
+  account_status: '',
   gender: {
     male: false,
     female: false,
     other: false,
   },
   address: '',
-  bio: '',
-  communication_app: '',
-  dob: '',
-  general_availability: '',
-  goals_personal: '',
-  goals_school_community: '',
-  phone_number: '',
-  photo_url: '',
-  programId: '',
-  registration_status: '',
-  last_name: '',
-  time_zone: '',
-  villageId: '',
+  education_contact: {
+    name: '',
+    phone: '',
+    email: '',
+    jobTitle: '',
+  },
+  notes: '',
 };
 
 const dateFormat = 'MM/DD/YYYY';
@@ -110,6 +106,14 @@ const ProfileForm = props => {
           />
         </Form.Item>
 
+        <Form.Item label="Gender" name="gender">
+          <Radio.Group onChange={onChange} value={value}>
+            <Radio value={1}>Male</Radio>
+            <Radio value={2}>Female</Radio>
+            <Radio value={3}>Other</Radio>
+          </Radio.Group>
+        </Form.Item>
+
         <Space direction="vertical" size={12} {...tailLayout}>
           <DatePicker
             defaultValue={moment(`${formData.dob}`, dateFormatList[0])}
@@ -131,96 +135,45 @@ const ProfileForm = props => {
         </Form.Item>
 
         <Form.Item
-          label="Phone Number"
-          name="phone_number"
-          rules={[{ required: true, message: 'Phone Number is required.' }]}
+          label="Education Contact"
+          name="education_contact"
+          rules={[{ required: false }]}
         >
           <Input
             type="text"
-            name="phone_number"
+            name="name"
+            value={formData.phone_number}
+            onChange={e => handleChange(e)}
+          />
+
+          <Input
+            type="text"
+            name="phone"
+            value={formData.phone_number}
+            onChange={e => handleChange(e)}
+          />
+
+          <Input
+            type="text"
+            name="email"
+            value={formData.phone_number}
+            onChange={e => handleChange(e)}
+          />
+
+          <Input
+            type="text"
+            name="jobTitle"
             value={formData.phone_number}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
 
-        <Form.Item label="Gender" name="gender">
-          <Radio.Group onChange={onChange} value={value}>
-            <Radio value={1}>Male</Radio>
-            <Radio value={2}>Female</Radio>
-            <Radio value={3}>Other</Radio>
-          </Radio.Group>
-        </Form.Item>
-
-        <Form.Item
-          label="Bio"
-          name="bio"
-          rules={[{ required: true, message: 'Bio is required.' }]}
-        >
+        <Form.Item label="Notes" name="notes" rules={[{ required: false }]}>
           <Input
             type="text"
-            name="bio"
-            defaultValue="Tell me about yourself..."
+            name="notes"
+            defaultValue="Jot something down..."
             value={formData.bio}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Communication App"
-          name="communication_app"
-          rules={[
-            { required: true, message: 'Communication app is required.' },
-          ]}
-        >
-          <Input
-            type="text"
-            name="communication_app"
-            value={formData.communication_app}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="General Availability"
-          name="general_availability"
-          rules={[
-            { required: true, message: 'General Availability is required' },
-          ]}
-        >
-          <Input
-            type="text"
-            name="general_availability"
-            value={formData.general_availability}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Personal Goals"
-          name="goals_personal"
-          rules={[{ required: true, message: 'Personal goals are required.' }]}
-        >
-          <Input
-            type="text"
-            defaultValue="What are you trying to accomplish?"
-            value={formData.goals_personal}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="School Community Goals"
-          name="goals_school_community"
-          rules={[
-            {
-              required: true,
-              message: 'Goals for schools community are required.',
-            },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.goals_school_community}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
