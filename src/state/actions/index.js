@@ -168,7 +168,7 @@ export const addLibrary = (id, data) => dispatch => {
 // TEACHER
 // -----------------------
 
-export const editteacherProfile = (id, data) => dispatch => {
+export const editTeacherProfile = (id, data) => dispatch => {
   axiosWithAuth()
     .put(`/teacher/${id}`, data)
     .then(res => {
@@ -177,7 +177,7 @@ export const editteacherProfile = (id, data) => dispatch => {
     })
     .catch(err => console.dir(err));
 };
-export const fetchteacherProfile = id => dispatch => {
+export const fetchTeacherProfile = id => dispatch => {
   axiosWithAuth()
     .get(`/teacher/${id}`) // change this later
     .then(res => {
