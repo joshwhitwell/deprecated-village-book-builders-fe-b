@@ -3,6 +3,9 @@ import React from 'react';
 import { Avatar, Divider, Skeleton } from 'antd';
 import moment from 'moment';
 
+//Update margin in span element to margin-right when creating a proper CSS file
+//Either make right margin very large or add a comma between languages/subjects
+
 const MenteeProfile = ({ currentMentee }) => {
   return (
     <div className="menteeProfileWrapper">
@@ -23,42 +26,31 @@ const MenteeProfile = ({ currentMentee }) => {
           <p>{currentMentee.email}</p>
           <Divider plain>Date of Birth</Divider>
           <p>{moment.utc(currentMentee.dob).format('dddd, MMMM Do of YYYY')}</p>
-          <Divider plain>Subjects</Divider>
-          <p>{currentMentee.support_needed}</p>
-          <Divider plain>Languages (left to right)</Divider>
-          <p>{currentMentee.primary_language}</p>
-          {/* <Divider plain>Gender</Divider>
-          <p>{currentMentee.gender}</p> */}
-          {/* <Divider plain>Mentor</Divider>
+          <Divider plain>Subjects Working On</Divider>
           <p>
-            {currentMentee.mentorId ? currentMentee.mentorId : 'Unassigned'}
-          </p> */}
-          <Divider plain>Grades</Divider>
-          <p>{`English :${currentMentee.english_lvl}`}</p>
-          <p>{`Math :${currentMentee.math_lvl}`}</p>
-          <p>{`Reading :${currentMentee.reading_lvl}`}</p>
-          <p>{`School :${currentMentee.school_lvl}`}</p>
-          <Divider plain>Academic Description</Divider>
-          <p>{currentMentee.academic_description}</p>
-          {/* <Divider plain>Availability</Divider>
-          <Table
-            align="center"
-            pagination={false}
-            size="small"
-            tableLayout="fixed"
-            dataSource={[currentMentee.availability]}
-            columns={columns}
-            key="table"
-          /> */}
-          {/* <Divider plain>Other Questions</Divider>
-          {currentMentee.dynamic_questions.map(question => {
-            return (
-              <div key={question.qId}>
-                <Divider plain>{question.question}</Divider>
-                <p>{question.answer}</p>
-              </div>
-            );
-          })} */}
+            {currentMentee.subjects.map(element => (
+              <span style={{ margin: '3px' }}>{element}</span>
+            ))}
+          </p>
+          <Divider plain>Current Grade</Divider>
+          <p>{currentMentee.grade}</p>
+          <Divider plain>Primary Language</Divider>
+          <p>{currentMentee.first_language}</p>
+          <Divider plain>Other Languages</Divider>
+          <p>
+            {currentMentee.other_fluent_languages.map(element => (
+              <span style={{ margin: '3px' }}>{element}</span>
+            ))}
+          </p>
+
+          <Divider plain>Home Country</Divider>
+          <p>{currentMentee.home_country}</p>
+          <Divider plain>Time Zone</Divider>
+          <p>{currentMentee.home_time_zone}</p>
+          <Divider plain>Phone Number</Divider>
+          <p>{currentMentee.phone}</p>
+          <Divider plain>Account Status</Divider>
+          <p>{currentMentee.account_status}</p>
         </>
       )}
     </div>
