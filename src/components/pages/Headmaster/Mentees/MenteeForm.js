@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-import { Form, Input, DatePicker, Space, Radio } from 'antd';
+import { Form, Input, DatePicker, Radio } from 'antd';
 import moment from 'moment';
 
 import { editHeadmasterProfile } from '../../../../state/actions';
@@ -32,15 +31,11 @@ const initialState = {
   support_needed: '',
 };
 
-const dateFormat = 'MM/DD/YYYY';
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
-const timeFormat = 'HH:mm';
 const genders = ['Male', 'Female', 'Other'];
 
 const MenteeForm = props => {
   const [formData, setFormData] = useState(initialState);
   //   const [value, setValue] = useState(1);
-  const pathname = useHistory().location.pathname;
   const params = useParams().id;
   const [form] = Form.useForm();
 
@@ -59,7 +54,7 @@ const MenteeForm = props => {
     if (moment.isMoment(e)) {
       setFormData({ ...formData, dob: moment.utc(e).format() });
       debugLog(moment.utc(e).format());
-    } else if (e.target.name == 'gender') {
+    } else if (e.target.name === 'gender') {
       setFormData({ ...formData, gender: genders[e.target.value] });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -318,7 +313,7 @@ const MenteeForm = props => {
           <Button
             className="l2-btn btn"
             htmlType="submit"
-            buttonText="Submit Village Edit"
+            buttonText="Submit"
           />
           <Required id="requiredMsg">
             Fields with <span id="required">&#42;</span> are required.

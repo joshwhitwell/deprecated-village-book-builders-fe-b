@@ -11,6 +11,7 @@ import HeadmasterDashboard from './pages/Headmaster/HeadmasterDashboard';
 import TeacherDashboard from './pages/Teacher/TeacherDashboard';
 // import TeacherProfile from './pages/Teacher/TeacherProfile';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import ProgramDashboard from './pages/Program/ProgramDashboard';
 
 const App = ({ role, checkToken }) => {
   return (
@@ -29,6 +30,7 @@ const App = ({ role, checkToken }) => {
               {/* //once we make a reusable dashboard/sidebar, this is where we would put it, passing in the role as props to fill it out accordingly. */}
               {role === 'headmaster' && <HeadmasterDashboard />}
               {role === 'admin' && <AdminDashboard />}
+              {role === 'program' && <ProgramDashboard />}
               {role === 'teacher' && <TeacherDashboard />}
             </>
           ) : (
