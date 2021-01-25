@@ -17,7 +17,7 @@ import { editMentee } from '../../../../state/actions';
 
 //initializes mentee form
 const initialState = {
-  first_name: 'test',
+  first_name: '',
   last_name: '',
   subjects: [],
   grade: '',
