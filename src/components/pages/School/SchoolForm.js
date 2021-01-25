@@ -15,8 +15,6 @@ import {
 import Button from '../../common/Button';
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 
-const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
-
 const initialState = {
   name: '',
   count_students_currently_enrolled: '',
@@ -48,7 +46,7 @@ const SchoolForm = props => {
         })
         .catch(err => console.dir(err));
     }
-  }, []);
+  }, [form, params, pathname]);
 
   const handleSubmit = async () => {
     props.editSchool(params, formData);
