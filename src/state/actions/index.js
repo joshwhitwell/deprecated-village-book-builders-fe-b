@@ -219,3 +219,7 @@ export const fetchTeacherProfile = id => dispatch => {
     })
     .catch(err => console.dir(err));
 };
+
+export const fetchTeacherSchool = () => dispatch => {
+  dispatch({ type: actionTypes.FETCH_TEACHER_SCHOOL });
+};
