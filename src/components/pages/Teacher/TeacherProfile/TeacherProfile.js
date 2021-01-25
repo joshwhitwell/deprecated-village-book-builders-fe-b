@@ -41,20 +41,11 @@ const TeacherProfile = props => {
       <Label>General Availability:</Label>
       <p>{profile.general_availability}</p>
 
-      <Label>Mentor Advisor Point of Contact:</Label>
-      <p>{profile.mentor_advisor_point_of_contact}</p>
-
-      <Label>Mentor Program Goals:</Label>
-      <p>{profile.goals_mentor_program}</p>
-
       <Label>Personal Goals:</Label>
       <p>{profile.goals_personal}</p>
 
       <Label>School Community Goals:</Label>
       <p>{profile.goals_school_community}</p>
-
-      <Label>Goals Mentor Program:</Label>
-      <p>{profile.goals_mentor_program}</p>
 
       <p></p>
 
