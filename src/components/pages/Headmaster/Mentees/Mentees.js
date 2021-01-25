@@ -128,7 +128,7 @@ const Mentees = props => {
 
 const mapStateToProps = state => {
   return {
-    mentees: state.headmasterReducer.mentees,
+    mentees: state.menteeReducer.mentees,
     userId: state.authReducer.userId,
     role: state.authReducer.role,
   };

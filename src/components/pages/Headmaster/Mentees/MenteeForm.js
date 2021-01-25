@@ -13,7 +13,7 @@ import {
 } from '../../../common/FormStyle';
 
 //actions
-import { editStudentProfile } from '../../../../state/actions';
+import { editMentee } from '../../../../state/actions';
 
 //options for mentee gender field
 const genders = ['Male', 'Female', 'Other'];
@@ -42,7 +42,7 @@ const MenteeForm = props => {
   //handles mentee form submit; invoked by onFinish prop on Form
   const handleSubmit = () => {
     console.log('test');
-    props.editStudentProfile(props.currentMentee.id, formData);
+    props.editMentee(props.currentMentee.id, formData);
   };
 
   //controls form field values
@@ -317,4 +317,4 @@ const MenteeForm = props => {
   );
 };
 
-export default connect(null, { editStudentProfile })(MenteeForm);
+export default connect(null, { editMentee })(MenteeForm);
