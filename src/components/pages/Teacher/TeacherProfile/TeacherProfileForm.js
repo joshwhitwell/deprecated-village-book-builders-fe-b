@@ -159,6 +159,7 @@ const ProfileForm = props => {
           <Input
             type="text"
             name="bio"
+            defaultValue="Tell me about yourself..."
             value={formData.bio}
             onChange={e => handleChange(e)}
           />
@@ -201,6 +202,7 @@ const ProfileForm = props => {
         >
           <Input
             type="text"
+            defaultValue="What are you trying to accomplish?"
             value={formData.goals_personal}
             onChange={e => handleChange(e)}
           />
