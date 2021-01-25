@@ -12,7 +12,7 @@ import MenteeModal from './MenteeModal';
 const Mentees = props => {
   //deconstructs mentee list from redux
   let menteesSelection = [...props.mentees].filter(
-    mentee => mentee.account_status === 'inactive'
+    mentee => mentee.account_status === 'Inactive'
   );
   //deconstructs fetchMentees from redux
   const { fetchMentees } = props;
