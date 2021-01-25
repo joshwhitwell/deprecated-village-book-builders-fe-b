@@ -194,3 +194,29 @@ export const addLibrary = (id, data) => dispatch => {
     })
     .catch(err => console.dir(err));
 };
+
+// -----------------------
+// TEACHER
+// -----------------------
+
+export const editTeacherProfile = (id, data) => dispatch => {
+  axiosWithAuth()
+    .put(`/teacher/${id}`, data)
+    .then(res => {
+      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
+      window.location.replace('/profile/');
+    })
+    .catch(err => console.dir(err));
+};
+export const fetchTeacherProfile = id => dispatch => {
+  axiosWithAuth()
+    .get(`/teacher/${id}`) // change this later
+    .then(res => {
+      console.log('fetchteacherProfile action --> ', res.data);
+      dispatch({
+        type: actionTypes.FETCH_TEACHER_PROFILE,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
+};
