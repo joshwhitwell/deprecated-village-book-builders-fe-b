@@ -17,7 +17,7 @@ import { editMentee } from '../../../../state/actions';
 
 //initializes mentee form
 const initialState = {
-  first_name: '',
+  first_name: 'test',
   last_name: '',
   subjects: [],
   grade: '',
@@ -35,11 +35,18 @@ const subjectOptions = [
   <Option key="English" value="English" name="subjects">
     English
   </Option>,
-  <Option key="Math" value="Math">
+  <Option key="Science" value="Science" name="subjects">
+    Science
+  </Option>,
+  <Option key="Math" value="Math" name="subjects">
     Math
   </Option>,
-  <Option key="Reading" value="Reading">
-    Reading
+  <Option
+    key="Theoretical Astroskiing"
+    value="Theoretical Astroskiing"
+    name="subjects"
+  >
+    Theoretical Astroskiing
   </Option>,
 ];
 
@@ -47,11 +54,17 @@ const fluentLanguages = [
   <Option key="English" value="English">
     English
   </Option>,
+  <Option key="Latin" value="Latin">
+    Latin
+  </Option>,
   <Option key="Spanish" value="Spanish">
     Spanish
   </Option>,
-  <Option key="Nepali" value="Nepali">
-    Nepali
+  <Option key="Sanskrit" value="Sanskrit">
+    Sanskrit
+  </Option>,
+  <Option key="Sumerian" value="Sumerian">
+    Sumerian
   </Option>,
 ];
 
@@ -66,8 +79,6 @@ const MenteeForm = props => {
 
   //controls form field values
   const handleChange = e => {
-    console.log(e);
-
     if (moment.isMoment(e)) {
       setFormData({ ...formData, dob: moment.utc(e).format() });
     } else if (Array.isArray(e)) {
@@ -77,7 +88,7 @@ const MenteeForm = props => {
     }
   };
 
-  //Create handleChange for dropdown
+  //creates handleChange for dropdown
   const handleMultiChange = (value, e) => {
     if (
       e.name === 'grade' ||
@@ -95,6 +106,21 @@ const MenteeForm = props => {
     }
   };
 
+  //maps current Mentee user data to edit Form inputs
+  const defaultValues = {
+    first_name: props.currentMentee.first_name,
+    last_name: props.currentMentee.last_name,
+    subjects: props.currentMentee.subjects,
+    grade: props.currentMentee.grade,
+    email: props.currentMentee.email,
+    dob: moment(props.currentMentee.dob),
+    home_country: props.currentMentee.home_country,
+    home_time_zone: props.currentMentee.home_time_zone,
+    phone: props.currentMentee.phone,
+    first_language: props.currentMentee.first_language,
+    other_fluent_languages: props.currentMentee.other_fluent_languages,
+  };
+
   return (
     <FormContainer>
       <Form.Item {...tailLayout}></Form.Item>
@@ -105,6 +131,8 @@ const MenteeForm = props => {
         form={props.form}
         {...layout}
         onFinish={handleSubmit}
+        //maps user data from redux store to default Form values
+        initialValues={defaultValues}
       >
         <Form.Item
           label="First Name"
@@ -131,68 +159,67 @@ const MenteeForm = props => {
           />
         </Form.Item>
 
-        <h4>Subjects</h4>
-        <Select
-          mode="multiple"
-          allowClear
-          style={{ width: '50%' }}
-          placeholder="Please select Subjects"
-          defaultValue={[]}
-          value={formData.subjects}
-          onChange={handleChange}
-        >
-          {subjectOptions}
-        </Select>
+        <Form.Item name="subjects" label="Subjects">
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: '50%' }}
+            placeholder="Please select Subjects"
+            value={formData.subjects}
+            onChange={handleChange}
+          >
+            {subjectOptions}
+          </Select>
+        </Form.Item>
 
-        <br />
-        <br />
-        <h4>Select Grade</h4>
-        <Select
-          style={{ width: 120 }}
-          onChange={handleMultiChange}
-          value={formData.grade}
-          onSelect={(value, event) => handleMultiChange(value, event)}
-        >
-          <Option value="Kindergarten" name="grade">
-            Kindergarten
-          </Option>
-          <Option value="1st Grade" name="grade">
-            1st Grade
-          </Option>
-          <Option value="2nd Grade" name="grade">
-            2nd Grade
-          </Option>
-          <Option value="3rd Grade" name="grade">
-            3rd Grade
-          </Option>
-          <Option value="4th Grade" name="grade">
-            4th Grade
-          </Option>
-          <Option value="5th Grade" name="grade">
-            5th Grade
-          </Option>
-          <Option value="6th Grade" name="grade">
-            6th Grade
-          </Option>
-          <Option value="7th Grade" name="grade">
-            7th Grade
-          </Option>
-          <Option value="8th Grade" name="grade">
-            8th Grade
-          </Option>
-          <Option value="9th Grade" name="grade">
-            9th Grade
-          </Option>
-          <Option value="10th Grade" name="grade">
-            10th Grade
-          </Option>
-          <Option value="11th Grade" name="grade">
-            11th Grade
-          </Option>
-          <Option value="12th Grade" name="grade">
-            12th Grade
-          </Option>
-        </Select>
+        <Form.Item name="grade" label="Grade">
+          <Select
+            style={{ width: 120 }}
+            onChange={handleMultiChange}
+            value={formData.grade}
+            onSelect={(value, event) => handleMultiChange(value, event)}
+          >
+            <Option value="Kindergarten" name="grade">
+              Kindergarten
+            </Option>
+            <Option value="1st Grade" name="grade">
+              1st Grade
+            </Option>
+            <Option value="2nd Grade" name="grade">
+              2nd Grade
+            </Option>
+            <Option value="3rd Grade" name="grade">
+              3rd Grade
+            </Option>
+            <Option value="4th Grade" name="grade">
+              4th Grade
+            </Option>
+            <Option value="5th Grade" name="grade">
+              5th Grade
+            </Option>
+            <Option value="6th Grade" name="grade">
+              6th Grade
+            </Option>
+            <Option value="7th Grade" name="grade">
+              7th Grade
+            </Option>
+            <Option value="8th Grade" name="grade">
+              8th Grade
+            </Option>
+            <Option value="9th Grade" name="grade">
+              9th Grade
+            </Option>
+            <Option value="10th Grade" name="grade">
+              10th Grade
+            </Option>
+            <Option value="11th Grade" name="grade">
+              11th Grade
+            </Option>
+            <Option value="12th Grade" name="grade">
+              12th Grade
+            </Option>
+          </Select>
+        </Form.Item>
 
         <Form.Item
           label="Date of Birth"
@@ -201,6 +228,7 @@ const MenteeForm = props => {
         >
           <DatePicker name="dob" onChange={e => handleChange(e)} />
         </Form.Item>
+
         <Form.Item
           label="Email"
           name="email"
@@ -214,51 +242,52 @@ const MenteeForm = props => {
           />
         </Form.Item>
 
-        <h4>Select Home Country</h4>
-        <Select
-          style={{ width: 120 }}
-          onChange={handleMultiChange}
-          value={formData.home_country}
-          onSelect={(value, event) => handleMultiChange(value, event)}
-        >
-          <Option value="Belize" name="home_country">
-            Belize
-          </Option>
-          <Option value="Ghana" name="home_country">
-            Ghana
-          </Option>
-          <Option value="Mexico" name="home_country">
-            Mexico
-          </Option>
-          <Option value="Nepal" name="home_country">
-            Nepal
-          </Option>
-          <Option value="Peru" name="home_country">
-            Peru
-          </Option>
-        </Select>
-        <br />
-        <br />
-        <h4>Select Time Zone</h4>
-        <Select
-          style={{ width: 300 }}
-          onChange={handleMultiChange}
-          value={formData.home_time_zone}
-          onSelect={(value, event) => handleMultiChange(value, event)}
-        >
-          <Option value="Central Standard Time" name="home_time_zone">
-            Central Standard Time
-          </Option>
-          <Option value="Greenwich Mean Time" name="home_time_zone">
-            Greenwich Mean Time
-          </Option>
-          <Option value="Nepal Standard Time" name="home_time_zone">
-            Nepal Standard Time
-          </Option>
-          <Option value="Peru Standard Time" name="home_time_zone">
-            Peru Standard Time
-          </Option>
-        </Select>
+        <Form.Item name="home_country" label="Home Country">
+          <Select
+            style={{ width: 120 }}
+            onChange={handleMultiChange}
+            value={formData.home_country}
+            onSelect={(value, event) => handleMultiChange(value, event)}
+          >
+            <Option value="Belize" name="home_country">
+              Belize
+            </Option>
+            <Option value="Ghana" name="home_country">
+              Ghana
+            </Option>
+            <Option value="Mexico" name="home_country">
+              Mexico
+            </Option>
+            <Option value="Nepal" name="home_country">
+              Nepal
+            </Option>
+            <Option value="Peru" name="home_country">
+              Peru
+            </Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item name="home_time_zone" label="Time Zone">
+          <Select
+            style={{ width: 300 }}
+            onChange={handleMultiChange}
+            value={formData.home_time_zone}
+            onSelect={(value, event) => handleMultiChange(value, event)}
+          >
+            <Option value="Central Standard Time" name="home_time_zone">
+              Central Standard Time
+            </Option>
+            <Option value="Greenwich Mean Time" name="home_time_zone">
+              Greenwich Mean Time
+            </Option>
+            <Option value="Nepal Standard Time" name="home_time_zone">
+              Nepal Standard Time
+            </Option>
+            <Option value="Peru Standard Time" name="home_time_zone">
+              Peru Standard Time
+            </Option>
+          </Select>
+        </Form.Item>
 
         <Form.Item label="Phone" name="phone" rules={[{ required: false }]}>
           <Input
@@ -269,38 +298,30 @@ const MenteeForm = props => {
           />
         </Form.Item>
 
-        <br />
-        <br />
-        <h4>Select First Language</h4>
-        <Select
-          style={{ width: 300 }}
-          onChange={handleMultiChange}
-          value={formData.first_language}
-          onSelect={(value, event) => handleMultiChange(value, event)}
-        >
-          <Option value="English" name="first_language">
-            English
-          </Option>
-          <Option value="Spanish" name="first_language">
-            Spanish
-          </Option>
-          <Option value="Nepali" name="first_language">
-            Nepali
-          </Option>
-        </Select>
+        <Form.Item name="first_language" label="Primary Language">
+          <Select
+            style={{ width: 300 }}
+            onChange={handleMultiChange}
+            value={formData.first_language}
+            onSelect={(value, event) => handleMultiChange(value, event)}
+          >
+            {fluentLanguages}
+          </Select>
+        </Form.Item>
 
-        <h4>Other Fluent Languages</h4>
-        <Select
-          mode="multiple"
-          allowClear
-          style={{ width: '50%' }}
-          placeholder="Please select other fluent languages"
-          defaultValue={[]}
-          value={formData.other_fluent_languages}
-          onChange={handleLanguageChange}
-        >
-          {fluentLanguages}
-        </Select>
+        <Form.Item name="other_fluent_languages" label="Other Fluent Languages">
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: '50%' }}
+            placeholder="Please select other fluent languages"
+            defaultValue={[]}
+            value={formData.other_fluent_languages}
+            onChange={handleLanguageChange}
+          >
+            {fluentLanguages}
+          </Select>
+        </Form.Item>
 
         <Form.Item {...tailLayout}>
           <Required id="requiredMsg">
