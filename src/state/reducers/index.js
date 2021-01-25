@@ -3,9 +3,11 @@
 
 import { combineReducers } from 'redux';
 import headmasterReducer from './headmasterReducer.js';
+import menteeReducer from './menteeReducer';
 import authReducer from './authReducer';
 
 export default combineReducers({
   headmasterReducer,
   authReducer,
+  menteeReducer,
 });

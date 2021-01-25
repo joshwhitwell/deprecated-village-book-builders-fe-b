@@ -1,33 +1,33 @@
+//dependencies
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
-
-import { Form, Input, DatePicker, Radio, Select, Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Form, Input, DatePicker, Select } from 'antd';
 import moment from 'moment';
 
-import { editHeadmasterProfile } from '../../../../state/actions';
+//styles
 import {
   layout,
   FormContainer,
   tailLayout,
   Required,
 } from '../../../common/FormStyle';
-import Button from '../../../common/Button';
-import { debugLog } from '../../../../utils/debugMode';
 
+//actions
+import { editMentee } from '../../../../state/actions';
+
+//initializes mentee form
 const initialState = {
   first_name: '',
   last_name: '',
-  subjects: [], //Need multiselect
-  grade: '', //Need dropdown
+  subjects: [],
+  grade: '',
   email: '',
   dob: '',
-  home_country: '', //Need dropdown
-  home_time_zone: '', //Need dropdown
+  home_country: '',
+  home_time_zone: '',
   phone: '',
-  first_language: '', //Need dropdown
-  other_fluent_languages: [], //Need multiselect
+  first_language: '',
+  other_fluent_languages: [],
 };
 
 const { Option } = Select;
@@ -55,34 +55,21 @@ const fluentLanguages = [
   </Option>,
 ];
 
-const countries = ['Belize', 'Ghana', 'Mexico', 'Nepal', 'Peru'];
-
-console.log(subjectOptions);
-
 const MenteeForm = props => {
+  //initializes form state
   const [formData, setFormData] = useState(initialState);
-  //   const [value, setValue] = useState(1);
-  const params = useParams().id;
-  const [form] = Form.useForm();
 
-  //   const onChange = e => {
-  //     console.log('radio checked', e.target.value);
-  //     setValue(e.target.value);
-  //   };
-
-  const handleSubmit = async () => {
-    debugLog(formData);
-    props.editHeadmasterProfile(params, formData);
-    console.log(formData);
+  //handles mentee form submit; invoked by onFinish prop on Form
+  const handleSubmit = () => {
+    props.editMentee(props.currentMentee.id, formData);
   };
 
+  //controls form field values
   const handleChange = e => {
-    // debugLog(e);
     console.log(e);
 
     if (moment.isMoment(e)) {
       setFormData({ ...formData, dob: moment.utc(e).format() });
-      debugLog(moment.utc(e).format());
     } else if (Array.isArray(e)) {
       setFormData({ ...formData, subjects: e });
     } else {
@@ -92,14 +79,11 @@ const MenteeForm = props => {
 
   //Create handleChange for dropdown
   const handleMultiChange = (value, e) => {
-    console.log(e);
-    console.log(formData.subjects);
-
     if (
-      e.name == 'grade' ||
-      e.name == 'home_country' ||
-      e.name == 'home_time_zone' ||
-      e.name == 'first_language'
+      e.name === 'grade' ||
+      e.name === 'home_country' ||
+      e.name === 'home_time_zone' ||
+      e.name === 'first_language'
     ) {
       setFormData({ ...formData, [e.name]: e.value });
     }
@@ -111,13 +95,17 @@ const MenteeForm = props => {
     }
   };
 
-  //   const handleChange = e => {
-  //     debugLog(moment.isMoment(e));
-  //   };
   return (
     <FormContainer>
       <Form.Item {...tailLayout}></Form.Item>
-      <Form onFinish={handleSubmit} form={form} {...layout}>
+      {/*onFinish attribute connects to form.submit hook in MenteeModal*/}
+      {/*id attribute connects to form attribute on submit button in MenteeModal*/}
+      <Form
+        id="menteeForm"
+        form={props.form}
+        {...layout}
+        onFinish={handleSubmit}
+      >
         <Form.Item
           label="First Name"
           name="first_name"
@@ -315,11 +303,6 @@ const MenteeForm = props => {
         </Select>
 
         <Form.Item {...tailLayout}>
-          <Button
-            className="l2-btn btn"
-            htmlType="submit"
-            buttonText="Submit"
-          />
           <Required id="requiredMsg">
             Fields with <span id="required">&#42;</span> are required.
           </Required>
@@ -329,4 +312,4 @@ const MenteeForm = props => {
   );
 };
 
-export default connect(null, { editHeadmasterProfile })(MenteeForm);
+export default connect(null, { editMentee })(MenteeForm);
