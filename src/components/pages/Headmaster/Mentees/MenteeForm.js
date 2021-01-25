@@ -1,7 +1,7 @@
 //dependencies
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Form, Input, DatePicker, Radio } from 'antd';
+import { Form, Input, DatePicker } from 'antd';
 import moment from 'moment';
 
 //styles
@@ -41,6 +41,7 @@ const MenteeForm = props => {
 
   //handles mentee form submit; invoked by onFinish prop on Form
   const handleSubmit = () => {
+    console.log('test');
     props.editStudentProfile(props.currentMentee.id, formData);
   };
 
@@ -58,8 +59,14 @@ const MenteeForm = props => {
   return (
     <FormContainer>
       <Form.Item {...tailLayout}></Form.Item>
-      {/*onFinish prop connects to form.submit hook in MenteeModal*/}
-      <Form form={props.form} {...layout} onFinish={handleSubmit}>
+      {/*onFinish attribute connects to form.submit hook in MenteeModal*/}
+      {/*id attribute connects to form attribute on submit button in MenteeModal*/}
+      <Form
+        id="menteeForm"
+        form={props.form}
+        {...layout}
+        onFinish={handleSubmit}
+      >
         <Form.Item
           label="First Name"
           name="first_name"
@@ -93,9 +100,9 @@ const MenteeForm = props => {
           <DatePicker name="dob" onChange={e => handleChange(e)} />
         </Form.Item>
         <Form.Item
-          label="email"
+          label="Email"
           name="email"
-          rules={[{ required: true, message: 'email is required.' }]}
+          rules={[{ required: true, message: 'Email is required.' }]}
         >
           <Input
             type="text"
@@ -118,7 +125,7 @@ const MenteeForm = props => {
           />
         </Form.Item>
 
-        <Form.Item label="Gender" name="gender">
+        {/* <Form.Item label="Gender" name="gender">
           <Radio.Group
             name="gender"
             value={formData.gender}
@@ -128,7 +135,7 @@ const MenteeForm = props => {
             <Radio value={1}>Female</Radio>
             <Radio value={2}>Other</Radio>
           </Radio.Group>
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           label="Picture URL"
@@ -182,7 +189,7 @@ const MenteeForm = props => {
           />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           label="school Level"
           name="school_lvl"
           rules={[{ required: true, message: 'school level is required.' }]}
@@ -193,7 +200,7 @@ const MenteeForm = props => {
             value={formData.school_lvl}
             onChange={e => handleChange(e)}
           />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           label="Academic Description"
@@ -214,20 +221,18 @@ const MenteeForm = props => {
         </Form.Item>
 
         <Form.Item
-          label="Support Needed"
-          name="support_needed"
-          rules={[
-            { required: true, message: 'Support needed level is required.' },
-          ]}
+          label="Subjects"
+          name="subjects"
+          rules={[{ required: true, message: 'Subjects is required.' }]}
         >
           <Input
             type="text"
-            name="support_needed"
+            name="subjects"
             value={formData.support_needed}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="General Availability"
           name="general_availability"
           rules={[
@@ -240,9 +245,9 @@ const MenteeForm = props => {
             value={formData.general_availability}
             onChange={e => handleChange(e)}
           />
-        </Form.Item>
+        </Form.Item> */}
 
-        <Form.Item
+        {/* <Form.Item
           label="Mentor Program Goals"
           name="goals_mentor_program"
           rules={[
@@ -283,9 +288,9 @@ const MenteeForm = props => {
             value={formData.goals_school_community}
             onChange={e => handleChange(e)}
           />
-        </Form.Item>
+        </Form.Item> */}
 
-        <Form.Item
+        {/* <Form.Item
           label="Mentor Advisor Point of Contact"
           name="mentor_advisor_point_of_contact"
           rules={[
@@ -300,7 +305,7 @@ const MenteeForm = props => {
             value={formData.mentor_advisor_point_of_contact}
             onChange={e => handleChange(e)}
           />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item {...tailLayout}>
           <Required id="requiredMsg">

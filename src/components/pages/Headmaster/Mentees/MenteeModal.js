@@ -39,7 +39,13 @@ function MenteeModal(props) {
           Delete
         </Button>,
         editing ? (
-          <Button key="submit" type="primary" htmlType="submit">
+          // form attribute connects to id attribute in menteeForm
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            form="menteeForm"
+          >
             Submit
           </Button>
         ) : (
