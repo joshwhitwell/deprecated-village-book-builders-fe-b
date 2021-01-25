@@ -21,7 +21,7 @@ const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 const initialState = {
   first_name: '',
   last_name: '',
-  account_status: '',
+  account_status: 'Active',
   gender: {
     male: false,
     female: false,
@@ -157,6 +157,9 @@ const ProfileForm = props => {
             type="text"
             name="email"
             value={formData.phone_number}
+            rules={[
+              { required: '@', message: 'Must be a proper Email format' },
+            ]}
             onChange={e => handleChange(e)}
           />
 
