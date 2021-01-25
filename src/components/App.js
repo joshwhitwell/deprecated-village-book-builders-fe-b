@@ -9,12 +9,14 @@ import Login from './pages/Login/Login';
 import Logout from './Logout';
 import HeadmasterDashboard from './pages/Headmaster/HeadmasterDashboard';
 import TeacherDashboard from './pages/Teacher/TeacherDashboard';
+// import TeacherProfile from './pages/Teacher/TeacherProfile';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 
 const App = ({ role, checkToken }) => {
   return (
     <div className="App">
       <Switch>
+        {/* <Route path="/teacher/:id" component={TeacherProfile} /> */}
         <Route path="/logout" component={Logout} />
         <Route path="/login" component={Login} />
 
