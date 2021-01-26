@@ -28,8 +28,10 @@ const MenteeProfile = ({ currentMentee }) => {
           <p>{moment.utc(currentMentee.dob).format('dddd, MMMM Do of YYYY')}</p>
           <Divider plain>Subjects Working On</Divider>
           <p>
-            {currentMentee.subjects.map(element => (
-              <span style={{ margin: '3px' }}>{element}</span>
+            {currentMentee.subjects.map((element, index) => (
+              <span style={{ margin: '3px' }} key={index.toString()}>
+                {element}
+              </span>
             ))}
           </p>
           <Divider plain>Current Grade</Divider>
@@ -38,11 +40,12 @@ const MenteeProfile = ({ currentMentee }) => {
           <p>{currentMentee.first_language}</p>
           <Divider plain>Other Languages</Divider>
           <p>
-            {currentMentee.other_fluent_languages.map(element => (
-              <span style={{ margin: '3px' }}>{element}</span>
+            {currentMentee.other_fluent_languages.map((element, index) => (
+              <span style={{ margin: '3px' }} key={index.toString()}>
+                {element}
+              </span>
             ))}
           </p>
-
           <Divider plain>Home Country</Divider>
           <p>{currentMentee.home_country}</p>
           <Divider plain>Time Zone</Divider>

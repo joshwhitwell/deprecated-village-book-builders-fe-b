@@ -1,21 +1,25 @@
 //dependencies
 import React, { useEffect, useState } from 'react';
-import { Button, Divider, Input, List, Avatar } from 'antd';
+import { Button, Divider, Input, List, Avatar, Tag } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 
 //actions
-import { checkToken, fetchMentees } from '../../../../state/actions/index';
+import { checkToken, fetchMentees } from '../../../state/actions/index';
 
 //components
 import MenteeModal from './MenteeModal';
+import { useHistory } from 'react-router-dom';
 
 const Mentees = props => {
   //deconstructs mentee list from redux
   let menteesSelection = [...props.mentees].filter(
     mentee => mentee.account_status === 'Inactive'
   );
+
   //deconstructs fetchMentees from redux
   const { fetchMentees } = props;
+  const history = useHistory();
 
   //initializes state
   const [search, setSearch] = useState('');
@@ -50,6 +54,18 @@ const Mentees = props => {
     );
   }
 
+  const statusTag = item => {
+    if (item.account_status === 'Active') {
+      return <Tag color="success">Active</Tag>;
+    }
+    if (item.account_status === 'Inactive') {
+      return <Tag icon={<ClockCircleOutlined />}>Inactive</Tag>;
+    }
+    if (item.account_status === 'Denied') {
+      return <Tag color="error">Denied</Tag>;
+    }
+  };
+
   //fetches mentee list on initial render
   useEffect(() => {
     fetchMentees();
@@ -57,13 +73,16 @@ const Mentees = props => {
 
   return (
     <div className="menteeContainer">
-      <h1 id="menteeTitle">Mentee Sign Up</h1>
+      <h1 id="menteeTitle">Mentees</h1>
       <div className="exploreWrapper">
         <Button
           style={{ width: '80%', marginBottom: '10pt', alignSelf: 'center' }}
           align="center"
+          onClick={() => {
+            history.push('/mentees/signup');
+          }}
         >
-          Create Account
+          Create Mentee
         </Button>
         <Input.Search
           value={search}
@@ -82,12 +101,19 @@ const Mentees = props => {
                   <List.Item.Meta
                     avatar={<Avatar src={item.mentee_picture} />}
                     title={
-                      <a href="https://ant.design">
-                        {item.first_name + ' ' + item.last_name}
-                      </a>
+                      <span
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        {item.first_name + ' ' + item.last_name}{' '}
+                        {statusTag(item)}
+                      </span>
                     }
                     description={item.academic_description}
                   />
+                  <span></span>
                 </div>
                 <div className="listItemButtonWrapper">
                   <Button
@@ -104,11 +130,10 @@ const Mentees = props => {
                       editingHandler();
                     }}
                     className="listItemButton"
-                    danger
                     size="middle"
                     type="default"
                   >
-                    Edit
+                    Activate
                   </Button>
                 </div>
               </div>
