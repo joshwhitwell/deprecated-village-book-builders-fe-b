@@ -73,7 +73,7 @@ const Mentees = props => {
 
   return (
     <div className="menteeContainer">
-      <h1 id="menteeTitle">Mentee Sign Up</h1>
+      <h1 id="menteeTitle">Mentees</h1>
       <div className="exploreWrapper">
         <Button
           style={{ width: '80%', marginBottom: '10pt', alignSelf: 'center' }}
@@ -82,7 +82,7 @@ const Mentees = props => {
             history.push('/mentees/signup');
           }}
         >
-          Create Account
+          Create Mentee
         </Button>
         <Input.Search
           value={search}

@@ -84,6 +84,9 @@ function ProgramDashboard() {
           <NavLink to="/mentees" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentees</button>
           </NavLink>
+          <NavLink to="/mentees/signup" onClick={() => setVisible(true)}>
+            <button className="btn l2-btn menuLinks">Mentee Sign Up</button>
+          </NavLink>
           <Link to="/logout" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Logout</button>
           </Link>
