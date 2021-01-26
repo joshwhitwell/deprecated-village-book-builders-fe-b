@@ -3,8 +3,8 @@ import React from 'react';
 import { Modal, Button, Form } from 'antd';
 
 //components
-import MenteeForm from './MenteeForm';
 import MenteeProfile from './MenteeProfile';
+import EditMentee from './EditMentee';
 
 function MenteeModal(props) {
   //form is initialized inside of Modal so that we can make use
@@ -53,7 +53,7 @@ function MenteeModal(props) {
       ]}
     >
       {editing ? (
-        <MenteeForm
+        <EditMentee
           currentMentee={currentMentee}
           editing={editing}
           editingHandler={editingHandler}

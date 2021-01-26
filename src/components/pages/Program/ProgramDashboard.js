@@ -16,6 +16,7 @@ import {
 //components
 import Logout from '../../Logout';
 import Mentees from '../Mentees/Mentees';
+import MenteeSignup from '../Mentees/MenteeSignup';
 
 function ProgramDashboard() {
   const [visible, setVisible] = useState(true);
@@ -48,7 +49,8 @@ function ProgramDashboard() {
     <div>
       <Dashboard>
         <Switch>
-          <Route path="/signup" component={Mentees} />
+          <Route path="/mentees/signup" component={MenteeSignup} />
+          <Route path="/mentees" component={Mentees} />
           <Route path="/logout" component={Logout} />
         </Switch>
       </Dashboard>
@@ -79,8 +81,8 @@ function ProgramDashboard() {
         >
           <h2>Welcome Program Admin!</h2>
 
-          <NavLink to="/signup" onClick={() => setVisible(true)}>
-            <button className="btn l2-btn menuLinks">Mentee Sign Up</button>
+          <NavLink to="/mentees" onClick={() => setVisible(true)}>
+            <button className="btn l2-btn menuLinks">Mentees</button>
           </NavLink>
           <Link to="/logout" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Logout</button>

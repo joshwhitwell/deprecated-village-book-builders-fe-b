@@ -9,14 +9,17 @@ import { checkToken, fetchMentees } from '../../../state/actions/index';
 
 //components
 import MenteeModal from './MenteeModal';
+import { useHistory } from 'react-router-dom';
 
 const Mentees = props => {
   //deconstructs mentee list from redux
   let menteesSelection = [...props.mentees].filter(
     mentee => mentee.account_status === 'Inactive'
   );
+
   //deconstructs fetchMentees from redux
   const { fetchMentees } = props;
+  const history = useHistory();
 
   //initializes state
   const [search, setSearch] = useState('');
@@ -75,6 +78,9 @@ const Mentees = props => {
         <Button
           style={{ width: '80%', marginBottom: '10pt', alignSelf: 'center' }}
           align="center"
+          onClick={() => {
+            history.push('/mentees/signup');
+          }}
         >
           Create Account
         </Button>
