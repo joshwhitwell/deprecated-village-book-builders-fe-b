@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { Form, Input, DatePicker, Select, Steps, Button } from 'antd';
 import moment from 'moment';
 
+//actions
+import { addMentee } from '../../../state/actions/index';
+
 //styles
 import {
   layout,
@@ -10,6 +13,7 @@ import {
   tailLayout,
   Required,
 } from '../../common/FormStyle';
+import { connect } from 'react-redux';
 
 //initializes mentee form
 const initialState = {
@@ -96,7 +100,6 @@ const MenteeSignup = props => {
 
   //creates handleChange for dropdown
   const handleMultiChange = (value, e) => {
-    console.log(e);
     if (
       e.name === 'grade' ||
       e.name === 'home_country' ||
@@ -115,7 +118,7 @@ const MenteeSignup = props => {
   };
 
   const handleSubmit = e => {
-    console.log(formData);
+    props.addMentee(formData);
   };
 
   //steps content used to render Form content
@@ -331,9 +334,7 @@ const MenteeSignup = props => {
         <Form.Item {...tailLayout}></Form.Item>
         <Form
           {...layout}
-          onFinish={
-            steps[current].title === 'Contact Info' ? handleSubmit : next
-          }
+          onFinish={current === steps.length - 1 ? handleSubmit : next}
         >
           {steps[current].content}
           <Form.Item {...tailLayout}>
@@ -369,4 +370,4 @@ const MenteeSignup = props => {
   );
 };
 
-export default MenteeSignup;
+export default connect(null, { addMentee })(MenteeSignup);
