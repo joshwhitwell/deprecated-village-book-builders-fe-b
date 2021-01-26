@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { Form, Input, DatePicker, Space, Radio } from 'antd';
 import moment from 'moment';
 
-import { editHeadmasterProfile } from '../../../../state/actions';
+import { editTeacherProfile } from '../../../../state/actions';
 import {
   layout,
   FormContainer,
@@ -20,27 +20,21 @@ const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 
 const initialState = {
   first_name: '',
+  last_name: '',
+  account_status: 'Active',
   gender: {
     male: false,
     female: false,
     other: false,
   },
   address: '',
-  bio: '',
-  communication_app: '',
-  dob: '',
-  general_availability: '',
-  goals_mentor_program: '',
-  goals_personal: '',
-  goals_school_community: '',
-  mentor_advisor_point_of_contact: '',
-  phone_number: '',
-  photo_url: '',
-  programId: '',
-  registration_status: '',
-  last_name: '',
-  time_zone: '',
-  villageId: '',
+  education_contact: {
+    name: '',
+    phone: '',
+    email: '',
+    jobTitle: '',
+  },
+  notes: '',
 };
 
 const dateFormat = 'MM/DD/YYYY';
@@ -49,18 +43,19 @@ const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 const ProfileForm = props => {
   const [formData, setFormData] = useState(initialState);
   const [value, setValue] = useState(1);
+  const pathname = useHistory().location.pathname;
   const params = useParams().id;
   const [form] = Form.useForm();
 
   useEffect(() => {
     axios // ! This should later become available through axiosWithAuth() only once we figure out the Auth with Stakeholder's backend
-      .get(`${baseURL}/headmaster/1`)
+      .get(`${baseURL}/teacher/1`)
       .then(res => {
         form.setFieldsValue(res.data);
         setFormData(res.data);
       })
       .catch(err => console.dir(err));
-  }, [form]);
+  }, []);
 
   const onChange = e => {
     console.log('radio checked', e.target.value);
@@ -69,7 +64,7 @@ const ProfileForm = props => {
 
   const handleSubmit = async () => {
     console.log(formData);
-    props.editHeadmasterProfile(params, formData);
+    props.editTeacherProfile(params, formData);
   };
 
   const handleChange = e => {
@@ -91,7 +86,7 @@ const ProfileForm = props => {
           <Input
             type="text"
             name="first_name"
-            defaultValue="Mr Headmaster" // Change this
+            defaultValue="Your First Name"
             value={formData.first_name}
             onChange={e => handleChange(e)}
           />
@@ -105,9 +100,18 @@ const ProfileForm = props => {
           <Input
             type="text"
             name="last_name"
+            defaultValue="Your Last Name"
             value={formData.last_name}
             onChange={e => handleChange(e)}
           />
+        </Form.Item>
+
+        <Form.Item label="Gender" name="gender">
+          <Radio.Group onChange={onChange} value={value}>
+            <Radio value={1}>Male</Radio>
+            <Radio value={2}>Female</Radio>
+            <Radio value={3}>Other</Radio>
+          </Radio.Group>
         </Form.Item>
 
         <Space direction="vertical" size={12} {...tailLayout}>
@@ -131,125 +135,48 @@ const ProfileForm = props => {
         </Form.Item>
 
         <Form.Item
-          label="Phone Number"
-          name="phone_number"
-          rules={[{ required: true, message: 'Phone Number is required.' }]}
+          label="Education Contact"
+          name="education_contact"
+          rules={[{ required: false }]}
         >
           <Input
             type="text"
-            name="phone_number"
+            name="name"
+            value={formData.phone_number}
+            onChange={e => handleChange(e)}
+          />
+
+          <Input
+            type="text"
+            name="phone"
+            value={formData.phone_number}
+            onChange={e => handleChange(e)}
+          />
+
+          <Input
+            type="text"
+            name="email"
+            value={formData.phone_number}
+            rules={[
+              { required: '@', message: 'Must be a proper Email format' },
+            ]}
+            onChange={e => handleChange(e)}
+          />
+
+          <Input
+            type="text"
+            name="jobTitle"
             value={formData.phone_number}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
 
-        <Form.Item label="Gender" name="gender">
-          <Radio.Group onChange={onChange} value={value}>
-            <Radio value={1}>Male</Radio>
-            <Radio value={2}>Female</Radio>
-            <Radio value={3}>Other</Radio>
-          </Radio.Group>
-        </Form.Item>
-
-        <Form.Item
-          label="Bio"
-          name="bio"
-          rules={[{ required: true, message: 'Bio is required.' }]}
-        >
+        <Form.Item label="Notes" name="notes" rules={[{ required: false }]}>
           <Input
             type="text"
-            name="bio"
+            name="notes"
+            defaultValue="Jot something down..."
             value={formData.bio}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Communication App"
-          name="communication_app"
-          rules={[
-            { required: true, message: 'Communication app is required.' },
-          ]}
-        >
-          <Input
-            type="text"
-            name="communication_app"
-            value={formData.communication_app}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="General Availability"
-          name="general_availability"
-          rules={[
-            { required: true, message: 'General Availability is required' },
-          ]}
-        >
-          <Input
-            type="text"
-            name="general_availability"
-            value={formData.general_availability}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Mentor Program Goals"
-          name="goals_mentor_program"
-          rules={[
-            { required: true, message: 'Goals of mentor program is required.' },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.goals_mentor_program}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Personal Goals"
-          name="goals_personal"
-          rules={[{ required: true, message: 'Personal goals are required.' }]}
-        >
-          <Input
-            type="text"
-            value={formData.goals_personal}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="School Community Goals"
-          name="goals_school_community"
-          rules={[
-            {
-              required: true,
-              message: 'Goals for schools community are required.',
-            },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.goals_school_community}
-            onChange={e => handleChange(e)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Mentor Advisor Point of Contact"
-          name="mentor_advisor_point_of_contact"
-          rules={[
-            {
-              required: true,
-              message: 'Mentor advisor point of contact is required.',
-            },
-          ]}
-        >
-          <Input
-            type="text"
-            value={formData.mentor_advisor_point_of_contact}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
@@ -269,4 +196,4 @@ const ProfileForm = props => {
   );
 };
 
-export default connect(null, { editHeadmasterProfile })(ProfileForm);
+export default connect(null, { editTeacherProfile })(ProfileForm);
