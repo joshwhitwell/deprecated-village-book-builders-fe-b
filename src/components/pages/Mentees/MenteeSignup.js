@@ -1,6 +1,6 @@
 //dependencies
 import React, { useState } from 'react';
-import { Form, Input, DatePicker, Select, Steps, Button, message } from 'antd';
+import { Form, Input, DatePicker, Select, Steps, Button } from 'antd';
 import moment from 'moment';
 
 //styles
@@ -49,19 +49,19 @@ const subjectOptions = [
 
 //creates select options for langauge field
 const fluentLanguages = [
-  <Option key="English" value="English">
+  <Option key="English" value="English" name="first_language">
     English
   </Option>,
-  <Option key="Latin" value="Latin">
+  <Option key="Latin" value="Latin" name="first_language">
     Latin
   </Option>,
-  <Option key="Spanish" value="Spanish">
+  <Option key="Spanish" value="Spanish" name="first_language">
     Spanish
   </Option>,
-  <Option key="Sanskrit" value="Sanskrit">
+  <Option key="Sanskrit" value="Sanskrit" name="first_language">
     Sanskrit
   </Option>,
-  <Option key="Sumerian" value="Sumerian">
+  <Option key="Sumerian" value="Sumerian" name="first_language">
     Sumerian
   </Option>,
 ];
@@ -96,6 +96,7 @@ const MenteeSignup = props => {
 
   //creates handleChange for dropdown
   const handleMultiChange = (value, e) => {
+    console.log(e);
     if (
       e.name === 'grade' ||
       e.name === 'home_country' ||
@@ -111,6 +112,10 @@ const MenteeSignup = props => {
     if (Array.isArray(e)) {
       setFormData({ ...formData, other_fluent_languages: e });
     }
+  };
+
+  const handleSubmit = e => {
+    console.log(formData);
   };
 
   //steps content used to render Form content
@@ -173,7 +178,6 @@ const MenteeSignup = props => {
         <>
           <Form.Item name="grade" label="Grade">
             <Select
-              onChange={handleMultiChange}
               value={formData.grade}
               onSelect={(value, event) => handleMultiChange(value, event)}
             >
@@ -233,7 +237,6 @@ const MenteeSignup = props => {
 
           <Form.Item name="first_language" label="Primary Language">
             <Select
-              onChange={handleMultiChange}
               value={formData.first_language}
               onSelect={(value, event) => handleMultiChange(value, event)}
             >
@@ -264,7 +267,6 @@ const MenteeSignup = props => {
         <>
           <Form.Item name="home_country" label="Home Country">
             <Select
-              onChange={handleMultiChange}
               value={formData.home_country}
               onSelect={(value, event) => handleMultiChange(value, event)}
             >
@@ -287,7 +289,6 @@ const MenteeSignup = props => {
           </Form.Item>
           <Form.Item name="home_time_zone" label="Time Zone">
             <Select
-              onChange={handleMultiChange}
               value={formData.home_time_zone}
               onSelect={(value, event) => handleMultiChange(value, event)}
             >
@@ -326,39 +327,44 @@ const MenteeSignup = props => {
           <Step key={item.title} title={item.title} />
         ))}
       </Steps>
-
       <FormContainer>
         <Form.Item {...tailLayout}></Form.Item>
-        <Form {...layout}>
+        <Form
+          {...layout}
+          onFinish={
+            steps[current].title === 'Contact Info' ? handleSubmit : next
+          }
+        >
           {steps[current].content}
           <Form.Item {...tailLayout}>
             <Required id="requiredMsg">
               Fields with <span id="required">&#42;</span> are required.
             </Required>
           </Form.Item>
+          <Form.Item {...tailLayout}>
+            <div
+              className="steps-action"
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
+              {current > 0 && (
+                <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                  Previous
+                </Button>
+              )}
+              {current < steps.length - 1 && (
+                <Button type="primary" htmlType="submit">
+                  Next
+                </Button>
+              )}
+              {current === steps.length - 1 && (
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              )}
+            </div>
+          </Form.Item>
         </Form>
       </FormContainer>
-
-      <div
-        className="steps-action"
-        style={{ display: 'flex', justifyContent: 'center' }}
-      >
-        {current > 0 && (
-          <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-            Previous
-          </Button>
-        )}
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => message.success('All Set!')}>
-            Done
-          </Button>
-        )}
-      </div>
     </div>
   );
 };
