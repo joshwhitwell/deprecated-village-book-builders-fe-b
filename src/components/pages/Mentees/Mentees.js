@@ -1,6 +1,6 @@
 //dependencies
 import React, { useEffect, useState } from 'react';
-import { Button, Divider, Input, List, Avatar } from 'antd';
+import { Button, Divider, Input, List, Avatar, Tag } from 'antd';
 import { connect } from 'react-redux';
 
 //actions
@@ -82,12 +82,27 @@ const Mentees = props => {
                   <List.Item.Meta
                     avatar={<Avatar src={item.mentee_picture} />}
                     title={
-                      <a href="https://ant.design">
-                        {item.first_name + ' ' + item.last_name}
-                      </a>
+                      <span
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        {item.first_name + ' ' + item.last_name}{' '}
+                        <Tag
+                          color={
+                            item.account_status === 'Inactive'
+                              ? 'error'
+                              : 'success'
+                          }
+                        >
+                          {item.account_status}
+                        </Tag>
+                      </span>
                     }
                     description={item.academic_description}
                   />
+                  <span></span>
                 </div>
                 <div className="listItemButtonWrapper">
                   <Button
@@ -104,7 +119,6 @@ const Mentees = props => {
                       editingHandler();
                     }}
                     className="listItemButton"
-                    danger
                     size="middle"
                     type="default"
                   >

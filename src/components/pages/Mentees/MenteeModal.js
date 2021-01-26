@@ -35,9 +35,6 @@ function MenteeModal(props) {
         <Button key="back" onClick={editing ? editingHandler : moreInfoHandler}>
           Return
         </Button>,
-        <Button key="delete" onClick={() => console.log('delete')}>
-          Delete
-        </Button>,
         editing ? (
           // form attribute connects to id attribute in menteeForm
           <Button
