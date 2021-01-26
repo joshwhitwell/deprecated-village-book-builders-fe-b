@@ -4,7 +4,7 @@ import { Button, Divider, Input, List, Avatar } from 'antd';
 import { connect } from 'react-redux';
 
 //actions
-import { checkToken, fetchMentees } from '../../../../state/actions/index';
+import { checkToken, fetchMentees } from '../../../state/actions/index';
 
 //components
 import MenteeModal from './MenteeModal';

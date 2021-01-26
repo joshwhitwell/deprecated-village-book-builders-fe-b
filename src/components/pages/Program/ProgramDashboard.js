@@ -15,7 +15,7 @@ import {
 
 //components
 import Logout from '../../Logout';
-import Mentees from '../Headmaster/Mentees/Mentees';
+import Mentees from '../Mentees/Mentees';
 
 function ProgramDashboard() {
   const [visible, setVisible] = useState(true);

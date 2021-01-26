@@ -10,10 +10,10 @@ import {
   FormContainer,
   tailLayout,
   Required,
-} from '../../../common/FormStyle';
+} from '../../common/FormStyle';
 
 //actions
-import { editMentee } from '../../../../state/actions';
+import { editMentee } from '../../../state/actions/index';
 
 //initializes mentee form
 const initialState = {
@@ -315,7 +315,6 @@ const MenteeForm = props => {
             allowClear
             style={{ width: '50%' }}
             placeholder="Please select other fluent languages"
-            defaultValue={[]}
             value={formData.other_fluent_languages}
             onChange={handleLanguageChange}
           >

@@ -27,7 +27,7 @@ import {
 } from './HeadmasterDashboard.style';
 import Logout from '../../Logout.js';
 // import MentorPairings from './Mentees/Mentees.js';
-import Mentees from './Mentees/Mentees.js';
+import Mentees from '../Mentees/Mentees';
 
 function HeadmasterDashboard() {
   const [visible, setVisible] = useState(true);
