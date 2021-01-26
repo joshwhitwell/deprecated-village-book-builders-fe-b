@@ -1,6 +1,7 @@
 //dependencies
 import React, { useEffect, useState } from 'react';
 import { Button, Divider, Input, List, Avatar, Tag } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 
 //actions
@@ -50,6 +51,18 @@ const Mentees = props => {
     );
   }
 
+  const statusTag = item => {
+    if (item.account_status === 'Active') {
+      return <Tag color="success">Active</Tag>;
+    }
+    if (item.account_status === 'Inactive') {
+      return <Tag icon={<ClockCircleOutlined />}>Inactive</Tag>;
+    }
+    if (item.account_status === 'Denied') {
+      return <Tag color="error">Denied</Tag>;
+    }
+  };
+
   //fetches mentee list on initial render
   useEffect(() => {
     fetchMentees();
@@ -89,15 +102,7 @@ const Mentees = props => {
                         }}
                       >
                         {item.first_name + ' ' + item.last_name}{' '}
-                        <Tag
-                          color={
-                            item.account_status === 'Inactive'
-                              ? 'error'
-                              : 'success'
-                          }
-                        >
-                          {item.account_status}
-                        </Tag>
+                        {statusTag(item)}
                       </span>
                     }
                     description={item.academic_description}
@@ -122,7 +127,7 @@ const Mentees = props => {
                     size="middle"
                     type="default"
                   >
-                    Edit
+                    Activate
                   </Button>
                 </div>
               </div>
