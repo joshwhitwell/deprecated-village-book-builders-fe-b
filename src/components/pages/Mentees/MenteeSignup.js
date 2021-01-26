@@ -26,6 +26,7 @@ const initialState = {
   other_fluent_languages: [],
 };
 
+//creates select options for subject field
 const { Option } = Select;
 const subjectOptions = [
   <Option key="English" value="English" name="subjects">
@@ -46,6 +47,7 @@ const subjectOptions = [
   </Option>,
 ];
 
+//creates select options for langauge field
 const fluentLanguages = [
   <Option key="English" value="English">
     English
@@ -64,13 +66,15 @@ const fluentLanguages = [
   </Option>,
 ];
 
-const { Step } = Steps;
-
 const MenteeSignup = props => {
   //initializes form state
   const [formData, setFormData] = useState(initialState);
+  //current state used to control Step logic
   const [current, setCurrent] = useState(0);
+  //destructures Step component from Steps
+  const { Step } = Steps;
 
+  //controls Step logic
   const next = () => {
     setCurrent(current + 1);
   };
@@ -102,12 +106,14 @@ const MenteeSignup = props => {
     }
   };
 
+  //creates change handler for language input field
   const handleLanguageChange = e => {
     if (Array.isArray(e)) {
       setFormData({ ...formData, other_fluent_languages: e });
     }
   };
 
+  //steps content used to render Form content
   const steps = [
     {
       title: 'Basic Info',
@@ -321,24 +327,16 @@ const MenteeSignup = props => {
   ];
 
   return (
-    <>
+    <div className="signup-container" style={{ padding: '50px' }}>
       <Steps current={current}>
         {steps.map(item => (
           <Step key={item.title} title={item.title} />
         ))}
       </Steps>
-      <div className="steps-content"></div>
 
       <FormContainer>
         <Form.Item {...tailLayout}></Form.Item>
-        {/*onFinish attribute connects to form.submit hook in MenteeModal*/}
-        {/*id attribute connects to form attribute on submit button in MenteeModal*/}
-        <Form
-          id="menteeForm"
-          form={props.form}
-          {...layout}
-          // onFinish={handleSubmit}
-        >
+        <Form {...layout}>
           {steps[current].content}
 
           <Form.Item {...tailLayout}>
@@ -348,7 +346,16 @@ const MenteeSignup = props => {
           </Form.Item>
         </Form>
       </FormContainer>
-      <div className="steps-action">
+
+      <div
+        className="steps-action"
+        style={{ display: 'flex', justifyContent: 'center' }}
+      >
+        {current > 0 && (
+          <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+            Previous
+          </Button>
+        )}
         {current < steps.length - 1 && (
           <Button type="primary" onClick={() => next()}>
             Next
@@ -359,13 +366,8 @@ const MenteeSignup = props => {
             Done
           </Button>
         )}
-        {current > 0 && (
-          <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-            Previous
-          </Button>
-        )}
       </div>
-    </>
+    </div>
   );
 };
 

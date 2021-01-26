@@ -6,6 +6,7 @@ import { MenuOutlined } from '@ant-design/icons';
 
 //styles
 import '../Headmaster/HeadmasterDashboard.css';
+
 import {
   menuButton,
   menuIcon,
@@ -47,7 +48,7 @@ function ProgramDashboard() {
 
   return (
     <div>
-      <Dashboard>
+      <Dashboard className="testContainer">
         <Switch>
           <Route path="/mentees/signup" component={MenteeSignup} />
           <Route path="/mentees" component={Mentees} />
