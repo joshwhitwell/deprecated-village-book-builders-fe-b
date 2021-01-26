@@ -159,22 +159,28 @@ const MenteeForm = props => {
           />
         </Form.Item>
 
-        <Form.Item name="subjects" label="Subjects">
-          <Select
-            mode="multiple"
-            allowClear
-            style={{ width: '50%' }}
-            placeholder="Please select Subjects"
-            value={formData.subjects}
-            onChange={handleChange}
-          >
-            {subjectOptions}
-          </Select>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: 'Email is required.' }]}
+        >
+          <Input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={e => handleChange(e)}
+          />
         </Form.Item>
 
+        <Form.Item
+          label="Date of Birth"
+          name="dob"
+          rules={[{ required: true, message: 'Date of Birth is required.' }]}
+        >
+          <DatePicker name="dob" onChange={e => handleChange(e)} />
+        </Form.Item>
         <Form.Item name="grade" label="Grade">
           <Select
-            style={{ width: 120 }}
             onChange={handleMultiChange}
             value={formData.grade}
             onSelect={(value, event) => handleMultiChange(value, event)}
@@ -221,30 +227,42 @@ const MenteeForm = props => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label="Date of Birth"
-          name="dob"
-          rules={[{ required: true, message: 'Date of Birth is required.' }]}
-        >
-          <DatePicker name="dob" onChange={e => handleChange(e)} />
+        <Form.Item name="subjects" label="Subjects">
+          <Select
+            mode="multiple"
+            allowClear
+            placeholder="Please select Subjects"
+            value={formData.subjects}
+            onChange={handleChange}
+          >
+            {subjectOptions}
+          </Select>
         </Form.Item>
 
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ required: true, message: 'Email is required.' }]}
-        >
-          <Input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={e => handleChange(e)}
-          />
+        <Form.Item name="first_language" label="Primary Language">
+          <Select
+            onChange={handleMultiChange}
+            value={formData.first_language}
+            onSelect={(value, event) => handleMultiChange(value, event)}
+          >
+            {fluentLanguages}
+          </Select>
+        </Form.Item>
+
+        <Form.Item name="other_fluent_languages" label="Other Fluent Languages">
+          <Select
+            mode="multiple"
+            allowClear
+            placeholder="Please select other fluent languages"
+            value={formData.other_fluent_languages}
+            onChange={handleLanguageChange}
+          >
+            {fluentLanguages}
+          </Select>
         </Form.Item>
 
         <Form.Item name="home_country" label="Home Country">
           <Select
-            style={{ width: 120 }}
             onChange={handleMultiChange}
             value={formData.home_country}
             onSelect={(value, event) => handleMultiChange(value, event)}
@@ -269,7 +287,6 @@ const MenteeForm = props => {
 
         <Form.Item name="home_time_zone" label="Time Zone">
           <Select
-            style={{ width: 300 }}
             onChange={handleMultiChange}
             value={formData.home_time_zone}
             onSelect={(value, event) => handleMultiChange(value, event)}
@@ -296,30 +313,6 @@ const MenteeForm = props => {
             value={formData.phone}
             onChange={e => handleChange(e)}
           />
-        </Form.Item>
-
-        <Form.Item name="first_language" label="Primary Language">
-          <Select
-            style={{ width: 300 }}
-            onChange={handleMultiChange}
-            value={formData.first_language}
-            onSelect={(value, event) => handleMultiChange(value, event)}
-          >
-            {fluentLanguages}
-          </Select>
-        </Form.Item>
-
-        <Form.Item name="other_fluent_languages" label="Other Fluent Languages">
-          <Select
-            mode="multiple"
-            allowClear
-            style={{ width: '50%' }}
-            placeholder="Please select other fluent languages"
-            value={formData.other_fluent_languages}
-            onChange={handleLanguageChange}
-          >
-            {fluentLanguages}
-          </Select>
         </Form.Item>
 
         <Form.Item {...tailLayout}>

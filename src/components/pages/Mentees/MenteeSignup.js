@@ -171,18 +171,6 @@ const MenteeSignup = props => {
       title: 'Academic Info',
       content: (
         <>
-          <Form.Item name="subjects" label="Subjects">
-            <Select
-              mode="multiple"
-              allowClear
-              placeholder="Please select Subjects"
-              value={formData.subjects}
-              onChange={handleChange}
-            >
-              {subjectOptions}
-            </Select>
-          </Form.Item>
-
           <Form.Item name="grade" label="Grade">
             <Select
               onChange={handleMultiChange}
@@ -228,6 +216,18 @@ const MenteeSignup = props => {
               <Option value="12th Grade" name="grade">
                 12th Grade
               </Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="subjects" label="Subjects">
+            <Select
+              mode="multiple"
+              allowClear
+              placeholder="Please select Subjects"
+              value={formData.subjects}
+              onChange={handleChange}
+            >
+              {subjectOptions}
             </Select>
           </Form.Item>
 
