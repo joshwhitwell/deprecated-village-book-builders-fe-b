@@ -23,8 +23,8 @@ const TeacherProfile = props => {
     <>
       <TeacherDashboard />
       <Profile>
-        <ComponentTitle titleText="Village" />
-        <img src={`${profile.teachers_picture}`} />
+        <ComponentTitle titleText="teacher" />
+        {/* <img src={`${profile.teachers_picture}`} /> */}
         <Label>Name:</Label>
         <p>{`${profile.first_name} ${profile.last_name}`}</p>
 
@@ -48,7 +48,7 @@ const TeacherProfile = props => {
 
         <Label>Time Zone:</Label>
         <p>{profile.time_zone}</p>
-        <div className="villageButtons">
+        <div className="teacherButtons">
           <Link to={`/teacher/${profile.id}/edit`}>
             <ThemeProvider theme={{ color: '#6ac66b' }}>
               <Button buttonText="Edit Your Profile" />
