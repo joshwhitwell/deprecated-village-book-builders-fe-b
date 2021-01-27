@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useParams, Link } from 'react-router-dom';
 
-import { Form, Input, DatePicker, Space, Radio } from 'antd';
-import moment from 'moment';
+import { Form, Input, Radio } from 'antd';
 
 import { editTeacherProfile } from '../../../../state/actions';
 import {
@@ -18,8 +16,6 @@ import { debugLog } from '../../../../utils/debugMode';
 import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
 
 import TeacherDashboard from '../TeacherDashboard';
-
-const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 
 const initialState = {
   first_name: '',
@@ -40,13 +36,9 @@ const initialState = {
   notes: '',
 };
 
-const dateFormat = 'MM/DD/YYYY';
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
-
 const ProfileForm = props => {
   const [formData, setFormData] = useState(initialState);
   const [value, setValue] = useState(1);
-  const pathname = useHistory().location.pathname;
   const params = useParams().id;
   const [form] = Form.useForm();
 
@@ -60,7 +52,7 @@ const ProfileForm = props => {
         setFormData(res.data);
       })
       .catch(err => console.dir(err));
-  }, []);
+  }, [form, params]);
 
   const onChange = e => {
     console.log('radio checked', e.target.value);
