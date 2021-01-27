@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Form, Input, DatePicker, Select, Steps, Button } from 'antd';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 //actions
 import { addMentee } from '../../../state/actions/index';
@@ -13,7 +15,6 @@ import {
   tailLayout,
   Required,
 } from '../../common/FormStyle';
-import { connect } from 'react-redux';
 
 //initializes mentee form
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
   phone: '',
   first_language: '',
   other_fluent_languages: [],
+  account_status: 'Inactive',
 };
 
 //creates select options for subject field
@@ -78,6 +80,8 @@ const MenteeSignup = props => {
   //destructures Step component from Steps
   const { Step } = Steps;
 
+  const history = useHistory();
+
   //controls Step logic
   const next = () => {
     setCurrent(current + 1);
@@ -119,6 +123,7 @@ const MenteeSignup = props => {
 
   const handleSubmit = e => {
     props.addMentee(formData);
+    history.push('/mentees/signup/complete');
   };
 
   //steps content used to render Form content
@@ -370,4 +375,10 @@ const MenteeSignup = props => {
   );
 };
 
-export default connect(null, { addMentee })(MenteeSignup);
+const mapStateToProps = state => {
+  return {
+    menteeReducer: state.menteeReducer,
+  };
+};
+
+export default connect(mapStateToProps, { addMentee })(MenteeSignup);

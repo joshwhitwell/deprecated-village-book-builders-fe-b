@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
 import { fetchTeacherProfile } from '../../../../state/actions';
 
@@ -15,9 +14,10 @@ import TeacherDashboard from '../TeacherDashboard';
 const TeacherProfile = props => {
   const { userId } = useSelector(state => state.authReducer);
   const { profile } = props;
+  const { fetchTeacherProfile } = props;
   useEffect(() => {
-    props.fetchTeacherProfile(userId - 10); // change this later with login
-  }, []);
+    fetchTeacherProfile(userId - 10); // change this later with login
+  }, [fetchTeacherProfile, userId]);
 
   return (
     <>

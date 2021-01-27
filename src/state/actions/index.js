@@ -177,11 +177,9 @@ export const addMentee = data => dispatch => {
   axiosWithAuth()
     .post('/mentee', data)
     .then(res => {
-      console.log(res);
-      dispatch({ type: actionTypes.ADD_MENTEE_SUCCESS, payload: res });
+      dispatch({ type: actionTypes.ADD_MENTEE_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
       dispatch({ type: actionTypes.ADD_MENTEE_FAILURE, payload: err });
     });
 };

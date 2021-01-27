@@ -14,21 +14,7 @@ import {
 
 //actions
 import { editMentee } from '../../../state/actions/index';
-
-//initializes mentee form
-const initialState = {
-  first_name: '',
-  last_name: '',
-  subjects: [],
-  grade: '',
-  email: '',
-  dob: '',
-  home_country: '',
-  home_time_zone: '',
-  phone: '',
-  first_language: '',
-  other_fluent_languages: [],
-};
+import { useHistory } from 'react-router-dom';
 
 const { Option } = Select;
 const subjectOptions = [
@@ -68,13 +54,19 @@ const fluentLanguages = [
   </Option>,
 ];
 
-const MenteeForm = props => {
+const EditMentee = props => {
   //initializes form state
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState(props.currentMentee);
+
+  const history = useHistory();
 
   //handles mentee form submit; invoked by onFinish prop on Form
   const handleSubmit = () => {
-    props.editMentee(props.currentMentee.id, formData);
+    props.editMentee(props.currentMentee.id, {
+      ...formData,
+      account_status: 'Active',
+    });
+    history.push('/mentees/signup/complete');
   };
 
   //controls form field values
@@ -106,21 +98,6 @@ const MenteeForm = props => {
     }
   };
 
-  //maps current Mentee user data to edit Form inputs
-  const defaultValues = {
-    first_name: props.currentMentee.first_name,
-    last_name: props.currentMentee.last_name,
-    subjects: props.currentMentee.subjects,
-    grade: props.currentMentee.grade,
-    email: props.currentMentee.email,
-    dob: moment(props.currentMentee.dob),
-    home_country: props.currentMentee.home_country,
-    home_time_zone: props.currentMentee.home_time_zone,
-    phone: props.currentMentee.phone,
-    first_language: props.currentMentee.first_language,
-    other_fluent_languages: props.currentMentee.other_fluent_languages,
-  };
-
   return (
     <FormContainer>
       <Form.Item {...tailLayout}></Form.Item>
@@ -131,58 +108,62 @@ const MenteeForm = props => {
         form={props.form}
         {...layout}
         onFinish={handleSubmit}
-        //maps user data from redux store to default Form values
-        initialValues={defaultValues}
       >
         <Form.Item
           label="First Name"
-          name="first_name"
           rules={[{ required: true, message: 'First Name is required.' }]}
         >
           <Input
             type="text"
             name="first_name"
+            defaultValue={props.currentMentee.first_name}
             value={formData.first_name}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
+
         <Form.Item
           label="Last Name"
-          name="last_name"
           rules={[{ required: true, message: 'Last Name is required.' }]}
         >
           <Input
             type="text"
             name="last_name"
             value={formData.last_name}
+            defaultValue={props.currentMentee.last_name}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
 
         <Form.Item
           label="Email"
-          name="email"
           rules={[{ required: true, message: 'Email is required.' }]}
         >
           <Input
             type="email"
             name="email"
             value={formData.email}
+            defaultValue={props.currentMentee.email}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
 
         <Form.Item
           label="Date of Birth"
-          name="dob"
           rules={[{ required: true, message: 'Date of Birth is required.' }]}
         >
-          <DatePicker name="dob" onChange={e => handleChange(e)} />
+          <DatePicker
+            name="dob"
+            onChange={e => handleChange(e)}
+            defaultValue={moment(props.currentMentee.dob)}
+          />
         </Form.Item>
-        <Form.Item name="grade" label="Grade">
+
+        <Form.Item label="Grade">
           <Select
             onChange={handleMultiChange}
             value={formData.grade}
+            defaultValue={props.currentMentee.grade}
             onSelect={(value, event) => handleMultiChange(value, event)}
           >
             <Option value="Kindergarten" name="grade">
@@ -227,44 +208,48 @@ const MenteeForm = props => {
           </Select>
         </Form.Item>
 
-        <Form.Item name="subjects" label="Subjects">
+        <Form.Item label="Subjects">
           <Select
             mode="multiple"
             allowClear
             placeholder="Please select Subjects"
             value={formData.subjects}
+            defaultValue={props.currentMentee.subjects}
             onChange={handleChange}
           >
             {subjectOptions}
           </Select>
         </Form.Item>
 
-        <Form.Item name="first_language" label="Primary Language">
+        <Form.Item label="Primary Language">
           <Select
             onChange={handleMultiChange}
             value={formData.first_language}
+            defaultValue={props.currentMentee.first_language}
             onSelect={(value, event) => handleMultiChange(value, event)}
           >
             {fluentLanguages}
           </Select>
         </Form.Item>
 
-        <Form.Item name="other_fluent_languages" label="Other Fluent Languages">
+        <Form.Item label="Other Fluent Languages">
           <Select
             mode="multiple"
             allowClear
             placeholder="Please select other fluent languages"
             value={formData.other_fluent_languages}
+            defaultValue={props.currentMentee.other_fluent_languages}
             onChange={handleLanguageChange}
           >
             {fluentLanguages}
           </Select>
         </Form.Item>
 
-        <Form.Item name="home_country" label="Home Country">
+        <Form.Item label="Home Country">
           <Select
             onChange={handleMultiChange}
             value={formData.home_country}
+            defaultValue={props.currentMentee.home_country}
             onSelect={(value, event) => handleMultiChange(value, event)}
           >
             <Option value="Belize" name="home_country">
@@ -285,10 +270,11 @@ const MenteeForm = props => {
           </Select>
         </Form.Item>
 
-        <Form.Item name="home_time_zone" label="Time Zone">
+        <Form.Item label="Time Zone">
           <Select
             onChange={handleMultiChange}
             value={formData.home_time_zone}
+            defaultValue={props.currentMentee.home_time_zone}
             onSelect={(value, event) => handleMultiChange(value, event)}
           >
             <Option value="Central Standard Time" name="home_time_zone">
@@ -306,11 +292,12 @@ const MenteeForm = props => {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Phone" name="phone" rules={[{ required: false }]}>
+        <Form.Item label="Phone" rules={[{ required: false }]}>
           <Input
             type="tel"
             name="phone"
             value={formData.phone}
+            defaultValue={props.currentMentee.phone}
             onChange={e => handleChange(e)}
           />
         </Form.Item>
@@ -325,4 +312,4 @@ const MenteeForm = props => {
   );
 };
 
-export default connect(null, { editMentee })(MenteeForm);
+export default connect(null, { editMentee })(EditMentee);

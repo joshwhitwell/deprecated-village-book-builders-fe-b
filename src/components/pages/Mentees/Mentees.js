@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 
 const Mentees = props => {
   //deconstructs mentee list from redux
-  let menteesSelection = [...props.mentees].filter(
+  let menteesSelection = [...props.menteeReducer.mentees].filter(
     mentee => mentee.account_status === 'Inactive'
   );
 
@@ -155,9 +155,7 @@ const Mentees = props => {
 
 const mapStateToProps = state => {
   return {
-    mentees: state.menteeReducer.mentees,
-    userId: state.authReducer.userId,
-    role: state.authReducer.role,
+    menteeReducer: state.menteeReducer,
   };
 };
 
