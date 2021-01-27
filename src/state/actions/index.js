@@ -172,6 +172,20 @@ export const editMentee = (id, data) => dispatch => {
     });
 };
 
+export const addMentee = data => dispatch => {
+  dispatch({ type: actionTypes.ADD_MENTEE_START, payload: data });
+  axiosWithAuth()
+    .post('/mentee', data)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: actionTypes.ADD_MENTEE_SUCCESS, payload: res });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: actionTypes.ADD_MENTEE_FAILURE, payload: err });
+    });
+};
+
 // ----------------
 // LIBRARIES
 // ----------------

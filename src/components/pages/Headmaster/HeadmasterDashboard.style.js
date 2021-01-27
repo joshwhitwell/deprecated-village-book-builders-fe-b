@@ -22,7 +22,7 @@ export const menuMove = {
 };
 
 export const Dashboard = styled.div`
-  margin-left: 340px;
+  margin-left: 300px;
   @media screen and (max-width: 800px) {
     margin-left: 0px;
   }

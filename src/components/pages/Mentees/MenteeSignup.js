@@ -1,7 +1,10 @@
 //dependencies
 import React, { useState } from 'react';
-import { Form, Input, DatePicker, Select, Steps, Button, message } from 'antd';
+import { Form, Input, DatePicker, Select, Steps, Button } from 'antd';
 import moment from 'moment';
+
+//actions
+import { addMentee } from '../../../state/actions/index';
 
 //styles
 import {
@@ -10,6 +13,7 @@ import {
   tailLayout,
   Required,
 } from '../../common/FormStyle';
+import { connect } from 'react-redux';
 
 //initializes mentee form
 const initialState = {
@@ -26,6 +30,7 @@ const initialState = {
   other_fluent_languages: [],
 };
 
+//creates select options for subject field
 const { Option } = Select;
 const subjectOptions = [
   <Option key="English" value="English" name="subjects">
@@ -46,31 +51,34 @@ const subjectOptions = [
   </Option>,
 ];
 
+//creates select options for langauge field
 const fluentLanguages = [
-  <Option key="English" value="English">
+  <Option key="English" value="English" name="first_language">
     English
   </Option>,
-  <Option key="Latin" value="Latin">
+  <Option key="Latin" value="Latin" name="first_language">
     Latin
   </Option>,
-  <Option key="Spanish" value="Spanish">
+  <Option key="Spanish" value="Spanish" name="first_language">
     Spanish
   </Option>,
-  <Option key="Sanskrit" value="Sanskrit">
+  <Option key="Sanskrit" value="Sanskrit" name="first_language">
     Sanskrit
   </Option>,
-  <Option key="Sumerian" value="Sumerian">
+  <Option key="Sumerian" value="Sumerian" name="first_language">
     Sumerian
   </Option>,
 ];
 
-const { Step } = Steps;
-
 const MenteeSignup = props => {
   //initializes form state
   const [formData, setFormData] = useState(initialState);
+  //current state used to control Step logic
   const [current, setCurrent] = useState(0);
+  //destructures Step component from Steps
+  const { Step } = Steps;
 
+  //controls Step logic
   const next = () => {
     setCurrent(current + 1);
   };
@@ -102,12 +110,18 @@ const MenteeSignup = props => {
     }
   };
 
+  //creates change handler for language input field
   const handleLanguageChange = e => {
     if (Array.isArray(e)) {
       setFormData({ ...formData, other_fluent_languages: e });
     }
   };
 
+  const handleSubmit = e => {
+    props.addMentee(formData);
+  };
+
+  //steps content used to render Form content
   const steps = [
     {
       title: 'Basic Info',
@@ -138,23 +152,35 @@ const MenteeSignup = props => {
             />
           </Form.Item>
 
-          <Form.Item name="subjects" label="Subjects">
-            <Select
-              mode="multiple"
-              allowClear
-              style={{ width: '50%' }}
-              placeholder="Please select Subjects"
-              value={formData.subjects}
-              onChange={handleChange}
-            >
-              {subjectOptions}
-            </Select>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: 'Email is required.' }]}
+          >
+            <Input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={e => handleChange(e)}
+            />
           </Form.Item>
 
+          <Form.Item
+            label="Date of Birth"
+            name="dob"
+            rules={[{ required: true, message: 'Date of Birth is required.' }]}
+          >
+            <DatePicker name="dob" onChange={e => handleChange(e)} />
+          </Form.Item>
+        </>
+      ),
+    },
+    {
+      title: 'Academic Info',
+      content: (
+        <>
           <Form.Item name="grade" label="Grade">
             <Select
-              style={{ width: 120 }}
-              onChange={handleMultiChange}
               value={formData.grade}
               onSelect={(value, event) => handleMultiChange(value, event)}
             >
@@ -199,38 +225,51 @@ const MenteeSignup = props => {
               </Option>
             </Select>
           </Form.Item>
+
+          <Form.Item name="subjects" label="Subjects">
+            <Select
+              mode="multiple"
+              allowClear
+              placeholder="Please select Subjects"
+              value={formData.subjects}
+              onChange={handleChange}
+            >
+              {subjectOptions}
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="first_language" label="Primary Language">
+            <Select
+              value={formData.first_language}
+              onSelect={(value, event) => handleMultiChange(value, event)}
+            >
+              {fluentLanguages}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="other_fluent_languages"
+            label="Other Fluent Languages"
+          >
+            <Select
+              mode="multiple"
+              allowClear
+              placeholder="Please select other fluent languages"
+              value={formData.other_fluent_languages}
+              onChange={handleLanguageChange}
+            >
+              {fluentLanguages}
+            </Select>
+          </Form.Item>
         </>
       ),
     },
     {
-      title: 'Academic Info',
+      title: 'Contact Info',
       content: (
         <>
-          <Form.Item
-            label="Date of Birth"
-            name="dob"
-            rules={[{ required: true, message: 'Date of Birth is required.' }]}
-          >
-            <DatePicker name="dob" onChange={e => handleChange(e)} />
-          </Form.Item>
-
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: 'Email is required.' }]}
-          >
-            <Input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={e => handleChange(e)}
-            />
-          </Form.Item>
-
           <Form.Item name="home_country" label="Home Country">
             <Select
-              style={{ width: 120 }}
-              onChange={handleMultiChange}
               value={formData.home_country}
               onSelect={(value, event) => handleMultiChange(value, event)}
             >
@@ -251,17 +290,8 @@ const MenteeSignup = props => {
               </Option>
             </Select>
           </Form.Item>
-        </>
-      ),
-    },
-    {
-      title: 'Contact Info',
-      content: (
-        <>
           <Form.Item name="home_time_zone" label="Time Zone">
             <Select
-              style={{ width: 300 }}
-              onChange={handleMultiChange}
               value={formData.home_time_zone}
               onSelect={(value, event) => handleMultiChange(value, event)}
             >
@@ -288,85 +318,56 @@ const MenteeSignup = props => {
               onChange={e => handleChange(e)}
             />
           </Form.Item>
-
-          <Form.Item name="first_language" label="Primary Language">
-            <Select
-              style={{ width: 300 }}
-              onChange={handleMultiChange}
-              value={formData.first_language}
-              onSelect={(value, event) => handleMultiChange(value, event)}
-            >
-              {fluentLanguages}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="other_fluent_languages"
-            label="Other Fluent Languages"
-          >
-            <Select
-              mode="multiple"
-              allowClear
-              style={{ width: '50%' }}
-              placeholder="Please select other fluent languages"
-              value={formData.other_fluent_languages}
-              onChange={handleLanguageChange}
-            >
-              {fluentLanguages}
-            </Select>
-          </Form.Item>
         </>
       ),
     },
   ];
 
   return (
-    <>
+    <div className="signup-container" style={{ padding: '50px' }}>
       <Steps current={current}>
         {steps.map(item => (
           <Step key={item.title} title={item.title} />
         ))}
       </Steps>
-      <div className="steps-content"></div>
-
       <FormContainer>
         <Form.Item {...tailLayout}></Form.Item>
-        {/*onFinish attribute connects to form.submit hook in MenteeModal*/}
-        {/*id attribute connects to form attribute on submit button in MenteeModal*/}
         <Form
-          id="menteeForm"
-          form={props.form}
           {...layout}
-          // onFinish={handleSubmit}
+          onFinish={current === steps.length - 1 ? handleSubmit : next}
         >
           {steps[current].content}
-
           <Form.Item {...tailLayout}>
             <Required id="requiredMsg">
               Fields with <span id="required">&#42;</span> are required.
             </Required>
           </Form.Item>
+          <Form.Item {...tailLayout}>
+            <div
+              className="steps-action"
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
+              {current > 0 && (
+                <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                  Previous
+                </Button>
+              )}
+              {current < steps.length - 1 && (
+                <Button type="primary" htmlType="submit">
+                  Next
+                </Button>
+              )}
+              {current === steps.length - 1 && (
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              )}
+            </div>
+          </Form.Item>
         </Form>
       </FormContainer>
-      <div className="steps-action">
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => message.success('All Set!')}>
-            Done
-          </Button>
-        )}
-        {current > 0 && (
-          <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-            Previous
-          </Button>
-        )}
-      </div>
-    </>
+    </div>
   );
 };
 
-export default MenteeSignup;
+export default connect(null, { addMentee })(MenteeSignup);
