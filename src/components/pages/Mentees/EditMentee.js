@@ -14,6 +14,7 @@ import {
 
 //actions
 import { editMentee } from '../../../state/actions/index';
+import { useHistory } from 'react-router-dom';
 
 const { Option } = Select;
 const subjectOptions = [
@@ -54,24 +55,10 @@ const fluentLanguages = [
 ];
 
 const EditMentee = props => {
-  //maps current Mentee user data to edit Form inputs
-  // const defaultValues = {
-  //   first_name: props.currentMentee.first_name,
-  //   last_name: props.currentMentee.last_name,
-  //   subjects: props.currentMentee.subjects,
-  //   grade: props.currentMentee.grade,
-  //   email: props.currentMentee.email,
-  //   dob: moment(props.currentMentee.dob),
-  //   home_country: props.currentMentee.home_country,
-  //   home_time_zone: props.currentMentee.home_time_zone,
-  //   phone: props.currentMentee.phone,
-  //   first_language: props.currentMentee.first_language,
-  //   other_fluent_languages: props.currentMentee.other_fluent_languages,
-  //   account_status: props.currentMentee.account_status,
-  // };
-
   //initializes form state
   const [formData, setFormData] = useState(props.currentMentee);
+
+  const history = useHistory();
 
   //handles mentee form submit; invoked by onFinish prop on Form
   const handleSubmit = () => {
@@ -79,6 +66,7 @@ const EditMentee = props => {
       ...formData,
       account_status: 'Active',
     });
+    history.push('/mentees/signup/complete');
   };
 
   //controls form field values

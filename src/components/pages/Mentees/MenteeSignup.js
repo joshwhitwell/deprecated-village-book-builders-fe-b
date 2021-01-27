@@ -1,5 +1,5 @@
 //dependencies
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, DatePicker, Select, Steps, Button } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -82,8 +82,6 @@ const MenteeSignup = props => {
 
   const history = useHistory();
 
-  const { newMentee } = props.menteeReducer;
-
   //controls Step logic
   const next = () => {
     setCurrent(current + 1);
@@ -125,6 +123,7 @@ const MenteeSignup = props => {
 
   const handleSubmit = e => {
     props.addMentee(formData);
+    history.push('/mentees/signup/complete');
   };
 
   //steps content used to render Form content
@@ -328,12 +327,6 @@ const MenteeSignup = props => {
       ),
     },
   ];
-
-  useEffect(() => {
-    if (newMentee) {
-      history.push('/mentees');
-    }
-  }, [history, newMentee]);
 
   return (
     <div className="signup-container" style={{ padding: '50px' }}>
