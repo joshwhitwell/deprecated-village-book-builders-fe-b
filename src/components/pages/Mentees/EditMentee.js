@@ -15,21 +15,6 @@ import {
 //actions
 import { editMentee } from '../../../state/actions/index';
 
-//initializes mentee form
-const initialState = {
-  first_name: '',
-  last_name: '',
-  subjects: [],
-  grade: '',
-  email: '',
-  dob: '',
-  home_country: '',
-  home_time_zone: '',
-  phone: '',
-  first_language: '',
-  other_fluent_languages: [],
-};
-
 const { Option } = Select;
 const subjectOptions = [
   <Option key="English" value="English" name="subjects">
@@ -68,13 +53,32 @@ const fluentLanguages = [
   </Option>,
 ];
 
-const MenteeForm = props => {
+const EditMentee = props => {
+  //maps current Mentee user data to edit Form inputs
+  const defaultValues = {
+    first_name: props.currentMentee.first_name,
+    last_name: props.currentMentee.last_name,
+    subjects: props.currentMentee.subjects,
+    grade: props.currentMentee.grade,
+    email: props.currentMentee.email,
+    dob: moment(props.currentMentee.dob),
+    home_country: props.currentMentee.home_country,
+    home_time_zone: props.currentMentee.home_time_zone,
+    phone: props.currentMentee.phone,
+    first_language: props.currentMentee.first_language,
+    other_fluent_languages: props.currentMentee.other_fluent_languages,
+    account_status: props.currentMentee.account_status,
+  };
+
   //initializes form state
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState(defaultValues);
 
   //handles mentee form submit; invoked by onFinish prop on Form
   const handleSubmit = () => {
-    props.editMentee(props.currentMentee.id, formData);
+    props.editMentee(props.currentMentee.id, {
+      ...formData,
+      account_status: 'Active',
+    });
   };
 
   //controls form field values
@@ -104,21 +108,6 @@ const MenteeForm = props => {
     if (Array.isArray(e)) {
       setFormData({ ...formData, other_fluent_languages: e });
     }
-  };
-
-  //maps current Mentee user data to edit Form inputs
-  const defaultValues = {
-    first_name: props.currentMentee.first_name,
-    last_name: props.currentMentee.last_name,
-    subjects: props.currentMentee.subjects,
-    grade: props.currentMentee.grade,
-    email: props.currentMentee.email,
-    dob: moment(props.currentMentee.dob),
-    home_country: props.currentMentee.home_country,
-    home_time_zone: props.currentMentee.home_time_zone,
-    phone: props.currentMentee.phone,
-    first_language: props.currentMentee.first_language,
-    other_fluent_languages: props.currentMentee.other_fluent_languages,
   };
 
   return (
@@ -325,4 +314,4 @@ const MenteeForm = props => {
   );
 };
 
-export default connect(null, { editMentee })(MenteeForm);
+export default connect(null, { editMentee })(EditMentee);

@@ -1,7 +1,9 @@
 //dependencies
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, DatePicker, Select, Steps, Button } from 'antd';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 //actions
 import { addMentee } from '../../../state/actions/index';
@@ -13,7 +15,6 @@ import {
   tailLayout,
   Required,
 } from '../../common/FormStyle';
-import { connect } from 'react-redux';
 
 //initializes mentee form
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
   phone: '',
   first_language: '',
   other_fluent_languages: [],
+  account_status: 'Inactive',
 };
 
 //creates select options for subject field
@@ -77,6 +79,10 @@ const MenteeSignup = props => {
   const [current, setCurrent] = useState(0);
   //destructures Step component from Steps
   const { Step } = Steps;
+
+  const history = useHistory();
+
+  const { newMentee } = props.menteeReducer;
 
   //controls Step logic
   const next = () => {
@@ -323,6 +329,12 @@ const MenteeSignup = props => {
     },
   ];
 
+  useEffect(() => {
+    if (newMentee) {
+      history.push('/mentees');
+    }
+  }, [history, newMentee]);
+
   return (
     <div className="signup-container" style={{ padding: '50px' }}>
       <Steps current={current}>
@@ -370,4 +382,10 @@ const MenteeSignup = props => {
   );
 };
 
-export default connect(null, { addMentee })(MenteeSignup);
+const mapStateToProps = state => {
+  return {
+    menteeReducer: state.menteeReducer,
+  };
+};
+
+export default connect(mapStateToProps, { addMentee })(MenteeSignup);
