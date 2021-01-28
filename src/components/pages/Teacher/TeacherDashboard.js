@@ -9,6 +9,7 @@ import TeacherProfile from './TeacherProfile/TeacherProfile';
 import Mentees from '../Mentees/Mentees';
 import MenteeSignup from '../Mentees/MenteeSignup';
 import SignupComplete from '../Mentees/SignupComplete';
+import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
 
 //styles
 import './TeacherDashboard.css';
@@ -31,6 +32,7 @@ const TeacherDashboard = () => {
         <Route path="/mentees/signup/complete" component={SignupComplete} />
         <Route path="/mentees/signup" component={MenteeSignup} />
         <Route path="/mentees" component={Mentees} />
+        <Route path="/" render={() => <Welcome />} />
       </Switch>
     </>
   );

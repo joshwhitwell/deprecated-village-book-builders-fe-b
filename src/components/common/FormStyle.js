@@ -20,6 +20,10 @@ export const FormContainer = styled.div`
     max-width: 60%;
     min-width: 15rem;
   }
+
+  .ant-col-16 {
+    max-width: 40%;
+  }
 `;
 
 export const Required = styled.p`
