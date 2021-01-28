@@ -1,5 +1,5 @@
 //dependencies
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, DatePicker, Select } from 'antd';
 import moment from 'moment';
@@ -16,86 +16,81 @@ import {
 import { editMentee } from '../../../state/actions/index';
 import { useHistory } from 'react-router-dom';
 
-const { Option } = Select;
-const subjectOptions = [
-  <Option key="English" value="English" name="subjects">
-    English
-  </Option>,
-  <Option key="Science" value="Science" name="subjects">
-    Science
-  </Option>,
-  <Option key="Math" value="Math" name="subjects">
-    Math
-  </Option>,
-  <Option
-    key="Theoretical Astroskiing"
-    value="Theoretical Astroskiing"
-    name="subjects"
-  >
-    Theoretical Astroskiing
-  </Option>,
-];
+//data
+import { countries } from '../../../data/countries';
+import { time_zones } from '../../../data/timeZones';
 
-const fluentLanguages = [
-  <Option key="English" value="English">
-    English
-  </Option>,
-  <Option key="Latin" value="Latin">
-    Latin
-  </Option>,
-  <Option key="Spanish" value="Spanish">
-    Spanish
-  </Option>,
-  <Option key="Sanskrit" value="Sanskrit">
-    Sanskrit
-  </Option>,
-  <Option key="Sumerian" value="Sumerian">
-    Sumerian
-  </Option>,
+//initialize subject options
+const { Option } = Select;
+const subjects = ['English', 'Science', 'Math', 'Reading'];
+const subjectOptions = subjects.map(subject => (
+  <Option key={subject} value={subject} name="subjects">
+    {subject}
+  </Option>
+));
+
+//initialize grade options
+const grades = [
+  'Kindergarten',
+  '1st Grade',
+  '2nd Grade',
+  '3rd Grade',
+  '4th Grade',
+  '5th Grade',
+  '6th Grade',
+  '7th Grade',
+  '8th Grade',
+  '9th Grade',
+  '10th Grade',
+  '11th Grade',
+  '12th Grade',
 ];
+const gradeOptions = grades.map(grade => (
+  <Option key={grade} value={grade} name="grade">
+    {grade}
+  </Option>
+));
+
+//initialize language options
+const languages = [
+  'English',
+  'Spanish',
+  'Vietnamese',
+  'Cantonese',
+  'Mandarin',
+  'Tagalog',
+];
+const languageOptions = languages.map(language => (
+  <Option key={language} value={language} name="languages">
+    {language}
+  </Option>
+));
+
+//initialize country options
+const countryOptions = countries.map(country => (
+  <Option key={country} value={country} name="home_country">
+    {country}
+  </Option>
+));
+
+//initialize time zone options
+const timeZoneOptions = time_zones.map(time_zone => (
+  <Option key={time_zone.name} value={time_zone.name} name="home_time_zone">
+    {time_zone.name}
+  </Option>
+));
 
 const EditMentee = props => {
-  //initializes form state
-  const [formData, setFormData] = useState(props.currentMentee);
-
   const history = useHistory();
 
   //handles mentee form submit; invoked by onFinish prop on Form
-  const handleSubmit = () => {
+  const handleSubmit = values => {
+    console.log(values);
     props.editMentee(props.currentMentee.id, {
-      ...formData,
+      ...values,
       account_status: 'Active',
     });
     history.push('/mentees/signup/complete');
-  };
-
-  //controls form field values
-  const handleChange = e => {
-    if (moment.isMoment(e)) {
-      setFormData({ ...formData, dob: moment.utc(e).format() });
-    } else if (Array.isArray(e)) {
-      setFormData({ ...formData, subjects: e });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
-  };
-
-  //creates handleChange for dropdown
-  const handleMultiChange = (value, e) => {
-    if (
-      e.name === 'grade' ||
-      e.name === 'home_country' ||
-      e.name === 'home_time_zone' ||
-      e.name === 'first_language'
-    ) {
-      setFormData({ ...formData, [e.name]: e.value });
-    }
-  };
-
-  const handleLanguageChange = e => {
-    if (Array.isArray(e)) {
-      setFormData({ ...formData, other_fluent_languages: e });
-    }
   };
 
   return (
@@ -108,198 +103,104 @@ const EditMentee = props => {
         form={props.form}
         {...layout}
         onFinish={handleSubmit}
+        //resets initial values of form fields on close
+        preserve={false}
       >
         <Form.Item
           label="First Name"
+          name="first_name"
           rules={[{ required: true, message: 'First Name is required.' }]}
+          initialValue={props.currentMentee.first_name}
         >
-          <Input
-            type="text"
-            name="first_name"
-            defaultValue={props.currentMentee.first_name}
-            value={formData.first_name}
-            onChange={e => handleChange(e)}
-          />
+          <Input type="text" />
         </Form.Item>
 
         <Form.Item
           label="Last Name"
+          name="last_name"
           rules={[{ required: true, message: 'Last Name is required.' }]}
+          initialValue={props.currentMentee.last_name}
         >
-          <Input
-            type="text"
-            name="last_name"
-            value={formData.last_name}
-            defaultValue={props.currentMentee.last_name}
-            onChange={e => handleChange(e)}
-          />
+          <Input type="text" />
         </Form.Item>
 
         <Form.Item
           label="Email"
+          name="email"
           rules={[{ required: true, message: 'Email is required.' }]}
+          initialValue={props.currentMentee.email}
         >
-          <Input
-            type="email"
-            name="email"
-            value={formData.email}
-            defaultValue={props.currentMentee.email}
-            onChange={e => handleChange(e)}
-          />
+          <Input type="email" />
         </Form.Item>
 
         <Form.Item
           label="Date of Birth"
+          name="dob"
           rules={[{ required: true, message: 'Date of Birth is required.' }]}
+          initialValue={moment(props.currentMentee.dob)}
         >
-          <DatePicker
-            name="dob"
-            onChange={e => handleChange(e)}
-            defaultValue={moment(props.currentMentee.dob)}
-          />
+          <DatePicker />
         </Form.Item>
 
-        <Form.Item label="Grade">
-          <Select
-            onChange={handleMultiChange}
-            value={formData.grade}
-            defaultValue={props.currentMentee.grade}
-            onSelect={(value, event) => handleMultiChange(value, event)}
-          >
-            <Option value="Kindergarten" name="grade">
-              Kindergarten
-            </Option>
-            <Option value="1st Grade" name="grade">
-              1st Grade
-            </Option>
-            <Option value="2nd Grade" name="grade">
-              2nd Grade
-            </Option>
-            <Option value="3rd Grade" name="grade">
-              3rd Grade
-            </Option>
-            <Option value="4th Grade" name="grade">
-              4th Grade
-            </Option>
-            <Option value="5th Grade" name="grade">
-              5th Grade
-            </Option>
-            <Option value="6th Grade" name="grade">
-              6th Grade
-            </Option>
-            <Option value="7th Grade" name="grade">
-              7th Grade
-            </Option>
-            <Option value="8th Grade" name="grade">
-              8th Grade
-            </Option>
-            <Option value="9th Grade" name="grade">
-              9th Grade
-            </Option>
-            <Option value="10th Grade" name="grade">
-              10th Grade
-            </Option>
-            <Option value="11th Grade" name="grade">
-              11th Grade
-            </Option>
-            <Option value="12th Grade" name="grade">
-              12th Grade
-            </Option>
-          </Select>
+        <Form.Item
+          label="Grade"
+          name="grade"
+          initialValue={props.currentMentee.grade}
+        >
+          <Select>{gradeOptions}</Select>
         </Form.Item>
 
-        <Form.Item label="Subjects">
-          <Select
-            mode="multiple"
-            allowClear
-            placeholder="Please select Subjects"
-            value={formData.subjects}
-            defaultValue={props.currentMentee.subjects}
-            onChange={handleChange}
-          >
+        <Form.Item
+          label="Subjects"
+          name="subjects"
+          initialValue={props.currentMentee.subjects}
+        >
+          <Select mode="multiple" allowClear placeholder="Please select">
             {subjectOptions}
           </Select>
         </Form.Item>
 
-        <Form.Item label="Primary Language">
-          <Select
-            onChange={handleMultiChange}
-            value={formData.first_language}
-            defaultValue={props.currentMentee.first_language}
-            onSelect={(value, event) => handleMultiChange(value, event)}
-          >
-            {fluentLanguages}
+        <Form.Item
+          label="Primary Language"
+          name="first_language"
+          initialValue={props.currentMentee.first_language}
+        >
+          <Select>{languageOptions}</Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Other Fluent Languages"
+          name="other_fluent_languages"
+          initialValue={props.currentMentee.other_fluent_languages}
+        >
+          <Select mode="multiple" allowClear placeholder="Please select">
+            {languageOptions}
           </Select>
         </Form.Item>
 
-        <Form.Item label="Other Fluent Languages">
-          <Select
-            mode="multiple"
-            allowClear
-            placeholder="Please select other fluent languages"
-            value={formData.other_fluent_languages}
-            defaultValue={props.currentMentee.other_fluent_languages}
-            onChange={handleLanguageChange}
-          >
-            {fluentLanguages}
-          </Select>
+        <Form.Item
+          label="Home Country"
+          name="home_country"
+          initialValue={props.currentMentee.home_country}
+        >
+          <Select>{countryOptions}</Select>
         </Form.Item>
 
-        <Form.Item label="Home Country">
-          <Select
-            onChange={handleMultiChange}
-            value={formData.home_country}
-            defaultValue={props.currentMentee.home_country}
-            onSelect={(value, event) => handleMultiChange(value, event)}
-          >
-            <Option value="Belize" name="home_country">
-              Belize
-            </Option>
-            <Option value="Ghana" name="home_country">
-              Ghana
-            </Option>
-            <Option value="Mexico" name="home_country">
-              Mexico
-            </Option>
-            <Option value="Nepal" name="home_country">
-              Nepal
-            </Option>
-            <Option value="Peru" name="home_country">
-              Peru
-            </Option>
-          </Select>
+        <Form.Item
+          label="Time Zone"
+          name="home_time_zone"
+          initialValue={props.currentMentee.home_time_zone}
+        >
+          <Select>{timeZoneOptions}</Select>
         </Form.Item>
 
-        <Form.Item label="Time Zone">
-          <Select
-            onChange={handleMultiChange}
-            value={formData.home_time_zone}
-            defaultValue={props.currentMentee.home_time_zone}
-            onSelect={(value, event) => handleMultiChange(value, event)}
-          >
-            <Option value="Central Standard Time" name="home_time_zone">
-              Central Standard Time
-            </Option>
-            <Option value="Greenwich Mean Time" name="home_time_zone">
-              Greenwich Mean Time
-            </Option>
-            <Option value="Nepal Standard Time" name="home_time_zone">
-              Nepal Standard Time
-            </Option>
-            <Option value="Peru Standard Time" name="home_time_zone">
-              Peru Standard Time
-            </Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item label="Phone" rules={[{ required: false }]}>
-          <Input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            defaultValue={props.currentMentee.phone}
-            onChange={e => handleChange(e)}
-          />
+        <Form.Item
+          label="Phone"
+          name="phone"
+          rules={[{ required: false }]}
+          initialValue={props.currentMentee.phone}
+        >
+          <Input type="tel" />
         </Form.Item>
 
         <Form.Item {...tailLayout}>
