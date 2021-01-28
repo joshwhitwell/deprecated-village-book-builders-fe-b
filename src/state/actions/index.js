@@ -82,14 +82,14 @@ export const fetchHeadmasterSchool = id => dispatch => {
     })
     .catch(err => console.dir(err));
 };
-
+// &account_status=Inactive
 export const fetchPendingTeachers = id => dispatch => {
   axiosWithAuth()
-    .get(`/teacher?schoolId=${id}&account_status=Inactive`)
+    .get(`/teacher?schoolId=${id}`)
     .then(res => {
-      console.log('fetchHeadMasterSchool action --> ', res.data);
+      console.log('fetchPendingTeacher action --> ', res.data);
       dispatch({
-        type: actionTypes.FETCH_HEADMASTER_SCHOOL,
+        type: actionTypes.FETCH_PENDING_TEACHERS,
         payload: res.data,
       });
     })
