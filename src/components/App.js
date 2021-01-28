@@ -13,6 +13,7 @@ import TeacherProfile from './pages/Teacher/TeacherProfile/TeacherProfile';
 import TeacherProfileForm from './pages/Teacher/TeacherProfile/TeacherProfileForm';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import ProgramDashboard from './pages/Program/ProgramDashboard';
+import MenteeDashboard from './pages/Mentees/MenteeDashboard';
 
 const App = ({ role, checkToken }) => {
   return (
@@ -34,6 +35,7 @@ const App = ({ role, checkToken }) => {
               {role === 'admin' && <AdminDashboard />}
               {role === 'program' && <ProgramDashboard />}
               {role === 'teacher' && <TeacherDashboard />}
+              {role === 'mentee' && <MenteeDashboard />}
             </>
           ) : (
             <Redirect to="/login" />
