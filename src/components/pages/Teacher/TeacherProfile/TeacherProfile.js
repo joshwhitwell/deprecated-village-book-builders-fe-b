@@ -8,23 +8,19 @@ import { fetchTeacherProfile } from '../../../../state/actions';
 import { Profile, Label } from '../../../common/ProfileStyle';
 import { Button } from '../../../common';
 import { ComponentTitle } from '../../../common';
-import TeacherDashboard from '../TeacherDashboard';
 
-// const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 const TeacherProfile = props => {
   const { userId } = useSelector(state => state.authReducer);
   const { profile } = props;
   const { fetchTeacherProfile } = props;
   useEffect(() => {
-    fetchTeacherProfile(userId - 10); // change this later with login
+    fetchTeacherProfile(userId - 10);
   }, [fetchTeacherProfile, userId]);
 
   return (
     <>
-      <TeacherDashboard />
       <Profile>
         <ComponentTitle titleText="teacher" />
-        {/* <img src={`${profile.teachers_picture}`} /> */}
         <Label>Name:</Label>
         <p>{`${profile.first_name} ${profile.last_name}`}</p>
 
