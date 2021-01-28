@@ -15,8 +15,6 @@ import Button from '../../../common/Button';
 import { debugLog } from '../../../../utils/debugMode';
 import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
 
-import TeacherDashboard from '../TeacherDashboard';
-
 const initialState = {
   first_name: '',
   last_name: '',
@@ -71,8 +69,6 @@ const ProfileForm = props => {
 
   return (
     <>
-      <TeacherDashboard />
-
       <FormContainer>
         <Form.Item {...tailLayout}>
           <Link to="/profile">Go Back to your Profile</Link>
