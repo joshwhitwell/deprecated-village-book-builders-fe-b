@@ -105,7 +105,7 @@ function HeadmasterDashboard() {
         >
           <h2>Hello, Headmaster!</h2>
 
-          <NavLink to="/dashboard" onClick={() => setVisible(true)}>
+          <NavLink to="/" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Home</button>
           </NavLink>
           <NavLink to="/profile" onClick={() => setVisible(true)}>
