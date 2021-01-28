@@ -163,11 +163,9 @@ export const editMentee = (id, data) => dispatch => {
     .then(res => {
       // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
       // window.location.replace('/profile/');
-      console.log(res);
       dispatch({ type: actionTypes.EDIT_MENTEE_SUCCESS, payload: res });
     })
     .catch(err => {
-      console.log(err);
       dispatch({ type: actionTypes.EDIT_MENTEE_FAILURE, payload: err });
     });
 };
@@ -211,19 +209,20 @@ export const addLibrary = (id, data) => dispatch => {
 // ----------------
 
 export const editTeacherProfile = (id, data) => dispatch => {
+  dispatch({ type: actionTypes.EDIT_TEACHER_START, payload: data });
   axiosWithAuth()
     .put(`/teacher/${id}`, data)
     .then(res => {
-      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
-      window.location.replace('/profile/');
+      dispatch({ type: actionTypes.EDIT_TEACHER_SUCCESS, payload: res.data });
     })
-    .catch(err => console.dir(err));
+    .catch(err => {
+      dispatch({ type: actionTypes.EDIT_TEACHER_FAILURE, payload: err });
+    });
 };
 export const fetchTeacherProfile = id => dispatch => {
   axiosWithAuth()
     .get(`/teacher/${id}`) // change this later
     .then(res => {
-      console.log('fetchteacherProfile action --> ', res.data);
       dispatch({
         type: actionTypes.FETCH_TEACHER_PROFILE,
         payload: res.data,

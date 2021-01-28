@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { connect, useSelector } from 'react-redux';
+import { useParams, Link, useHistory } from 'react-router-dom';
 
 import { Form, Input, Radio } from 'antd';
 
@@ -12,7 +12,6 @@ import {
   Required,
 } from '../../../common/FormStyle';
 import Button from '../../../common/Button';
-import { debugLog } from '../../../../utils/debugMode';
 import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
 
 const initialState = {
@@ -35,12 +34,12 @@ const initialState = {
 };
 
 const ProfileForm = props => {
+  const { userId } = useSelector(state => state.authReducer);
   const [formData, setFormData] = useState(initialState);
   const [value, setValue] = useState(1);
   const params = useParams().id;
   const [form] = Form.useForm();
-
-  console.log(formData);
+  const history = useHistory();
 
   useEffect(() => {
     axiosWithAuth() // ! This should later become available through axiosWithAuth() only once we figure out the Auth with Stakeholder's backend
@@ -53,17 +52,15 @@ const ProfileForm = props => {
   }, [form, params]);
 
   const onChange = e => {
-    console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
     props.editTeacherProfile(params, formData);
+    history.push(`/teacher/${userId - 10}`);
   };
 
   const handleChange = e => {
-    debugLog(formData);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -71,7 +68,7 @@ const ProfileForm = props => {
     <>
       <FormContainer>
         <Form.Item {...tailLayout}>
-          <Link to="/profile">Go Back to your Profile</Link>
+          <Link to={`/teacher/${userId - 10}`}>Go Back to your Profile</Link>
         </Form.Item>
         <Form onFinish={handleSubmit} form={form} {...layout}>
           <Form.Item
@@ -171,7 +168,7 @@ const ProfileForm = props => {
             <Button
               className="l2-btn btn"
               htmlType="submit"
-              buttonText="Submit Village Edit"
+              buttonText="Submit"
             />
             <Required id="requiredMsg">
               Fields with <span id="required">&#42;</span> are required.
