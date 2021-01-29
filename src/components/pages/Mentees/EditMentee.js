@@ -16,69 +16,14 @@ import {
 import { editMentee } from '../../../state/actions/index';
 import { useHistory } from 'react-router-dom';
 
-//data
-import { countries } from '../../../data/countries';
-import { time_zones } from '../../../data/timeZones';
-
-//initialize subject options
-const { Option } = Select;
-const subjects = ['English', 'Science', 'Math', 'Reading'];
-const subjectOptions = subjects.map(subject => (
-  <Option key={subject} value={subject} name="subjects">
-    {subject}
-  </Option>
-));
-
-//initialize grade options
-const grades = [
-  'Kindergarten',
-  '1st Grade',
-  '2nd Grade',
-  '3rd Grade',
-  '4th Grade',
-  '5th Grade',
-  '6th Grade',
-  '7th Grade',
-  '8th Grade',
-  '9th Grade',
-  '10th Grade',
-  '11th Grade',
-  '12th Grade',
-];
-const gradeOptions = grades.map(grade => (
-  <Option key={grade} value={grade} name="grade">
-    {grade}
-  </Option>
-));
-
-//initialize language options
-const languages = [
-  'English',
-  'Spanish',
-  'Vietnamese',
-  'Cantonese',
-  'Mandarin',
-  'Tagalog',
-];
-const languageOptions = languages.map(language => (
-  <Option key={language} value={language} name="languages">
-    {language}
-  </Option>
-));
-
-//initialize country options
-const countryOptions = countries.map(country => (
-  <Option key={country} value={country} name="home_country">
-    {country}
-  </Option>
-));
-
-//initialize time zone options
-const timeZoneOptions = time_zones.map(time_zone => (
-  <Option key={time_zone.name} value={time_zone.name} name="home_time_zone">
-    {time_zone.name}
-  </Option>
-));
+//components
+import {
+  gradeOptions,
+  subjectOptions,
+  languageOptions,
+  countryOptions,
+  timeZoneOptions,
+} from './FormOptions';
 
 const EditMentee = props => {
   const history = useHistory();
