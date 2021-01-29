@@ -19,6 +19,7 @@ const initialState = {
   mentees: [],
   pendingTeachers: [],
 };
+
 // Fetch school data for headmaster
 const reducer = (state = initialState, action) => {
   // console.log('HEADMASTERREDUCER.js, action type & payload:', action.type, action.payload);
