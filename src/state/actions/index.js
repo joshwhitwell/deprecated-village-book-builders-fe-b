@@ -5,6 +5,7 @@ import axios from 'axios';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 
 //action types
+
 import * as actionTypes from './actionTypes';
 
 //env variables
@@ -73,8 +74,30 @@ export const fetchHeadmasterProfile = id => dispatch => {
     .catch(err => console.dir(err));
 };
 
-export const fetchHeadmasterSchool = () => dispatch => {
-  dispatch({ type: actionTypes.FETCH_HEADMASTER_SCHOOL });
+export const fetchHeadmasterSchool = id => dispatch => {
+  axiosWithAuth()
+    .get(`/school/${id}`)
+    .then(res => {
+      console.log('fetchHeadMasterSchool action --> ', res.data);
+      dispatch({
+        type: actionTypes.FETCH_HEADMASTER_SCHOOL,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
+};
+// &account_status=Inactive
+export const fetchPendingTeachers = id => dispatch => {
+  axiosWithAuth()
+    .get(`/teacher?schoolId=${id}`)
+    .then(res => {
+      console.log('fetchPendingTeacher action --> ', res.data);
+      dispatch({
+        type: actionTypes.FETCH_PENDING_TEACHERS,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
 };
 
 // -----------------------
