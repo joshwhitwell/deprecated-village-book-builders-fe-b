@@ -73,6 +73,7 @@ const Login = ({ login, loggedIn }) => {
       <p>Account info for testing:</p>
       <p>"admin@admin.com" - "password"</p>
       <p>"headmaster@headmaster.com" - "password"</p>
+      <p>"teacher@teacher.com - "password"</p>
       <p>
         more from server should be added later to show different data from
         different headmasters (for example)
