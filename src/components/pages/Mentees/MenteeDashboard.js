@@ -83,6 +83,9 @@ function MenteeDashboard() {
           <NavLink to="/mentees/signup" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentee Sign Up</button>
           </NavLink>
+          <NavLink to="/mentees/resources" onClick={() => setVisible(true)}>
+            <button className="btn l2-btn menuLinks">Mentee Resources</button>
+          </NavLink>
           <Link to="/logout" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Logout</button>
           </Link>
