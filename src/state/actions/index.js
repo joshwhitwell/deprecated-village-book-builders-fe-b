@@ -141,6 +141,23 @@ export const editSchool = (id, data) => dispatch => {
 };
 
 // -----------------------
+// MENTORS
+// -----------------------
+
+export const fetchMentors = () => dispatch => {
+  dispatch({ type: actionTypes.FETCH_MENTOR_START });
+  axiosWithAuth()
+    .get('/mentor')
+    .then(res => {
+      console.log('DID FETCH');
+      dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: res.data });
+    })
+    .catch(err =>
+      dispatch({ type: actionTypes.FETCH_MENTOR_FAILURE, payload: err })
+    );
+};
+
+// -----------------------
 // MENTEES
 // -----------------------
 
@@ -149,6 +166,7 @@ export const fetchMentees = () => dispatch => {
   axiosWithAuth()
     .get('/mentee')
     .then(res => {
+      localStorage.setItem('mentees', res.data);
       dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: res.data });
     })
     .catch(err =>

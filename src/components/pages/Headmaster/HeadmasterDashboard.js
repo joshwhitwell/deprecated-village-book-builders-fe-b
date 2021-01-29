@@ -27,7 +27,7 @@ import {
 } from './HeadmasterDashboard.style';
 import Logout from '../../Logout.js';
 // import MentorPairings from './Mentees/Mentees.js';
-import Mentees from '../Mentees/Mentees';
+import MentorPairing from '../Mentor/MentorPairing';
 
 function HeadmasterDashboard() {
   const [visible, setVisible] = useState(true);
@@ -61,7 +61,7 @@ function HeadmasterDashboard() {
     <div>
       <Dashboard>
         <Switch>
-          <Route path="/mentor-pairings" component={Mentees} />
+          <Route path="/mentor-pairings" component={MentorPairing} />
           <Route exact path="/profile" component={HeadmasterProfile} />
           <Route path="/profile/edit/:id" component={ProfileForm} />
           <Route path="/mentor-advisor" />

@@ -13,6 +13,7 @@ import TeacherProfile from './pages/Teacher/TeacherProfile/TeacherProfile';
 import TeacherProfileForm from './pages/Teacher/TeacherProfile/TeacherProfileForm';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import ProgramDashboard from './pages/Program/ProgramDashboard';
+import MentorTimeSlot from './pages/Mentor/MentorTimeSlot';
 
 const App = ({ role, checkToken }) => {
   return (
@@ -22,7 +23,6 @@ const App = ({ role, checkToken }) => {
         <Route exact path="/teacher/:id" component={TeacherProfile} />
         <Route path="/logout" component={Logout} />
         <Route path="/login" component={Login} />
-
         <Route path="/">
           {/*//! this needs to be changed to if there is an unexpired token*/}
           {/* Look for token in case a user refreshes the page & clears redux store, then it repopulates the redux store with userId, role & loggedIn status with checkToken().  */}
