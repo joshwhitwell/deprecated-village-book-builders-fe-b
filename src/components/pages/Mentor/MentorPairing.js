@@ -14,17 +14,17 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
   const { Option } = Select;
   const [mentor, setMentor] = useState([]);
   const [mentee, setMentee] = useState([]);
-  const [matched, setMatched] = useState([]);
+  //   const [matched, setMatched] = useState([]);
 
   useEffect(() => {
-    fetchMentors();
     fetchMentees();
+    fetchMentors();
   }, [fetchMentees, fetchMentors]);
 
   const state = useSelector(state => ({ ...state }));
 
-  const { mentors } = state.mentorReducer;
   const { mentees } = state.menteeReducer;
+  const { mentors } = state.mentorReducer;
 
   const availableMentor = eachMentor => {
     if (eachMentor.account_status === 'Denied') return false;
@@ -106,25 +106,29 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
       </div>
       <div className="paired">
         {mentors.filter(availableMentor).map(eachMentor => {
-          let menteeInfo = mentees.filter(
-            eachMentee => eachMentee.id === eachMentor.mentee
-          );
-          console.log('MENTEE INFO: ', menteeInfo[0]);
+          let menteeInfo = {};
+
+          for (let i = 0; i < mentees.length; i++) {
+            if (mentees[i].id === eachMentor.mentee) {
+              menteeInfo = mentees[i];
+            }
+          }
+
+          console.log(menteeInfo);
 
           return (
-            <>
+            <div className="descriptions-container" key={eachMentor.id}>
               <hr />
               <Descriptions
+                className="descriptions"
                 title={`${moment(eachMentor.time_slots).format('MMM Do YY')}`}
               >
                 <Descriptions.Item label="Mentor">{`${eachMentor.first_name} ${eachMentor.last_name}`}</Descriptions.Item>
-                <Descriptions.Item label="Mentee">
-                  {`${menteeInfo[0]} ${menteeInfo.last_name}`}
-                </Descriptions.Item>
-                <Descriptions.Item label="Subject">{}</Descriptions.Item>
-                <Descriptions.Item label="Time">Name</Descriptions.Item>
+                <Descriptions.Item label="Mentee">{`${menteeInfo.first_name}`}</Descriptions.Item>
+                <Descriptions.Item label="Language">{`${menteeInfo.primary_language}`}</Descriptions.Item>
+                <Descriptions.Item label="Time">{`${2}`}</Descriptions.Item>
               </Descriptions>
-            </>
+            </div>
           );
         })}
       </div>

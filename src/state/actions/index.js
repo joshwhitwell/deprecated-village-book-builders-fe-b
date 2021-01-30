@@ -144,35 +144,39 @@ export const editSchool = (id, data) => dispatch => {
 // MENTORS
 // -----------------------
 
-export const fetchMentors = () => dispatch => {
+export const fetchMentors = () => async dispatch => {
   dispatch({ type: actionTypes.FETCH_MENTOR_START });
-  axiosWithAuth()
-    .get('/mentor')
-    .then(res => {
-      console.log('DID FETCH');
-      dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: res.data });
-    })
-    .catch(err =>
-      dispatch({ type: actionTypes.FETCH_MENTOR_FAILURE, payload: err })
-    );
+  const mentors = await axiosWithAuth().get('/mentor');
+
+  console.log('DID FETCH MENTOR');
+  dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: mentors.data });
+  // .then(res => {
+  //   console.log('DID FETCH MENTOR');
+  //   dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: res.data });
+  // })
+  // .catch(err =>
+  //   dispatch({ type: actionTypes.FETCH_MENTOR_FAILURE, payload: err })
+  // );
 };
 
 // -----------------------
 // MENTEES
 // -----------------------
 
-export const fetchMentees = () => dispatch => {
+export const fetchMentees = () => async dispatch => {
   dispatch({ type: actionTypes.FETCH_MENTEE_START });
-  axiosWithAuth()
-    .get('/mentee')
-    .then(res => {
-      dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: res.data });
-    })
-    .catch(err =>
-      dispatch({ type: actionTypes.FETCH_MENTEE_FAILURE, payload: err })
-    );
-};
+  const mentees = await axiosWithAuth().get('/mentee');
 
+  console.log('DID FETCH MENTEE');
+  dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: mentees.data });
+  // .then(res => {
+  //   console.log('DID FETCH MENTEE');
+  //   dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: res.data });
+  // })
+  // .catch(err =>
+  //   dispatch({ type: actionTypes.FETCH_MENTEE_FAILURE, payload: err })
+  // );
+};
 export const editMentee = (id, data) => dispatch => {
   dispatch({ type: actionTypes.EDIT_MENTEE_START, payload: data });
   axiosWithAuth()

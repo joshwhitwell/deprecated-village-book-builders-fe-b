@@ -13,7 +13,7 @@ import TeacherProfile from './pages/Teacher/TeacherProfile/TeacherProfile';
 import TeacherProfileForm from './pages/Teacher/TeacherProfile/TeacherProfileForm';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import ProgramDashboard from './pages/Program/ProgramDashboard';
-import MentorTimeSlot from './pages/Mentor/MentorTimeSlot';
+// import MentorTimeSlot from './pages/Mentor/MentorTimeSlot';
 
 const App = ({ role, checkToken }) => {
   return (
