@@ -166,7 +166,6 @@ export const fetchMentees = () => dispatch => {
   axiosWithAuth()
     .get('/mentee')
     .then(res => {
-      localStorage.setItem('mentees', res.data);
       dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: res.data });
     })
     .catch(err =>

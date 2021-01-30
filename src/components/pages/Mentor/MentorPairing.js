@@ -12,19 +12,19 @@ import './MentorPairing.css';
 
 const MentorPairing = ({ fetchMentors, fetchMentees }) => {
   const { Option } = Select;
-  const [mentors, setMentor] = useState([]);
-  const [mentees, setMentee] = useState([]);
+  const [mentor, setMentor] = useState([]);
+  const [mentee, setMentee] = useState([]);
   const [matched, setMatched] = useState([]);
 
-  //   useEffect(() => {
-  //     fetchMentors();
-  //     fetchMentees();
-  //   }, [fetchMentees, fetchMentors]);
+  useEffect(() => {
+    fetchMentors();
+    fetchMentees();
+  }, [fetchMentees, fetchMentors]);
 
-  //   const state = useSelector(state => ({ ...state }));
+  const state = useSelector(state => ({ ...state }));
 
-  //   const { mentors } = state.mentorReducer;
-  //   const { mentees } = state.menteeReducer;
+  const { mentors } = state.mentorReducer;
+  const { mentees } = state.menteeReducer;
 
   const availableMentor = eachMentor => {
     if (eachMentor.account_status === 'Denied') return false;
@@ -109,6 +109,7 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
           let menteeInfo = mentees.filter(
             eachMentee => eachMentee.id === eachMentor.mentee
           );
+          console.log('MENTEE INFO: ', menteeInfo[0]);
 
           return (
             <>
