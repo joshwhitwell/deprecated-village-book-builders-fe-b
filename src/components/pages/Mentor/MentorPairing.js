@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchMentees, fetchMentors } from '../../../state/actions';
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import { useSelector, connect } from 'react-redux';
-
-import { Select } from 'antd';
-import { Button } from 'antd';
-import { Descriptions } from 'antd';
+import { Descriptions, Select, Button } from 'antd';
 
 import moment from 'moment';
 import './MentorPairing.css';
@@ -96,11 +93,15 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
 
   return (
     <div className="mentor__pairing">
-      Pairing
       <div className="pairing__box">
-        <section className="mentors">{selectMentor()}</section>
-        <section className="mentees">{selectMentee()}</section>
-        <Button type="primary" onClick={handleUpdate}>
+        <section className="mentors selection">{selectMentor()}</section>
+        <section className="mentees selection">{selectMentee()}</section>
+        <Button
+          className="match-button"
+          type="primary"
+          shape="round"
+          onClick={handleUpdate}
+        >
           Let's Match
         </Button>
       </div>
@@ -128,6 +129,7 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
                 <Descriptions.Item label="Language">{`${menteeInfo.primary_language}`}</Descriptions.Item>
                 <Descriptions.Item label="Time">{`${2}`}</Descriptions.Item>
               </Descriptions>
+              <Button>Cancel</Button>
             </div>
           );
         })}

@@ -3,9 +3,20 @@
   flex-wrap: wrap;
   flex-direction: column;
   width: 97%;
-  height: 15vh;
+  height: 17vh;
+  justify-content: flex-end;
+  margin-top: 4%;
+}
+
+.mentors {
+  margin-bottom: 1%;
+}
+
+.match-button {
+  margin-top: auto;
 }
 
 .descriptions-container {
+  margin-top: 2%;
   width: 97%;
 }
