@@ -32,20 +32,16 @@ const reducer = (state = initialState, action) => {
       };
       
     case FETCH_PENDING_TEACHERS:
-      debugLog(action.type, action.payload);
       return { ...state, pendingTeachers: action.payload };
     case FETCH_MENTEE_SUCCESS:
-      debugLog(action.type, action.payload);
       return {
         ...state,
         mentees: action.payload,
       };
       
     case FETCH_MENTEE_START:
-      debugLog(action.type, action.payload);
       return { ...state };
     case FETCH_MENTEE_FAILURE:
-      debugLog(action.type, action.payload);
       return { ...state };
     default:
       return state;
