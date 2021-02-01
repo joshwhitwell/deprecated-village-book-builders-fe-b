@@ -1,12 +1,19 @@
-// import all of your actions into this file, and export them back out.
-// This allows for the simplification of flow when importing actions into your components throughout your app.
-// Actions should be focused to a single purpose.
-// You can have multiple action creators per file if it makes sense to the purpose those action creators are serving.
-// Declare action TYPES at the top of the file
+//dependencies
 import axios from 'axios';
+
+//utils
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
+
+//action types
+
 import * as actionTypes from './actionTypes';
+
+//env variables
 const baseURL = process.env.REACT_APP_BASE_URL;
+
+// -------------------------
+// AUTHORIZATION
+// -------------------------
 
 export const checkToken = data => dispatch => {
   dispatch({
@@ -15,9 +22,6 @@ export const checkToken = data => dispatch => {
   });
 };
 
-// -------------------------
-// AUTHORIZATION
-// -------------------------
 export const login = data => dispatch => {
   axios
     .post(`${baseURL}/auth/login`, data)
@@ -45,7 +49,7 @@ export const logout = () => dispatch => {
 };
 
 // -----------------------
-// HEAD MASTER
+// HEADMASTER
 // -----------------------
 
 export const editHeadmasterProfile = (id, data) => dispatch => {
@@ -130,6 +134,11 @@ export const patchSchoolTeacherId = (id, teacherId) => dispatch => {
     .catch(err => console.dir(err));
 };
 
+// -----------------------
+// VILLAGES
+// -----------------------
+
+
 export const fetchVillage = id => dispatch => {
   // console.log("ACTIONSindexFetchVillage --> test", process.env.REACT_APP_BASEURL)
   axiosWithAuth()
@@ -151,17 +160,9 @@ export const editVillage = (id, data) => () => {
     .catch(err => console.dir(err));
 };
 
-export const fetchMentees = () => dispatch => {
-  dispatch({ type: actionTypes.FETCH_MENTEE_START });
-  axiosWithAuth()
-    .get('/mentee')
-    .then(res => {
-      dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: res.data });
-    })
-    .catch(err =>
-      dispatch({ type: actionTypes.FETCH_MENTEE_FAILURE, payload: err })
-    );
-};
+// -----------------------
+// SCHOOLS
+// -----------------------
 
 export const fetchSchools = () => dispatch => {
   axiosWithAuth()
@@ -197,8 +198,50 @@ export const editSchool = (id, data) => dispatch => {
     .catch(err => console.dir(err));
 };
 
+// -----------------------
+// MENTEES
+// -----------------------
+
+export const fetchMentees = () => dispatch => {
+  dispatch({ type: actionTypes.FETCH_MENTEE_START });
+  axiosWithAuth()
+    .get('/mentee')
+    .then(res => {
+      dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: res.data });
+    })
+    .catch(err =>
+      dispatch({ type: actionTypes.FETCH_MENTEE_FAILURE, payload: err })
+    );
+};
+
+export const editMentee = (id, data) => dispatch => {
+  dispatch({ type: actionTypes.EDIT_MENTEE_START, payload: data });
+  axiosWithAuth()
+    .put(`/mentee/${id}`, data)
+    .then(res => {
+      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
+      // window.location.replace('/profile/');
+      dispatch({ type: actionTypes.EDIT_MENTEE_SUCCESS, payload: res });
+    })
+    .catch(err => {
+      dispatch({ type: actionTypes.EDIT_MENTEE_FAILURE, payload: err });
+    });
+};
+
+export const addMentee = data => dispatch => {
+  dispatch({ type: actionTypes.ADD_MENTEE_START, payload: data });
+  axiosWithAuth()
+    .post('/mentee', data)
+    .then(res => {
+      dispatch({ type: actionTypes.ADD_MENTEE_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: actionTypes.ADD_MENTEE_FAILURE, payload: err });
+    });
+};
+
 // ----------------
-// ADMIN
+// LIBRARIES
 // ----------------
 
 export const editLibrary = (id, data) => dispatch => {
@@ -217,4 +260,35 @@ export const addLibrary = (id, data) => dispatch => {
       window.location.replace('/admin/libraries');
     })
     .catch(err => console.dir(err));
+};
+
+// ----------------
+// TEACHER
+// ----------------
+
+export const editTeacherProfile = (id, data) => dispatch => {
+  dispatch({ type: actionTypes.EDIT_TEACHER_START, payload: data });
+  axiosWithAuth()
+    .put(`/teacher/${id}`, data)
+    .then(res => {
+      dispatch({ type: actionTypes.EDIT_TEACHER_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: actionTypes.EDIT_TEACHER_FAILURE, payload: err });
+    });
+};
+export const fetchTeacherProfile = id => dispatch => {
+  axiosWithAuth()
+    .get(`/teacher/${id}`) // change this later
+    .then(res => {
+      dispatch({
+        type: actionTypes.FETCH_TEACHER_PROFILE,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
+};
+
+export const fetchTeacherSchool = () => dispatch => {
+  dispatch({ type: actionTypes.FETCH_TEACHER_SCHOOL });
 };

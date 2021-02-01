@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
 import { fetchHeadmasterProfile } from '../../../../state/actions';
 
@@ -12,14 +11,15 @@ import { ComponentTitle } from '../../../common';
 // const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 const HeadmasterProfile = props => {
   const { profile } = props;
+  const { fetchHeadmasterProfile } = props;
   useEffect(() => {
-    props.fetchHeadmasterProfile(1); // change this later with login
-  }, []);
+    fetchHeadmasterProfile(1); // change this later with login
+  }, [fetchHeadmasterProfile]);
   console.log(profile);
   return (
     <Profile>
-      <ComponentTitle titleText="Village" />
-      <img src={`${profile.headmasters_picture}`} />
+      <ComponentTitle titleText="Headmaster" />
+      <img src={`${profile.headmasters_picture}`} alt="headmaster" />
       <Label>Name:</Label>
       <p>{`${profile.first_name} ${profile.last_name}`}</p>
 

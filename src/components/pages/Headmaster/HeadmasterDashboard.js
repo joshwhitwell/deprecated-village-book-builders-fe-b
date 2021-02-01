@@ -32,7 +32,7 @@ import {
 } from '../../../state/actions/index.js';
 import Logout from '../../Logout.js';
 // import MentorPairings from './Mentees/Mentees.js';
-import Mentees from './Mentees/Mentees.js';
+import Mentees from '../Mentees/Mentees';
 
 function HeadmasterDashboard(props) {
   const [visible, setVisible] = useState(true);

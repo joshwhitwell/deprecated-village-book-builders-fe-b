@@ -15,8 +15,6 @@ import {
 } from '../../common/FormStyle';
 import Button from '../../common/Button';
 
-const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
-
 //! use real name when full server is developed
 const initialState = {
   headmaster: 'Mr Headmaster',
@@ -49,7 +47,7 @@ const VillageForm = props => {
         })
         .catch(err => console.dir(err));
     }
-  }, []);
+  }, [form, params, pathname]);
 
   const handleSubmit = async () => {
     // console.log(formData);

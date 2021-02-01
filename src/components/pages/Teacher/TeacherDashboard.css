@@ -1,0 +1,10 @@
+.teacher__dashboard__navbar {
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher__dashboard__navbar a {
+  color: black;
+  font-size: 1.4rem;
+  margin-bottom: 2%;
+}
