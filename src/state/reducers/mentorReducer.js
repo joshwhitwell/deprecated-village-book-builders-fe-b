@@ -5,6 +5,7 @@ import {
   EDIT_MENTOR_START,
   EDIT_MENTOR_SUCCESS,
   EDIT_MENTOR_FAILURE,
+  EDIT_MENTOR_MATCHES,
 } from '../actions/actionTypes';
 
 //initializes mentee reducer state
@@ -26,6 +27,8 @@ const mentorReducer = (state = initialState, action) => {
     case EDIT_MENTOR_START:
       return { ...state };
     case EDIT_MENTOR_SUCCESS:
+      return { ...state };
+    case EDIT_MENTOR_MATCHES:
       return { ...state };
     case EDIT_MENTOR_FAILURE:
       return { ...state };

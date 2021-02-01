@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMentees, fetchMentors } from '../../../state/actions';
+import {
+  fetchMentees,
+  fetchMentors,
+  editMentor,
+  cancelMatches,
+} from '../../../state/actions';
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import { useSelector, connect } from 'react-redux';
 import { Descriptions, Select, Button } from 'antd';
@@ -7,35 +12,61 @@ import { Descriptions, Select, Button } from 'antd';
 import moment from 'moment';
 import './MentorPairing.css';
 
-const MentorPairing = ({ fetchMentors, fetchMentees }) => {
+const MentorPairing = ({
+  fetchMentors,
+  fetchMentees,
+  editMentor,
+  cancelMatches,
+}) => {
   const { Option } = Select;
-  const [mentor, setMentor] = useState([]);
-  const [mentee, setMentee] = useState([]);
+  const [mentor, setMentor] = useState({});
+  const [menteeId, setMenteeId] = useState(-1);
+  console.log('MENTOR: ', mentor, '\nMENTEE: ', menteeId);
   //   const [matched, setMatched] = useState([]);
+  const state = useSelector(state => ({ ...state }));
+
+  const { mentees } = state.menteeReducer;
+  const { mentors } = state.mentorReducer;
 
   useEffect(() => {
     fetchMentees();
     fetchMentors();
   }, [fetchMentees, fetchMentors]);
 
-  const state = useSelector(state => ({ ...state }));
-
-  const { mentees } = state.menteeReducer;
-  const { mentors } = state.mentorReducer;
-
   const availableMentor = eachMentor => {
     if (eachMentor.account_status === 'Denied') return false;
     if (eachMentor.account_status === 'Inactive') return false;
+    if (eachMentor.mentee !== -1) return false;
+    return true;
+  };
+
+  const matchedMentor = eachMentor => {
+    if (eachMentor.account_status === 'Denied') return false;
+    if (eachMentor.account_status === 'Inactive') return false;
+    if (eachMentor.mentee < 0) return false;
     return true;
   };
 
   const availableMentee = eachMentee => {
     if (eachMentee.account_status === false) return false;
+    for (let i = 0; i < mentors.length; i++) {
+      if (eachMentee.id === mentors[i].mentee) return false;
+    }
     return true;
   };
 
   const availableMentorSubjects = eachMentor =>
     eachMentor.subjects.map(eachSubject => `${eachSubject}`);
+
+  const handleUpdate = (mentor, menteeId) => {
+    editMentor(mentor, menteeId);
+    fetchMentors();
+  };
+
+  const handleCancel = mentor => {
+    cancelMatches(mentor);
+    fetchMentors();
+  };
 
   const selectMentor = () => (
     <Select
@@ -44,7 +75,13 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
       placeholder="Select a mentor"
       showSearch
       optionFilterProp="children"
-      onChange={value => setMentor(value)}
+      onChange={value => {
+        mentors.forEach(eachMentor => {
+          if (eachMentor.id === value) {
+            setMentor(eachMentor);
+          }
+        });
+      }}
     >
       {mentors.filter(availableMentor).map(eachMentor => (
         <Option key={eachMentor.id} value={eachMentor.id}>
@@ -65,7 +102,7 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
       placeholder="Select a mentee"
       showSearch
       optionFilterProp="children"
-      onChange={value => setMentee(value)}
+      onChange={value => setMenteeId(value)}
     >
       {mentees.filter(availableMentee).map(eachMentee => (
         <Option key={eachMentee.id} value={eachMentee.id}>{`${
@@ -79,18 +116,6 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
     </Select>
   );
 
-  const handleUpdate = () => {
-    //  axiosWithAuth()
-    //    .post('/matched-pairs', matched)
-    //    .then(res => {
-    //      console.log('Successfully Matched Mentor/Mentee');
-    //      setMatched(res.data);
-    //    })
-    //    .catch(err => {
-    //      console.log('Matching Mentor/Mentee Failed: ', err);
-    //    });
-  };
-
   return (
     <div className="mentor__pairing">
       <div className="pairing__box">
@@ -101,13 +126,13 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
           type="primary"
           shape="round"
           style={{ backgroundColor: '#ff914d', border: '#ff914d' }}
-          onClick={handleUpdate}
+          onClick={() => handleUpdate(mentor, menteeId)}
         >
           Let's Match
         </Button>
       </div>
       <div className="paired">
-        {mentors.filter(availableMentor).map(eachMentor => {
+        {mentors.filter(matchedMentor).map(eachMentor => {
           let menteeInfo = {};
 
           for (let i = 0; i < mentees.length; i++) {
@@ -115,8 +140,6 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
               menteeInfo = mentees[i];
             }
           }
-
-          console.log(menteeInfo);
 
           return (
             <div className="descriptions-container" key={eachMentor.id}>
@@ -128,9 +151,11 @@ const MentorPairing = ({ fetchMentors, fetchMentees }) => {
                 <Descriptions.Item label="Mentor">{`${eachMentor.first_name} ${eachMentor.last_name}`}</Descriptions.Item>
                 <Descriptions.Item label="Mentee">{`${menteeInfo.first_name}`}</Descriptions.Item>
                 <Descriptions.Item label="Language">{`${menteeInfo.primary_language}`}</Descriptions.Item>
-                <Descriptions.Item label="Time">{`${2}`}</Descriptions.Item>
+                <Descriptions.Item label="Time">{`${moment(
+                  eachMentor.time_slots
+                ).format('MMM Do YY')}`}</Descriptions.Item>
               </Descriptions>
-              <Button>Cancel</Button>
+              <Button onClick={() => handleCancel(eachMentor)}>Cancel</Button>
             </div>
           );
         })}
@@ -143,6 +168,9 @@ const mapStateToProps = state => {
   return {};
 };
 
-export default connect(mapStateToProps, { fetchMentees, fetchMentors })(
-  MentorPairing
-);
+export default connect(mapStateToProps, {
+  fetchMentees,
+  fetchMentors,
+  editMentor,
+  cancelMatches,
+})(MentorPairing);

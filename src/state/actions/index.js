@@ -159,6 +159,37 @@ export const fetchMentors = () => async dispatch => {
   // );
 };
 
+export const editMentor = (mentor, menteeId) => dispatch => {
+  dispatch({ type: actionTypes.EDIT_MENTOR_START, payload: mentor });
+  axiosWithAuth()
+    .put(`/mentor/${mentor.id}`, { ...mentor, mentee: menteeId })
+    .then(res => {
+      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
+      // window.location.replace('/profile/');
+      console.log(res.data);
+      dispatch({ type: actionTypes.EDIT_MENTOR_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: actionTypes.EDIT_MENTOR_FAILURE, payload: err });
+    });
+};
+export const cancelMatches = mentor => dispatch => {
+  dispatch({ type: actionTypes.EDIT_MENTOR_MATCHES, payload: mentor });
+  axiosWithAuth()
+    .put(`/mentor/${mentor.id}`, { ...mentor, mentee: -1 })
+    .then(res => {
+      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
+      // window.location.replace('/profile/');
+      console.log(res.data);
+      dispatch({ type: actionTypes.EDIT_MENTOR_MATCHES, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: actionTypes.EDIT_MENTOR_FAILURE, payload: err });
+    });
+};
+
 // -----------------------
 // MENTEES
 // -----------------------
