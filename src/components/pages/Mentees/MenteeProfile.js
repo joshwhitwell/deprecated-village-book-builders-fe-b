@@ -29,7 +29,7 @@ const MenteeProfile = ({ currentMentee }) => {
       key: 'methods',
       render: tags => (
         <>
-          {tags.map(tag => {
+          {tags?.map(tag => {
             return (
               <Tag color="geekblue" key={tags.indexOf(tag)}>
                 {tag.toUpperCase()}
@@ -117,7 +117,7 @@ const MenteeProfile = ({ currentMentee }) => {
           <p>{currentMentee.first_language}</p>
           <Divider plain>Other Fluent Languages</Divider>
           <p>
-            {currentMentee.other_fluent_languages.map((element, index) => (
+            {currentMentee.other_fluent_languages?.map((element, index) => (
               <span style={{ margin: '3px' }} key={index.toString()}>
                 {element}
               </span>
@@ -149,20 +149,20 @@ const MenteeProfile = ({ currentMentee }) => {
           {/*dynamic questions*/}
           {currentMentee.bio_questions.map(question => {
             return (
-              <div key={question.qId}>
+              <>
                 <Divider plain>{question.question}</Divider>
                 <p>{question.answer}</p>
-              </div>
+              </>
             );
           })}
 
           {/*notes*/}
           {currentMentee.admin_notes.map(note => {
             return (
-              <div key={note.qId}>
+              <>
                 <Divider plain>{note.question}</Divider>
                 <p>{note.answer}</p>
-              </div>
+              </>
             );
           })}
 
