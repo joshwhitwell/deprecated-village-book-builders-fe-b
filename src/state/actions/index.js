@@ -86,10 +86,10 @@ export const fetchHeadmasterSchool = id => dispatch => {
     })
     .catch(err => console.dir(err));
 };
-// &account_status=Inactive
+
 export const fetchPendingTeachers = id => dispatch => {
   axiosWithAuth()
-    .get(`/teacher?schoolId=${id}`)
+    .get(`/teacher?schoolId=${id}&account_status=Inactive`)
     .then(res => {
       console.log('fetchPendingTeacher action --> ', res.data);
       dispatch({
@@ -100,9 +100,44 @@ export const fetchPendingTeachers = id => dispatch => {
     .catch(err => console.dir(err));
 };
 
+export const patchTeacherStatus = (id, status) => dispatch => {
+  axiosWithAuth()
+    .patch(`/teacher/${id}`, { account_status: `${status}` })
+    .then(res => {
+      console.log('patchTeacherStatus action --> ', res.data);
+      dispatch({
+        type: actionTypes.PATCH_TEACHER_STATUS,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
+};
+
+export const patchSchoolTeacherId = (id, teacherId) => dispatch => {
+  let teachersArray = [];
+
+  axiosWithAuth()
+    .get(`/school/${id}`)
+    .then(res => {
+      teachersArray = res.data.teacherId.filter(value => teacherId !== value);
+      axiosWithAuth()
+        .patch(`/school/${id}`, { teacherId: teachersArray })
+        .then(res => {
+          console.log('patchSchoolTeacherId action --> ', res.data);
+          dispatch({
+            type: actionTypes.PATCH_SCHOOL_TEACHERID,
+            payload: res.data,
+          });
+        })
+        .catch(err => console.dir(err));
+    })
+    .catch(err => console.dir(err));
+};
+
 // -----------------------
 // VILLAGES
 // -----------------------
+
 
 export const fetchVillage = id => dispatch => {
   // console.log("ACTIONSindexFetchVillage --> test", process.env.REACT_APP_BASEURL)

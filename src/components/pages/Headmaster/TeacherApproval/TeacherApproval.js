@@ -1,11 +1,15 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { connect } from 'react-router-dom';
-import { Profile, ComponentTitle, Label, Button } from 'antd';
+import { connect } from 'react-redux';
+import { ComponentTitle } from '../../../common/';
+import { Button } from 'antd';
+import { Label, Profile } from '../../../common/ProfileStyle';
 
 import {
   fetchPendingTeachers,
   fetchHeadmasterProfile,
+  patchTeacherStatus,
+  patchSchoolTeacherId,
 } from '../../../../state/actions/index.js';
 
 function TeacherApproval(props) {
@@ -17,6 +21,25 @@ function TeacherApproval(props) {
     awaitProfile();
   }, []);
 
+  function onConfirmClick(e, teacherId) {
+    e.preventDefault();
+    async function awaitPatch() {
+      await props.patchTeacherStatus(teacherId, 'Active');
+      props.fetchPendingTeachers(props.headMasterProfile.schoolId);
+    }
+    awaitPatch();
+  }
+
+  function onDenyClick(e, schoolId, teacherId) {
+    e.preventDefault();
+    async function awaitPatch() {
+      await props.patchTeacherStatus(teacherId, 'Denied');
+      await props.patchSchoolTeacherId(schoolId, teacherId);
+      props.fetchPendingTeachers(props.headMasterProfile.schoolId);
+    }
+    awaitPatch();
+  }
+
   return (
     <Profile>
       <ComponentTitle titleText="Teacher Approval" />
@@ -26,10 +49,18 @@ function TeacherApproval(props) {
           <div key={`${teacher.id}-${ind}`}>
             <p>{`${teacher.first_name} ${teacher.last_name}`}</p>
             <Label>Actions:</Label>
-            <p>
-              <Button>Confirm</Button>
-              <Button>Deny</Button>
-            </p>
+            <div className="confirm-deny-container">
+              <Button onClick={e => onConfirmClick(e, teacher.id)}>
+                Confirm
+              </Button>
+              <Button
+                onClick={e =>
+                  onDenyClick(e, props.headMasterProfile.schoolId, teacher.id)
+                }
+              >
+                Deny
+              </Button>
+            </div>
           </div>
         );
       })}
@@ -50,4 +81,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   fetchHeadmasterProfile,
   fetchPendingTeachers,
+  patchTeacherStatus,
+  patchSchoolTeacherId,
 })(TeacherApproval);
