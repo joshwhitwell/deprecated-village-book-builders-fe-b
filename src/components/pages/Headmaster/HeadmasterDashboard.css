@@ -35,7 +35,7 @@
 }
 
 .headmasterDashboard {
-	margin-left: 340px;
+	margin-left: 300px;
 }
 
 .menuIcon {
@@ -90,6 +90,14 @@
 
 .menteeModal{
 	background-color: rgb(236, 166, 73);
+}
+
+.menteeContainer {
+	padding: 25px;
+}
+
+.menteeContainer h1 {
+	text-align: center;
 }
 
 .menteeProfileWrapper {
