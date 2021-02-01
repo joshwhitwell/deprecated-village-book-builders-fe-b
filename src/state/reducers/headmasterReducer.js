@@ -5,6 +5,8 @@ import {
   FETCH_VILLAGE,
   FETCH_HEADMASTER_PROFILE,
   FETCH_PENDING_TEACHERS,
+  PATCH_TEACHER_STATUS,
+  PATCH_SCHOOL_TEACHERID,
   FETCH_MENTEE_SUCCESS,
   FETCH_MENTEE_FAILURE,
   FETCH_MENTEE_START,
@@ -35,6 +37,10 @@ const reducer = (state = initialState, action) => {
       };
     case FETCH_PENDING_TEACHERS:
       return { ...state, pendingTeachers: action.payload };
+    case PATCH_TEACHER_STATUS:
+      return { ...state };
+    case PATCH_SCHOOL_TEACHERID:
+      return { ...state };
     case FETCH_MENTEE_SUCCESS:
       return {
         ...state,
