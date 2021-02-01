@@ -86,18 +86,6 @@
   margin-right: 10px;
 }
 
-.mentee_Resources {
-  padding: 25px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.card_Container {
-  width: 300px;
-  height: 300px;
-}
-
 .menteeModal {
   background-color: rgb(236, 166, 73);
 }
