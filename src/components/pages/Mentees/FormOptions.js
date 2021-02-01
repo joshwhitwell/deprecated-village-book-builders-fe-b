@@ -13,9 +13,7 @@ const { Option } = Select;
 const subjects = ['English', 'Science', 'Math', 'Reading'];
 
 export const subjectOptions = subjects.map(subject => (
-  <Option key={subject} value={subject} name="subjects">
-    {subject}
-  </Option>
+  <Option key={subject}>{subject}</Option>
 ));
 
 //initialize grade options
@@ -36,9 +34,16 @@ const grades = [
 ];
 
 export const gradeOptions = grades.map(grade => (
-  <Option key={grade} value={grade} name="grade">
-    {grade}
-  </Option>
+  <Option key={grade}>{grade}</Option>
+));
+
+//initialize proficiency options
+const proficiency = [];
+for (let i = 1; i < 14; i++) {
+  proficiency.push(i);
+}
+export const proficiencyOptions = proficiency.map(proficiency => (
+  <Option key={proficiency}>{proficiency}</Option>
 ));
 
 //initialize language options
@@ -52,21 +57,30 @@ const languages = [
 ];
 
 export const languageOptions = languages.map(language => (
-  <Option key={language} value={language} name="languages">
-    {language}
-  </Option>
+  <Option key={language}>{language}</Option>
 ));
 
 //initialize country options
 export const countryOptions = countries.map(country => (
-  <Option key={country} value={country} name="home_country">
-    {country}
-  </Option>
+  <Option key={country}>{country}</Option>
 ));
 
 //initialize time zone options
 export const timeZoneOptions = time_zones.map(time_zone => (
-  <Option key={time_zone.name} value={time_zone.name} name="home_time_zone">
-    {time_zone.name}
-  </Option>
+  <Option key={time_zone.name}>{time_zone.name}</Option>
+));
+
+//initialize contact method options
+const methods = [
+  'phone',
+  'email',
+  'mail',
+  'wechat',
+  'duo',
+  'facebook',
+  'twitter',
+];
+
+export const methodOptions = methods.map(method => (
+  <Option key={method}>{method}</Option>
 ));
