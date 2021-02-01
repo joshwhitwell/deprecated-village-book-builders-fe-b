@@ -56,8 +56,8 @@ function ProgramDashboard() {
           <Route path="/mentees/signup" component={MenteeSignup} />
           <Route path="/mentees" component={Mentees} />
           <Route path="/logout" component={Logout} />
+          <Route path="/" render={() => <Welcome />} />
         </Switch>
-        <Welcome />
       </Dashboard>
 
       {desktop ? null : (

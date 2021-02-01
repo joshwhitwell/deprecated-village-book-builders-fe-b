@@ -37,7 +37,7 @@ const Mentees = props => {
   const moreInfoHandler = (e, menteeData) => {
     if (showModal) {
       setShowModal(false);
-      setCurrentMentee({});
+      // setCurrentMentee({});
       setEditing(false);
     } else {
       setShowModal(true);
