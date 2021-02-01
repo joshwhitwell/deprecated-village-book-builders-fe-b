@@ -27,6 +27,7 @@ import {
   methodOptions,
 } from './FormOptions';
 
+//destructure TextArea
 const { TextArea } = Input;
 
 const EditMentee = props => {
@@ -106,7 +107,6 @@ const EditMentee = props => {
       mentor_assignment: '',
       mentoring_time_slot: null,
     };
-    console.log(formattedValues);
     props.editMentee(props.currentMentee.id, formattedValues);
     history.push('/mentees/signup/complete');
   };
@@ -128,7 +128,7 @@ const EditMentee = props => {
         <Form.Item
           label="First Name"
           name="first_name"
-          rules={[{ required: true, message: 'First Name is required.' }]}
+          rules={[{ required: true, message: 'First name is required.' }]}
           initialValue={props.currentMentee.first_name}
         >
           <Input type="text" />
@@ -137,7 +137,7 @@ const EditMentee = props => {
         <Form.Item
           label="Last Name"
           name="last_name"
-          rules={[{ required: true, message: 'Last Name is required.' }]}
+          rules={[{ required: true, message: 'Last name is required.' }]}
           initialValue={props.currentMentee.last_name}
         >
           <Input type="text" />
