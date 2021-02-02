@@ -1,11 +1,14 @@
+//dependencies
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { ThemeProvider } from 'styled-components';
+//actions
 import { fetchTeacherProfile } from '../../../../state/actions';
 
+//styles
+import { ThemeProvider } from 'styled-components';
 import { Profile, Label } from '../../../common/ProfileStyle';
 import { Button } from '../../../common';
 import { ComponentTitle } from '../../../common';
