@@ -35,11 +35,11 @@ You can find the deployed project at [VBB-Deployment](main.d364h8tamcqe39.amplif
 | Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
 | Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
 
-| Josh Whitwell | Joon Kim     | Beau Bradley | Rohith Sachdeva | Andre Jeon | Henry Davis |
-| ------------- | ------------ | ------------ | --------------- | ---------- | ----------- |
-| Content Cell  | Content Cell |
-| ------------- | ------------ | ------------ | --------------- | ---------- | ----------- |
-| Content Cell  | Content Cell |
+| Josh Whitwell | Joon Kim     | Beau Bradley | Rohith Sachdeva | Andre Jeon   | Henry Davis  |
+| ------------- | ------------ | ------------ | --------------- | ------------ | ------------ |
+| Content Cell  | Content Cell | Content Cell | Content Cell    | Content Cell | Content Cell |
+| Content Cell  | Content Cell | Content Cell | Content Cell    | Content Cell | Content Cell |
+| Content Cell  | Content Cell | Content Cell | Content Cell    | Content Cell | Content Cell |
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
