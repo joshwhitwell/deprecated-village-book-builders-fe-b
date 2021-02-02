@@ -35,11 +35,13 @@ You can find the deployed project at [VBB-Deployment](main.d364h8tamcqe39.amplif
 | Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
 | Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
 
-| Josh Whitwell                                                                                                                   | Joon Kim     | Beau Bradley | Rohith Sachdeva | Andre Jeon   | Henry Davis  |
-| ------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------------ | --------------- | ------------ | ------------ |
-| [<img src="https://ca.slack-edge.com/ESZCHB482-W0180TANQ73-30c122b765f7-512" width = "150" />](https://github.com/Joshwhitwell) | Content Cell | Content Cell | Content Cell    | Content Cell | Content Cell |
-| Content Cell                                                                                                                    | Content Cell | Content Cell | Content Cell    | Content Cell | Content Cell |
-| Content Cell                                                                                                                    | Content Cell | Content Cell | Content Cell    | Content Cell | Content Cell |
+| Josh Whitwell                                                                                                                   | Joon Kim                                                                                                                                                            | Beau Bradley | Rohith Sachdeva | Andre Jeon   | Henry Davis  |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ------------ | ------------ |
+| [<img src="https://ca.slack-edge.com/ESZCHB482-W0180TANQ73-30c122b765f7-512" width = "150" />](https://github.com/Joshwhitwell) | [<img src="https://avatars.githubusercontent.com/u/66539462?s=460&u=4ca0fa8e9a34c1e63f261c952670f2335289eaf2&v=4" width = "150" />](https://github.com/Sunkist5691) | Content Cell | Content Cell    | Content Cell | Content Cell |
+| Content Cell                                                                                                                    | Content Cell                                                                                                                                                        | Content Cell | Content Cell    | Content Cell | Content Cell |
+| Content Cell                                                                                                                    | Content Cell                                                                                                                                                        | Content Cell | Content Cell    | Content Cell | Content Cell |
+
+https://avatars.githubusercontent.com/u/66539462?s=460&u=4ca0fa8e9a34c1e63f261c952670f2335289eaf2&v=4
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
