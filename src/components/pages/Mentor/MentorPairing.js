@@ -158,7 +158,7 @@ const MentorPairing = ({
               >
                 <Descriptions.Item label="Mentor">{`${eachMentor.first_name} ${eachMentor.last_name}`}</Descriptions.Item>
                 <Descriptions.Item label="Mentee">{`${menteeInfo.first_name}`}</Descriptions.Item>
-                <Descriptions.Item label="Language">{`${menteeInfo.primary_language}`}</Descriptions.Item>
+                <Descriptions.Item label="Language">{`${menteeInfo.first_language}`}</Descriptions.Item>
                 <Descriptions.Item label="Time">{`${moment(
                   eachMentor.time_slots
                 ).format('MMM Do YY')}`}</Descriptions.Item>
