@@ -23,7 +23,7 @@ const MenteeResources = () => {
               >
                 <img
                   alt="Khan Academy"
-                  src="https://pbs.twimg.com/profile_images/1122934185570852865/leT97MR8.png" //This looks weird... might be due to it being a landscape photo.. or rather the other ones looks weird
+                  src="https://pbs.twimg.com/profile_images/1122934185570852865/leT97MR8.png"
                 />
               </a>
             }
