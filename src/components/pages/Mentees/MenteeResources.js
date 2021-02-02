@@ -23,7 +23,7 @@ const MenteeResources = () => {
               >
                 <img
                   alt="Khan Academy"
-                  src="https://cdn.kastatic.org/images/khan-logo-dark-background-2.png" //This looks weird... might be due to it being a landscape photo.. or rather the other ones looks weird
+                  src="https://pbs.twimg.com/profile_images/1122934185570852865/leT97MR8.png" //This looks weird... might be due to it being a landscape photo.. or rather the other ones looks weird
                 />
               </a>
             }
@@ -31,7 +31,7 @@ const MenteeResources = () => {
             <Meta
               style={{ height: 100 }}
               title="Khan Academy"
-              description="Click here to practice math!"
+              description="Math videos and exercises for K-8"
             />
           </Card>
         </div>
@@ -59,7 +59,7 @@ const MenteeResources = () => {
             <Meta
               style={{ height: 100 }}
               title="Crash Course"
-              description="Find fun videos to learn from!"
+              description="Video channel covering a variety of subjects.  Find fun and educational videos to learn from!"
             />
           </Card>
         </div>
@@ -82,7 +82,7 @@ const MenteeResources = () => {
           >
             <Meta
               title="IXL"
-              description="Search topics and practice skills"
+              description="Math and language arts help for all age groups, the website is categorized by grade."
               style={{ height: 100 }}
             />
           </Card>
@@ -99,14 +99,14 @@ const MenteeResources = () => {
               >
                 <img
                   alt="Notion"
-                  src="https://i.pcmag.com/imagery/reviews/05FBstbqla0pEWrlFLTw4ML-5..1569474012.jpg"
+                  src="https://i.pinimg.com/474x/5f/5c/91/5f5c916b12b4957e957f368ca2e983fe.jpg"
                 />
               </a>
             }
           >
             <Meta
               title="Notion"
-              description="Track/Journal your progress.  Sign up with your google account"
+              description="Mentees and mentors are encouraged to journal (self-authoring), set/review goals. They log in with their google accounts."
               style={{ height: 100 }}
             />
           </Card>
@@ -130,7 +130,7 @@ const MenteeResources = () => {
           >
             <Meta
               title="K-5 Learning"
-              description="Practice worksheets for grades K-5"
+              description="Worksheets for math, language arts, reading comprehension, spelling, and grammar."
               style={{ height: 100 }}
             />
           </Card>
@@ -147,14 +147,14 @@ const MenteeResources = () => {
               >
                 <img
                   alt="Math drills"
-                  src="https://www.math-drills.com/images/pinterest/index.png"
+                  src="https://maji-production-store-assets.imgix.net/548acdd828289218f8cbc45e8caa1db4d346ebac88b6d5f0011b61eb4a16?ixlib=rails-4.1.0&auto=format&fit=crop&dpr=2.0&h=170&w=170"
                 />
               </a>
             }
           >
             <Meta
               title="Math Drills"
-              description="Math worksheets for extra practice"
+              description="Provides math worksheets for addition, subtraction, multiplication, division, geometry, integers, real numbers, and more."
               style={{ height: 100 }}
             />
           </Card>
@@ -171,14 +171,14 @@ const MenteeResources = () => {
               >
                 <img
                   alt="Splash Math"
-                  src="https://cdn.splashmath.com/logo/splashlearn_logo_withbrandmark.jpg"
+                  src="https://edsurge.imgix.net/uploads/product/image/851/SplashLearn_Square_logo_lockup-1603481543.jpg?auto=compress%2Cformat&w=480&h=480&fit=crop"
                 />
               </a>
             }
           >
             <Meta
               title="Splash Math"
-              description="Learning platform with reports and analytics on your progress"
+              description="Fun Math Activities for Kids!"
               style={{ height: 100 }}
             />
           </Card>
@@ -195,14 +195,15 @@ const MenteeResources = () => {
               >
                 <img
                   alt="English For Everyone"
-                  src="https://www.dkefe.com/images/logo.png"
+                  src="https://edsurge.imgix.net/uploads/product/image/1506/FBRT-1456779904.png?auto=compress%2Cformat&w=480&h=480&fit=crop"
                 />
               </a>
             }
           >
             <Meta
               title="English for Everyone"
-              description="Various exercises to practice your english skills"
+              description="Worksheets for nouns, verbs, grammatical prepositions, punctuation, sentence construction.
+              "
               style={{ height: 100 }}
             />
           </Card>
@@ -219,7 +220,7 @@ const MenteeResources = () => {
               >
                 <img
                   alt="idroo"
-                  src="https://lh3.googleusercontent.com/proxy/goag__0iRmasqXbyIoD-wvDRFKKQRhi74q2ridqe3xL2-EAYBmtbdQZ5Ah0hElE2YmTIqK4IcBQ-ube9nDPmMBIvB3bey1tljNtS75OKY9ZydX9sfwD_Rfx4b8uihA"
+                  src="https://learntoteachonlineormakevideotutorials.files.wordpress.com/2015/09/idroo.png"
                 />
               </a>
             }
@@ -261,20 +262,20 @@ const MenteeResources = () => {
             style={{ width: 300 }}
             cover={
               <a
-                href="https://www.w3schools.com"
+                href="https://www.google.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <img
-                  alt="Khan Academy"
-                  src="https://cdn.kastatic.org/images/khan-logo-dark-background-2.png"
+                  alt="Google"
+                  src="https://expresswriters.com/wp-content/uploads/2015/09/google-new-logo-450x450.jpg"
                 />
               </a>
             }
           >
             <Meta
-              title="Khan Academy"
-              description="Learning platform"
+              title="Google Search"
+              description="Many questions can be answered on Google.  Try searching for answers!"
               style={{ height: 100 }}
             />
           </Card>
@@ -285,20 +286,20 @@ const MenteeResources = () => {
             style={{ width: 300 }}
             cover={
               <a
-                href="https://www.w3schools.com"
+                href="http://oer2go.org/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <img
-                  alt="Khan Academy"
-                  src="https://cdn.kastatic.org/images/khan-logo-dark-background-2.png"
+                  alt="OfflineResourcesToGo"
+                  src="https://media-exp1.licdn.com/dms/image/C560BAQFmxAff3nBvUQ/company-logo_200_200/0/1538150443024?e=2159024400&v=beta&t=6qq9ehThzt6_3-trwmin5HhXp20alPcE4UwagGDFWrM"
                 />
               </a>
             }
           >
             <Meta
-              title="Khan Academy"
-              description="Learning platform"
+              title="Offline Resources"
+              description="A collection of tools and apps for offline, digital education on the local server"
               style={{ height: 100 }}
             />
           </Card>
