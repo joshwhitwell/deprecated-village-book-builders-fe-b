@@ -9,7 +9,6 @@ import { useSelector, connect } from 'react-redux';
 import { Descriptions, Select, Button } from 'antd';
 import { Popconfirm, message } from 'antd';
 
-
 import moment from 'moment';
 import './MentorPairing.css';
 
@@ -121,14 +120,13 @@ const MentorPairing = ({
     message.success('Successfully Unmatched!');
   };
 
-
   return (
     <div className="mentor__pairing">
       <div className="pairing__box">
         <section className="mentors selection">{selectMentor()}</section>
         <section className="mentees selection">{selectMentee()}</section>
         <Button
-          className="match-button"
+          className="match__button"
           type="primary"
           shape="round"
           style={{ backgroundColor: '#ff914d', border: '#ff914d' }}
@@ -148,7 +146,7 @@ const MentorPairing = ({
           }
 
           return (
-            <div className="descriptions-container" key={eachMentor.id}>
+            <div className="descriptions__container" key={eachMentor.id}>
               <hr />
               <Descriptions
                 className="descriptions"
@@ -170,7 +168,6 @@ const MentorPairing = ({
               >
                 <Button>Cancel</Button>
               </Popconfirm>
-              <Button onClick={() => handleCancel(eachMentor)}>Cancel</Button>
             </div>
           );
         })}

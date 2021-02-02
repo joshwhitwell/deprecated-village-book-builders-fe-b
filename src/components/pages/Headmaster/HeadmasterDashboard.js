@@ -90,14 +90,15 @@ function HeadmasterDashboard(props) {
     <div>
       <Dashboard>
         <Switch>
+
           <Route exact path="/" render={() => <Welcome />} />
-          <Route path="/mentees" component={Mentees} />
-          <Route path="/mentor-pairings" component={MentorPairing} />
-          <Route path="/teacher-approval" component={TeacherApproval} />
+          <Route exact path="/mentees" component={Mentees} />
+          <Route exact path="/mentor-pairings" component={MentorPairing} />
+          <Route exact path="/teacher-approval" component={TeacherApproval} />
           <Route exact path="/profile" component={HeadmasterProfile} />
-          <Route path="/profile/edit/:id" component={ProfileForm} />
+          <Route exact path="/profile/edit/:id" component={ProfileForm} />
           {/* <Route path="/mentor-advisor" /> */}
-          <Route path="/school-village">
+          <Route exact path="/school-village">
             <Village />
             <Schools />
           </Route>
@@ -108,7 +109,7 @@ function HeadmasterDashboard(props) {
           />
           <Route exact path="/school/edit/:schoolId" component={SchoolForm} />
           {/* <Route path="/library" /> */}
-          <Route path="/logout" component={Logout} />
+          <Route exact path="/logout" component={Logout} />
         </Switch>
       </Dashboard>
       {desktop ? null : (
