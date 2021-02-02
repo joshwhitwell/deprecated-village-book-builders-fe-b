@@ -17,8 +17,8 @@ You can find the deployed project at [VBB-Deployment](main.d364h8tamcqe39.amplif
 <br>
 <br>
 
-| [Josh Whitwell](https://github.com/) | [Beau Bradley](https://github.com/) | [Rohith Sachdeva](https://github.com/) | [Joon Kim](https://github.com/) | [Andre Jeon](https://github.com/)
-[Henry Davis](https://github.com/) |
+| [Josh Whitwell](https://github.com/)
+| [Beau Bradley](https://github.com/) | [Rohith Sachdeva](https://github.com/) | [Joon Kim](https://github.com/) | [Andre Jeon](https://github.com/) |
 | :-------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: |
 | [<img src="https://ca.slack-edge.com/ESZCHB482-W016ECL84RW-afefea5a0c53-512" width = "200" />](https://github.com/Jahteo) | [<img src="https://ca.slack-edge.com/ESZCHB482-W0123RU151V-ffba83afb622-512" width = "200" />](https://github.com/ferror18) | [<img src="https://ca.slack-edge.com/ESZCHB482-W0138D8CX0Q-a7076291a0cf-512" width = "200" />](https://github.com/yirano) | [<img src="https://ca.slack-edge.com/ESZCHB482-W012QNXUFMJ-92e87d69900d-512" width = "200" />](https://github.com/jidelson) | [<img src="https://ca.slack-edge.com/ESZCHB482-W0123RP3C9M-fff2ba750184-512" width = "200" />](https://github.com/kima-92) |
 | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Jahteo) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/ferror18) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/yirano) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/jidelson) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/kima-92) |
@@ -26,6 +26,11 @@ You can find the deployed project at [VBB-Deployment](main.d364h8tamcqe39.amplif
 
 <br>
 <br>
+
+| First Header                                                                                                   | Second Header |
+| -------------------------------------------------------------------------------------------------------------- | ------------- |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="200"> ](https://www.linkedin.com/) | Content Cell  |
+| Content Cell                                                                                                   | Content Cell  |
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
