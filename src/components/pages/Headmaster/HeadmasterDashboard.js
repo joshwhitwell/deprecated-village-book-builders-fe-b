@@ -32,7 +32,7 @@ import {
   fetchPendingTeachers,
 } from '../../../state/actions/index.js';
 import Logout from '../../Logout.js';
-// import MentorPairings from './Mentees/Mentees.js';
+import Mentees from '../Mentees/Mentees';
 import MentorPairing from '../Mentor/MentorPairing';
 
 function HeadmasterDashboard(props) {
@@ -56,7 +56,7 @@ function HeadmasterDashboard(props) {
 
   useEffect(() => {
     fetchHeadmasterProfile(1);
-  }, []);
+  }, [fetchHeadmasterProfile]);
 
   useEffect(() => {
     fetchPendingTeachers(headMasterProfile.schoolId);
@@ -90,14 +90,13 @@ function HeadmasterDashboard(props) {
     <div>
       <Dashboard>
         <Switch>
-
-          <Route exact path="/" component={Welcome} />
-          <Route path="/mentor-pairings" component={Mentees} />
+          <Route exact path="/" render={() => <Welcome />} />
+          <Route path="/mentees" component={Mentees} />
+          <Route path="/mentor-pairings" component={MentorPairing} />
           <Route path="/teacher-approval" component={TeacherApproval} />
-
           <Route exact path="/profile" component={HeadmasterProfile} />
           <Route path="/profile/edit/:id" component={ProfileForm} />
-          <Route path="/mentor-advisor" />
+          {/* <Route path="/mentor-advisor" /> */}
           <Route path="/school-village">
             <Village />
             <Schools />
@@ -108,7 +107,7 @@ function HeadmasterDashboard(props) {
             component={VillageForm}
           />
           <Route exact path="/school/edit/:schoolId" component={SchoolForm} />
-          <Route path="/library" />
+          {/* <Route path="/library" /> */}
           <Route path="/logout" component={Logout} />
         </Switch>
       </Dashboard>
@@ -143,21 +142,24 @@ function HeadmasterDashboard(props) {
           <NavLink to="/profile" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Profile</button>
           </NavLink>
+          <NavLink to="/mentees" onClick={() => setVisible(true)}>
+            <button className="btn l2-btn menuLinks">Mentees</button>
+          </NavLink>
           <NavLink to={'/mentor-pairings'} onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentor Pairings</button>
           </NavLink>
           <NavLink to={'/teacher-approval'} onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Pending Teachers</button>
           </NavLink>
-          <NavLink to="/mentor-advisor" onClick={() => setVisible(true)}>
+          {/* <NavLink to="/mentor-advisor" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentor Advisor</button>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/school-village" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">School/Village</button>
           </NavLink>
-          <NavLink to="/library" onClick={() => setVisible(true)}>
+          {/* <NavLink to="/library" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Library</button>
-          </NavLink>
+          </NavLink> */}
           <Link to="/logout" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Logout</button>
           </Link>

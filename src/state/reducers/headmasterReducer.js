@@ -3,7 +3,9 @@ import {
   FETCH_HEADMASTER_SCHOOLS,
   FETCH_VILLAGE,
   FETCH_HEADMASTER_PROFILE,
-
+  EDIT_HEADMASTER_START,
+  EDIT_HEADMASTER_SUCCESS,
+  EDIT_HEADMASTER_FAILURE,
   FETCH_PENDING_TEACHERS,
   PATCH_TEACHER_STATUS,
   PATCH_SCHOOL_TEACHERID,
@@ -18,6 +20,7 @@ const initialState = {
   headmasterProfile: '',
   mentees: [],
   pendingTeachers: [],
+  err: '',
 };
 
 // Fetch school data for headmaster
@@ -32,7 +35,14 @@ const reducer = (state = initialState, action) => {
         ...state,
         villageData: action.payload,
       };
-      
+
+    case EDIT_HEADMASTER_START:
+      return { ...state };
+    case EDIT_HEADMASTER_SUCCESS:
+      return { ...state, headmasterProfile: action.payload };
+    case EDIT_HEADMASTER_FAILURE:
+      return { ...state, err: action.payload };
+
     case FETCH_PENDING_TEACHERS:
       return { ...state, pendingTeachers: action.payload };
     case PATCH_TEACHER_STATUS:
@@ -44,7 +54,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         mentees: action.payload,
       };
-      
+
     case FETCH_MENTEE_START:
       return { ...state };
     case FETCH_MENTEE_FAILURE:
