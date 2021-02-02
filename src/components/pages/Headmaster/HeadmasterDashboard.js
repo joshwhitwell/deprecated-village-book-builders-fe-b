@@ -94,6 +94,7 @@ function HeadmasterDashboard(props) {
           <Route exact path="/" component={Welcome} />
           <Route path="/mentor-pairings" component={Mentees} />
           <Route path="/teacher-approval" component={TeacherApproval} />
+
           <Route exact path="/profile" component={HeadmasterProfile} />
           <Route path="/profile/edit/:id" component={ProfileForm} />
           <Route path="/mentor-advisor" />
