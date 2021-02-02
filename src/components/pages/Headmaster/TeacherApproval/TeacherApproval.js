@@ -14,11 +14,13 @@ import {
 
 function TeacherApproval(props) {
   useEffect(() => {
-    async function awaitProfile() {
-      await props.fetchHeadmasterProfile(1);
-      props.fetchPendingTeachers(props.headMasterProfile.schoolId);
+    if (!props.pendingTeachers) {
+      async function awaitProfile() {
+        await props.fetchHeadmasterProfile(1);
+        props.fetchPendingTeachers(props.headMasterProfile.schoolId);
+      }
+      awaitProfile();
     }
-    awaitProfile();
   }, []);
 
   function onConfirmClick(e, teacherId) {

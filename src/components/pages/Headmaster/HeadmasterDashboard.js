@@ -15,9 +15,10 @@ import SchoolForm from '../School/SchoolForm.js';
 import HeadmasterProfile from './HeadmasterProfile/Profile.js';
 import ProfileForm from './HeadmasterProfile/ProfileForm.js';
 import TeacherApproval from './TeacherApproval/TeacherApproval.js';
+import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
 // import HeadmasterNav from './Drawer';
 // import TestComponent from './TestComponent';
-import { Drawer, Button } from 'antd';
+import { Drawer, Button, message } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import './HeadmasterDashboard.css';
 import {
@@ -35,6 +36,7 @@ import Logout from '../../Logout.js';
 import Mentees from '../Mentees/Mentees';
 
 function HeadmasterDashboard(props) {
+  let { headMasterProfile, pendingTeachers } = props;
   const [visible, setVisible] = useState(true);
   const [desktop, setDesktop] = useState(true);
 
@@ -48,12 +50,21 @@ function HeadmasterDashboard(props) {
   }, []);
 
   useEffect(() => {
-    async function awaitProfile() {
-      await props.fetchHeadmasterProfile(1);
-      props.fetchPendingTeachers(props.headMasterProfile.schoolId);
-    }
-    awaitProfile();
+    props.fetchHeadmasterProfile(1);
   }, []);
+
+  useEffect(() => {
+    props.fetchPendingTeachers(headMasterProfile.schoolId);
+  }, [headMasterProfile]);
+
+  useEffect(() => {
+    if (pendingTeachers.length > 0) {
+      message.warning(
+        `There are ${pendingTeachers.length} teachers awaiting approval.`,
+        4
+      );
+    }
+  }, [pendingTeachers]);
 
   const onClose = () => {
     setVisible(false);
@@ -74,6 +85,7 @@ function HeadmasterDashboard(props) {
     <div>
       <Dashboard>
         <Switch>
+          <Route exact path="/" component={Welcome} />
           <Route path="/mentor-pairings" component={Mentees} />
           <Route path="/teacher-approval" component={TeacherApproval} />
           <Route exact path="/profile" component={HeadmasterProfile} />
@@ -93,11 +105,6 @@ function HeadmasterDashboard(props) {
           <Route path="/logout" component={Logout} />
         </Switch>
       </Dashboard>
-      <div>
-        {' '}
-        You currently have {props.pendingTeachers.length} teachers waiting
-        approval.
-      </div>
       {desktop ? null : (
         // inline style to force animation
         <div style={visible ? menuMove : menuIcon}>
