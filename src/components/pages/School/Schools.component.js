@@ -13,8 +13,8 @@ const Schools = props => {
   return (
     <StyledSchools>
       <ComponentTitle titleText="Schools" />
-      {props.schools.map(s => (
-        <School school={s} />
+      {props.schools.map((s, i) => (
+        <School school={s} key={i} />
       ))}
     </StyledSchools>
   );

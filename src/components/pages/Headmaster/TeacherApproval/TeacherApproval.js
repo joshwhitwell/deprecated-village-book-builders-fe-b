@@ -13,15 +13,26 @@ import {
 } from '../../../../state/actions/index.js';
 
 function TeacherApproval(props) {
+  const {
+    fetchHeadmasterProfile,
+    fetchPendingTeachers,
+    pendingTeachers,
+    headMasterProfile,
+  } = props;
   useEffect(() => {
-    if (!props.pendingTeachers) {
+    if (!pendingTeachers) {
       async function awaitProfile() {
-        await props.fetchHeadmasterProfile(1);
-        props.fetchPendingTeachers(props.headMasterProfile.schoolId);
+        await fetchHeadmasterProfile(1);
+        fetchPendingTeachers(headMasterProfile.schoolId);
       }
       awaitProfile();
     }
-  }, []);
+  }, [
+    pendingTeachers,
+    fetchHeadmasterProfile,
+    fetchPendingTeachers,
+    headMasterProfile,
+  ]);
 
   function onConfirmClick(e, teacherId) {
     e.preventDefault();

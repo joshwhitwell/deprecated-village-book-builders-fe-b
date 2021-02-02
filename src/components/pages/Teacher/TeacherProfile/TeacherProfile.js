@@ -13,11 +13,9 @@ import { ComponentTitle } from '../../../common';
 const TeacherProfile = props => {
   const { userId } = useSelector(state => state.authReducer);
   const { profile } = props;
-  const { fetchTeacherProfile } = props;
   useEffect(() => {
     props.fetchTeacherProfile(userId - 10); // change this later with login
   }, [props, userId]);
-
 
   return (
     <>
