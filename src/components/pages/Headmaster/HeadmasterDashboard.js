@@ -90,9 +90,8 @@ function HeadmasterDashboard(props) {
     <div>
       <Dashboard>
         <Switch>
-
           <Route exact path="/" component={Welcome} />
-          <Route path="/mentor-pairings" component={Mentees} />
+          <Route path="/mentor-pairings" component={MentorPairing} />
           <Route path="/teacher-approval" component={TeacherApproval} />
 
           <Route exact path="/profile" component={HeadmasterProfile} />
