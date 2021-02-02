@@ -149,20 +149,20 @@ const MenteeProfile = ({ currentMentee }) => {
           {/*dynamic questions*/}
           {currentMentee.bio_questions.map(question => {
             return (
-              <>
+              <div key={question.qId}>
                 <Divider plain>{question.question}</Divider>
                 <p>{question.answer}</p>
-              </>
+              </div>
             );
           })}
 
           {/*notes*/}
           {currentMentee.admin_notes.map(note => {
             return (
-              <>
+              <div key={note.qId}>
                 <Divider plain>{note.question}</Divider>
                 <p>{note.answer}</p>
-              </>
+              </div>
             );
           })}
 

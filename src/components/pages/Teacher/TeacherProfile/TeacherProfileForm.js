@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { connect, useSelector } from 'react-redux';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { Form, Input, Radio } from 'antd';
 import { editTeacherProfile } from '../../../../state/actions';
 import {
@@ -11,9 +11,7 @@ import {
 } from '../../../common/FormStyle';
 import Button from '../../../common/Button';
 import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
-import TeacherDashboard from '../TeacherDashboard';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 
 const initialState = {
   first_name: '',

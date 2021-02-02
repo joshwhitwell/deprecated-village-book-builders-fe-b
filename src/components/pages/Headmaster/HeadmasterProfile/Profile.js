@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+//dependencies
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
+
+//actions
 import { fetchHeadmasterProfile } from '../../../../state/actions';
 
+//styles
+import { ThemeProvider } from 'styled-components';
 import { Profile, Label } from '../../../common/ProfileStyle';
 import { Button } from '../../../common/';
 import { ComponentTitle } from '../../../common';
 
-// const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 const HeadmasterProfile = props => {
   const { profile } = props;
 
@@ -25,37 +28,19 @@ const HeadmasterProfile = props => {
       <Label>Address:</Label>
       <p>{profile.address}</p>
 
-      <Label>Bio:</Label>
-      <p>{profile.bio}</p>
+      <Label>GPS Coordinates</Label>
+      <p>
+        {profile.gps_coordinates
+          ? `${profile.gps_coordinates[0]}, ${profile.gps_coordinates[1]}`
+          : null}
+      </p>
 
-      <Label>Communication App:</Label>
-      <p>{profile.communication_app}</p>
+      <Label>Education Contact:</Label>
+      <p>Name: {profile.education_contact?.name}</p>
+      <p>Title: {profile.education_contact?.jobTitle}</p>
+      <p>Email: {profile.education_contact?.email}</p>
+      <p>Phone: {profile.education_contact?.phone}</p>
 
-      <Label>DOB:</Label>
-      <p>{profile.dob}</p>
-
-      <Label>General Availability:</Label>
-      <p>{profile.general_availability}</p>
-
-      <Label>Mentor Advisor Point of Contact:</Label>
-      <p>{profile.mentor_advisor_point_of_contact}</p>
-
-      <Label>Mentor Program Goals:</Label>
-      <p>{profile.goals_mentor_program}</p>
-
-      <Label>Personal Goals:</Label>
-      <p>{profile.goals_personal}</p>
-
-      <Label>School Community Goals:</Label>
-      <p>{profile.goals_school_community}</p>
-
-      <Label>Goals Mentor Program:</Label>
-      <p>{profile.goals_mentor_program}</p>
-
-      <p></p>
-
-      <Label>Time Zone:</Label>
-      <p>{profile.time_zone}</p>
       <div className="villageButtons">
         <Link to={`/profile/edit/${profile.id}`}>
           <ThemeProvider theme={{ color: '#6ac66b' }}>
