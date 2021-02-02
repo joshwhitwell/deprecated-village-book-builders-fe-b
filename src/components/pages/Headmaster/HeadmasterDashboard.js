@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   Link,
   NavLink,
@@ -14,9 +14,11 @@ import Schools from '../School/Schools.component.js';
 import SchoolForm from '../School/SchoolForm.js';
 import HeadmasterProfile from './HeadmasterProfile/Profile.js';
 import ProfileForm from './HeadmasterProfile/ProfileForm.js';
+import TeacherApproval from './TeacherApproval/TeacherApproval.js';
+import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
 // import HeadmasterNav from './Drawer';
 // import TestComponent from './TestComponent';
-import { Drawer, Button } from 'antd';
+import { Drawer, Button, message } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import './HeadmasterDashboard.css';
 import {
@@ -25,11 +27,21 @@ import {
   menuMove,
   Dashboard,
 } from './HeadmasterDashboard.style';
+import {
+  fetchHeadmasterProfile,
+  fetchPendingTeachers,
+} from '../../../state/actions/index.js';
 import Logout from '../../Logout.js';
 // import MentorPairings from './Mentees/Mentees.js';
 import MentorPairing from '../Mentor/MentorPairing';
 
-function HeadmasterDashboard() {
+function HeadmasterDashboard(props) {
+  let {
+    headMasterProfile,
+    pendingTeachers,
+    fetchHeadmasterProfile,
+    fetchPendingTeachers,
+  } = props;
   const [visible, setVisible] = useState(true);
   const [desktop, setDesktop] = useState(true);
 
@@ -41,6 +53,23 @@ function HeadmasterDashboard() {
       setDesktop(true);
     }
   }, []);
+
+  useEffect(() => {
+    fetchHeadmasterProfile(1);
+  }, []);
+
+  useEffect(() => {
+    fetchPendingTeachers(headMasterProfile.schoolId);
+  }, [headMasterProfile, fetchPendingTeachers]);
+
+  useEffect(() => {
+    if (pendingTeachers.length > 0) {
+      message.warning(
+        `There are ${pendingTeachers.length} teachers awaiting approval.`,
+        7
+      );
+    }
+  }, [pendingTeachers]);
 
   const onClose = () => {
     setVisible(false);
@@ -61,7 +90,11 @@ function HeadmasterDashboard() {
     <div>
       <Dashboard>
         <Switch>
-          <Route path="/mentor-pairings" component={MentorPairing} />
+
+          <Route exact path="/" component={Welcome} />
+          <Route path="/mentor-pairings" component={Mentees} />
+          <Route path="/teacher-approval" component={TeacherApproval} />
+
           <Route exact path="/profile" component={HeadmasterProfile} />
           <Route path="/profile/edit/:id" component={ProfileForm} />
           <Route path="/mentor-advisor" />
@@ -79,7 +112,6 @@ function HeadmasterDashboard() {
           <Route path="/logout" component={Logout} />
         </Switch>
       </Dashboard>
-
       {desktop ? null : (
         // inline style to force animation
         <div style={visible ? menuMove : menuIcon}>
@@ -105,7 +137,7 @@ function HeadmasterDashboard() {
         >
           <h2>Hello, Headmaster!</h2>
 
-          <NavLink to="/dashboard" onClick={() => setVisible(true)}>
+          <NavLink to="/" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Home</button>
           </NavLink>
           <NavLink to="/profile" onClick={() => setVisible(true)}>
@@ -113,6 +145,9 @@ function HeadmasterDashboard() {
           </NavLink>
           <NavLink to={'/mentor-pairings'} onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentor Pairings</button>
+          </NavLink>
+          <NavLink to={'/teacher-approval'} onClick={() => setVisible(true)}>
+            <button className="btn l2-btn menuLinks">Pending Teachers</button>
           </NavLink>
           <NavLink to="/mentor-advisor" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentor Advisor</button>
@@ -134,13 +169,18 @@ function HeadmasterDashboard() {
   );
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     loggedIn: state.authReducer.loggedIn,
-//     // userId: state.authReducer.userId,
-//     // role: state.authReducer.role,
-//   };
-// };
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.authReducer.loggedIn,
+    userId: state.authReducer.userId,
+    role: state.authReducer.role,
+    headMasterProfile: state.headmasterReducer.headmasterProfile,
+    pendingTeachers: state.headmasterReducer.pendingTeachers,
+  };
+};
 
-// export default connect(mapStateToProps, {})(HeadmasterDashboard);
-export default HeadmasterDashboard;
+export default connect(mapStateToProps, {
+  fetchHeadmasterProfile,
+  fetchPendingTeachers,
+})(HeadmasterDashboard);
+// export default HeadmasterDashboard;

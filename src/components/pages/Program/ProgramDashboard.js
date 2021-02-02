@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
+import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
 
 //styles
 import '../Headmaster/HeadmasterDashboard.css';
+
 import {
   menuButton,
   menuIcon,
@@ -17,6 +19,7 @@ import {
 import Logout from '../../Logout';
 import Mentees from '../Mentees/Mentees';
 import MenteeSignup from '../Mentees/MenteeSignup';
+import SignupComplete from '../Mentees/SignupComplete';
 
 function ProgramDashboard() {
   const [visible, setVisible] = useState(true);
@@ -47,11 +50,13 @@ function ProgramDashboard() {
 
   return (
     <div>
-      <Dashboard>
+      <Dashboard className="testContainer">
         <Switch>
+          <Route path="/mentees/signup/complete" component={SignupComplete} />
           <Route path="/mentees/signup" component={MenteeSignup} />
           <Route path="/mentees" component={Mentees} />
           <Route path="/logout" component={Logout} />
+          <Route path="/" render={() => <Welcome />} />
         </Switch>
       </Dashboard>
 
@@ -79,13 +84,11 @@ function ProgramDashboard() {
           width={desktop ? 300 : 500}
           height={500}
         >
-          <h2>Welcome Program Admin!</h2>
-
           <NavLink to="/mentees" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentees</button>
           </NavLink>
           <NavLink to="/mentees/signup" onClick={() => setVisible(true)}>
-            <button className="btn l2-btn menuLinks">Mentee Sign Up</button>
+            <button className="btn l2-btn menuLinks">Sign Up</button>
           </NavLink>
           <Link to="/logout" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Logout</button>

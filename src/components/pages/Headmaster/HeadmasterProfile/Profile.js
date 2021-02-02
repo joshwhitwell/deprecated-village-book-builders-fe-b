@@ -11,11 +11,7 @@ import { ComponentTitle } from '../../../common';
 // const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 const HeadmasterProfile = props => {
   const { profile } = props;
-  const { fetchHeadmasterProfile } = props;
-  useEffect(() => {
-    fetchHeadmasterProfile(1); // change this later with login
-  }, [fetchHeadmasterProfile]);
-  console.log(profile);
+
   return (
     <Profile>
       <ComponentTitle titleText="Headmaster" />

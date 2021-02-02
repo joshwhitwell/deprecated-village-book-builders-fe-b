@@ -6,6 +6,11 @@ html {
 	background-color: #fffff6;
 }
 
+* {
+	box-sizing: border-box;
+	max-width: 100%;
+}
+
 #page-container {
 	position: relative;
 	min-height: 100vh;
