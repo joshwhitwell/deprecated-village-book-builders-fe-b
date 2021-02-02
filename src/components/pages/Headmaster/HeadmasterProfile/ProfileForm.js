@@ -7,7 +7,6 @@ import { useForm } from 'antd/lib/form/Form';
 
 //actions
 import { editHeadmasterProfile } from '../../../../state/actions';
-import { fetchHeadmasterProfile } from '../../../../state/actions/index';
 
 //styles
 import {
@@ -66,6 +65,7 @@ const ProfileForm = props => {
     <FormContainer>
       <Form onFinish={handleSubmit} form={form} {...layout}>
         <ComponentTitle titleText="Headmaster" />
+
         <Form.Item
           label="First Name"
           name="first_name"
@@ -187,5 +187,4 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   editHeadmasterProfile,
-  fetchHeadmasterProfile,
 })(ProfileForm);

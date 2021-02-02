@@ -41,9 +41,9 @@ const TeacherProfile = props => {
         <p>
           {profile.other_language?.map((language, i) => {
             if (i === profile.other_language.length - 1) {
-              return <span>{language}</span>;
+              return <span key={i}>{language}</span>;
             } else {
-              return <span>{language}, </span>;
+              return <span key={i}>{language}, </span>;
             }
           })}
         </p>
