@@ -8,6 +8,7 @@ import {
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import { useSelector, connect } from 'react-redux';
 import { Descriptions, Select, Button } from 'antd';
+import { Popconfirm, message } from 'antd';
 
 import moment from 'moment';
 import './MentorPairing.css';
@@ -116,6 +117,11 @@ const MentorPairing = ({
     </Select>
   );
 
+  const confirm = eachMentor => {
+    handleCancel(eachMentor);
+    message.success('Successfully Unmatched!');
+  };
+
   return (
     <div className="mentor__pairing">
       <div className="pairing__box">
@@ -155,7 +161,15 @@ const MentorPairing = ({
                   eachMentor.time_slots
                 ).format('MMM Do YY')}`}</Descriptions.Item>
               </Descriptions>
-              <Button onClick={() => handleCancel(eachMentor)}>Cancel</Button>
+              <Popconfirm
+                title="Are you sure to delete this task?"
+                onConfirm={() => confirm(eachMentor)}
+                //  onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button>Cancel</Button>
+              </Popconfirm>
             </div>
           );
         })}
