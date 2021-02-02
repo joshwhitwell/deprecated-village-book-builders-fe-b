@@ -27,14 +27,14 @@ You can find the deployed project at [VBB-Deployment](main.d364h8tamcqe39.amplif
 <br>
 <br>
 
-| Version 1.1 Developers                                                                                                                                                   | Developer Information |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------- |
-| [ <img src="https://avatars.githubusercontent.com/u/36117777?s=460&u=f4f2f2021785906244edd782560db4210676a9be&v=4" width="200"> ](https://www.github.com/RohithSachdeva) | Rohith Sachdeva       |
-| Content Cell                                                                                                                                                             | Content Cell          |
-| Content Cell                                                                                                                                                             | Content Cell          |
-| Content Cell                                                                                                                                                             | Content Cell          |
-| Content Cell                                                                                                                                                             | Content Cell          |
-| Content Cell                                                                                                                                                             | Content Cell          |
+| Version 1.1 Developers                                                                                                                                                   | Developer Information                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| [ <img src="https://avatars.githubusercontent.com/u/36117777?s=460&u=f4f2f2021785906244edd782560db4210676a9be&v=4" width="200"> ](https://www.github.com/RohithSachdeva) | Rohith Sachdeva [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Rohith Sachdeva) |
+| Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
+| Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
+| Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
+| Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
+| Content Cell                                                                                                                                                             | Content Cell                                                                                                 |
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
