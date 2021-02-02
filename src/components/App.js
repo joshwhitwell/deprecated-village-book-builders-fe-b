@@ -11,7 +11,8 @@ import HeadmasterDashboard from './pages/Headmaster/HeadmasterDashboard';
 import TeacherDashboard from './pages/Teacher/TeacherDashboard';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import ProgramDashboard from './pages/Program/ProgramDashboard';
-// import MentorTimeSlot from './pages/Mentor/MentorTimeSlot';
+import MenteeDashboard from './pages/Mentees/MenteeDashboard';
+
 
 const App = ({ role, checkToken }) => {
   return (
@@ -30,6 +31,7 @@ const App = ({ role, checkToken }) => {
               {role === 'admin' && <AdminDashboard />}
               {role === 'program' && <ProgramDashboard />}
               {role === 'teacher' && <TeacherDashboard />}
+              {role === 'mentee' && <MenteeDashboard />}
             </>
           ) : (
             <Redirect to="/login" />
