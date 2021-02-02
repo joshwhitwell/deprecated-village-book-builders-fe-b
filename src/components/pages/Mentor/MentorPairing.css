@@ -1,0 +1,36 @@
+.mentor__pairing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pairing__box {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 93%;
+  min-height: 17vh;
+  margin: 50px 0 0 0;
+}
+
+.available {
+  padding-bottom: 1%;
+}
+
+.match__button {
+  margin-top: 50px;
+}
+
+.mentors {
+  margin-bottom: 15px;
+}
+
+.paired {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.descriptions__container {
+  margin-top: 40px;
+  width: 93%;
+}

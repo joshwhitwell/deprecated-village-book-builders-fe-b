@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
 import { fetchSchools } from '../../../state/actions/index';
 import { StyledSchools } from './School.styles';
 import School from './School.component';
 import { ComponentTitle } from '../../common';
 
 const Schools = props => {
+  const { fetchSchools } = props;
   useEffect(() => {
-    props.fetchSchools();
-  }, []);
+    fetchSchools();
+  }, [fetchSchools]);
   return (
     <StyledSchools>
       <ComponentTitle titleText="Schools" />
-      {props.schools.map(s => (
-        <School school={s} />
+      {props.schools.map((s, i) => (
+        <School school={s} key={i} />
       ))}
     </StyledSchools>
   );

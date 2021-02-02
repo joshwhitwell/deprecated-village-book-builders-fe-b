@@ -3,9 +3,15 @@
 
 import { combineReducers } from 'redux';
 import headmasterReducer from './headmasterReducer.js';
+import menteeReducer from './menteeReducer';
 import authReducer from './authReducer';
+import teacherReducer from './teacherReducer';
+import mentorReducer from './mentorReducer';
 
 export default combineReducers({
   headmasterReducer,
   authReducer,
+  menteeReducer,
+  mentorReducer,
+  teacherReducer,
 });

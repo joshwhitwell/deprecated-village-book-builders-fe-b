@@ -1,36 +1,51 @@
+//dependencies
 import React, { useEffect, useState } from 'react';
-// import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
-import { Button, Divider, Input, Modal, List, Avatar } from 'antd';
+import { Button, Divider, Input, List, Avatar, Tag } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { checkToken, fetchMentees } from '../../../../state/actions/index';
-import MenteeForm from './MenteeForm';
-import MenteeProfile from './MenteeProfile';
+
+//actions
+import { checkToken, fetchMentees } from '../../../state/actions/index';
+
+//components
+import MenteeModal from './MenteeModal';
+import { useHistory } from 'react-router-dom';
+
 const Mentees = props => {
-  let menteesSelection = [...props.mentees];
+  //deconstructs mentee list from redux
+  let menteesSelection = [...props.menteeReducer.mentees].filter(
+    mentee => mentee.account_status === 'Inactive'
+  );
+
+  //deconstructs fetchMentees from redux
+  const { fetchMentees } = props;
+  const history = useHistory();
+
+  //initializes state
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
   const [currentMentee, setCurrentMentee] = useState({});
 
-  const editingHandler = e => {
-    setEditing(!editing);
-    console.log(e);
-  };
+  //opens and closes MenteeForm in MenteeModal
+  const editingHandler = () => setEditing(!editing);
+
+  //updates search state value
   const searchHandler = e => setSearch(e.target.value);
+
+  //opens and closes MenteeModal
   const moreInfoHandler = (e, menteeData) => {
     if (showModal) {
-      // Closing Modal
       setShowModal(false);
-      setCurrentMentee({});
+      // setCurrentMentee({});
       setEditing(false);
     } else {
-      // Opening Modal
       setShowModal(true);
       setCurrentMentee(menteeData);
-      // console.log(menteeData);
     }
   };
 
+  //handles search bar filtering logic
   if (Array.isArray(menteesSelection)) {
     menteesSelection = menteesSelection.filter(
       item =>
@@ -39,19 +54,35 @@ const Mentees = props => {
     );
   }
 
+  const statusTag = item => {
+    if (item.account_status === 'Active') {
+      return <Tag color="success">Active</Tag>;
+    }
+    if (item.account_status === 'Inactive') {
+      return <Tag icon={<ClockCircleOutlined />}>Inactive</Tag>;
+    }
+    if (item.account_status === 'Denied') {
+      return <Tag color="error">Denied</Tag>;
+    }
+  };
+
+  //fetches mentee list on initial render
   useEffect(() => {
-    props.fetchMentees();
-  }, []);
+    fetchMentees();
+  }, [fetchMentees]);
 
   return (
     <div className="menteeContainer">
-      <h1 id="menteeTittle">Mentee Management</h1>
+      <h1 id="menteeTitle">Mentees</h1>
       <div className="exploreWrapper">
         <Button
           style={{ width: '80%', marginBottom: '10pt', alignSelf: 'center' }}
           align="center"
+          onClick={() => {
+            history.push('/mentees/signup');
+          }}
         >
-          Create New Library
+          Create Mentee
         </Button>
         <Input.Search
           value={search}
@@ -70,12 +101,19 @@ const Mentees = props => {
                   <List.Item.Meta
                     avatar={<Avatar src={item.mentee_picture} />}
                     title={
-                      <a href="https://ant.design">
-                        {item.first_name + ' ' + item.last_name}
-                      </a>
+                      <span
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        {item.first_name + ' ' + item.last_name}{' '}
+                        {statusTag(item)}
+                      </span>
                     }
                     description={item.academic_description}
                   />
+                  <span></span>
                 </div>
                 <div className="listItemButtonWrapper">
                   <Button
@@ -92,11 +130,10 @@ const Mentees = props => {
                       editingHandler();
                     }}
                     className="listItemButton"
-                    danger
                     size="middle"
                     type="default"
                   >
-                    Edit
+                    Activate
                   </Button>
                 </div>
               </div>
@@ -105,49 +142,20 @@ const Mentees = props => {
         />
         ,
       </div>
-      <Modal
-        className="menteeModal"
-        visible={showModal}
-        title="Mentee Profile"
-        onCancel={moreInfoHandler}
-        maskClosable
-        destroyOnClose
-        footer={[
-          <Button
-            key="back"
-            onClick={editing ? editingHandler : moreInfoHandler}
-          >
-            Return
-          </Button>,
-          <Button key="delete" onClick={() => console.log('delete')}>
-            Delete
-          </Button>,
-          editing ? (
-            <Button key="submit" type="primary" onClick={moreInfoHandler}>
-              Submit
-            </Button>
-          ) : (
-            <Button key="edit" type="primary" onClick={editingHandler}>
-              Edit
-            </Button>
-          ),
-        ]}
-      >
-        {editing ? (
-          <MenteeForm />
-        ) : (
-          <MenteeProfile currentMentee={currentMentee} />
-        )}
-      </Modal>
+      <MenteeModal
+        showModal={showModal}
+        editing={editing}
+        editingHandler={editingHandler}
+        moreInfoHandler={moreInfoHandler}
+        currentMentee={currentMentee}
+      />
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    mentees: state.headmasterReducer.mentees,
-    userId: state.authReducer.userId,
-    role: state.authReducer.role,
+    menteeReducer: state.menteeReducer,
   };
 };
 

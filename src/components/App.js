@@ -6,17 +6,19 @@ import '../style.css';
 // import PrivateRoute from "../utils/PrivateRoute";
 import { checkToken } from '../state/actions/index';
 import Login from './pages/Login/Login';
+import Logout from './Logout';
 import HeadmasterDashboard from './pages/Headmaster/HeadmasterDashboard';
+import TeacherDashboard from './pages/Teacher/TeacherDashboard';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import ProgramDashboard from './pages/Program/ProgramDashboard';
+import MenteeDashboard from './pages/Mentees/MenteeDashboard';
 
 const App = ({ role, checkToken }) => {
   return (
     <div className="App">
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-
+        <Route path="/logout" component={Logout} />
+        <Route path="/login" component={Login} />
         <Route path="/">
           {/*//! this needs to be changed to if there is an unexpired token*/}
           {/* Look for token in case a user refreshes the page & clears redux store, then it repopulates the redux store with userId, role & loggedIn status with checkToken().  */}
@@ -26,6 +28,9 @@ const App = ({ role, checkToken }) => {
               {/* //once we make a reusable dashboard/sidebar, this is where we would put it, passing in the role as props to fill it out accordingly. */}
               {role === 'headmaster' && <HeadmasterDashboard />}
               {role === 'admin' && <AdminDashboard />}
+              {role === 'program' && <ProgramDashboard />}
+              {role === 'teacher' && <TeacherDashboard />}
+              {role === 'mentee' && <MenteeDashboard />}
             </>
           ) : (
             <Redirect to="/login" />
