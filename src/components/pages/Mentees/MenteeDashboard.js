@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
+import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
 
 //styles
 import '../Headmaster/HeadmasterDashboard.css';
@@ -51,6 +52,7 @@ function MenteeDashboard() {
         <Switch>
           <Route path="/logout" component={Logout} />
           <Route path="/mentees/resources" component={MenteeResources} />
+          <Route path="/" render={() => <Welcome />} />
         </Switch>
       </Dashboard>
 
