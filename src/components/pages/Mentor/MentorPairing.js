@@ -10,6 +10,7 @@ import { useSelector, connect } from 'react-redux';
 import { Descriptions, Select, Button } from 'antd';
 import { Popconfirm, message } from 'antd';
 
+
 import moment from 'moment';
 import './MentorPairing.css';
 
@@ -122,6 +123,7 @@ const MentorPairing = ({
     message.success('Successfully Unmatched!');
   };
 
+
   return (
     <div className="mentor__pairing">
       <div className="pairing__box">
@@ -161,6 +163,7 @@ const MentorPairing = ({
                   eachMentor.time_slots
                 ).format('MMM Do YY')}`}</Descriptions.Item>
               </Descriptions>
+
               <Popconfirm
                 title="Are you sure to delete this task?"
                 onConfirm={() => confirm(eachMentor)}
@@ -170,6 +173,7 @@ const MentorPairing = ({
               >
                 <Button>Cancel</Button>
               </Popconfirm>
+              <Button onClick={() => handleCancel(eachMentor)}>Cancel</Button>
             </div>
           );
         })}
