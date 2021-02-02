@@ -14,7 +14,7 @@ import {
 //initializes mentee reducer state
 const initialState = {
   mentees: [],
-  newMentee: {},
+  newMentee: null,
   error: '',
 };
 
@@ -38,13 +38,10 @@ const menteeReducer = (state = initialState, action) => {
       return { ...state };
 
     case ADD_MENTEE_START:
-      console.log('reducer start');
       return { ...state };
     case ADD_MENTEE_SUCCESS:
-      console.log('reducer succes');
       return { ...state, newMentee: action.payload };
     case ADD_MENTEE_FAILURE:
-      console.log('reducer failuer');
       return { ...state, error: action.payload };
 
     default:

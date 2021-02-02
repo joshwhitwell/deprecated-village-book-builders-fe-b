@@ -9,8 +9,6 @@ import Login from './pages/Login/Login';
 import Logout from './Logout';
 import HeadmasterDashboard from './pages/Headmaster/HeadmasterDashboard';
 import TeacherDashboard from './pages/Teacher/TeacherDashboard';
-import TeacherProfile from './pages/Teacher/TeacherProfile/TeacherProfile';
-import TeacherProfileForm from './pages/Teacher/TeacherProfile/TeacherProfileForm';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import ProgramDashboard from './pages/Program/ProgramDashboard';
 import MenteeDashboard from './pages/Mentees/MenteeDashboard';
@@ -19,8 +17,6 @@ const App = ({ role, checkToken }) => {
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/teacher/:id/edit" component={TeacherProfileForm} />
-        <Route exact path="/teacher/:id" component={TeacherProfile} />
         <Route path="/logout" component={Logout} />
         <Route path="/login" component={Login} />
 

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import axios from 'axios';
+import { connect, useSelector } from 'react-redux';
+import { useParams, Link, useHistory } from 'react-router-dom';
 
-import { Form, Input, DatePicker, Space, Radio } from 'antd';
-import moment from 'moment';
+import { Form, Input, Radio } from 'antd';
 
 import { editTeacherProfile } from '../../../../state/actions';
 import {
@@ -14,12 +12,7 @@ import {
   Required,
 } from '../../../common/FormStyle';
 import Button from '../../../common/Button';
-import { debugLog } from '../../../../utils/debugMode';
 import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
-
-import TeacherDashboard from '../TeacherDashboard';
-
-const baseURL = 'https://cors-anywhere.herokuapp.com/http://54.158.134.245/api';
 
 const initialState = {
   first_name: '',
@@ -40,17 +33,13 @@ const initialState = {
   notes: '',
 };
 
-const dateFormat = 'MM/DD/YYYY';
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
-
 const ProfileForm = props => {
+  const { userId } = useSelector(state => state.authReducer);
   const [formData, setFormData] = useState(initialState);
   const [value, setValue] = useState(1);
-  const pathname = useHistory().location.pathname;
   const params = useParams().id;
   const [form] = Form.useForm();
-
-  console.log(formData);
+  const history = useHistory();
 
   useEffect(() => {
     axiosWithAuth() // ! This should later become available through axiosWithAuth() only once we figure out the Auth with Stakeholder's backend
@@ -60,30 +49,26 @@ const ProfileForm = props => {
         setFormData(res.data);
       })
       .catch(err => console.dir(err));
-  }, []);
+  }, [form, params]);
 
   const onChange = e => {
-    console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
     props.editTeacherProfile(params, formData);
+    history.push(`/teacher/${userId - 10}`);
   };
 
   const handleChange = e => {
-    debugLog(formData);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
     <>
-      <TeacherDashboard />
-
       <FormContainer>
         <Form.Item {...tailLayout}>
-          <Link to="/profile">Go Back to your Profile</Link>
+          <Link to={`/teacher/${userId - 10}`}>Go Back to your Profile</Link>
         </Form.Item>
         <Form onFinish={handleSubmit} form={form} {...layout}>
           <Form.Item
@@ -183,7 +168,7 @@ const ProfileForm = props => {
             <Button
               className="l2-btn btn"
               htmlType="submit"
-              buttonText="Submit Village Edit"
+              buttonText="Submit"
             />
             <Required id="requiredMsg">
               Fields with <span id="required">&#42;</span> are required.

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 
 //action types
+
 import * as actionTypes from './actionTypes';
 
 //env variables
@@ -73,13 +74,70 @@ export const fetchHeadmasterProfile = id => dispatch => {
     .catch(err => console.dir(err));
 };
 
-export const fetchHeadmasterSchool = () => dispatch => {
-  dispatch({ type: actionTypes.FETCH_HEADMASTER_SCHOOL });
+export const fetchHeadmasterSchool = id => dispatch => {
+  axiosWithAuth()
+    .get(`/school/${id}`)
+    .then(res => {
+      console.log('fetchHeadMasterSchool action --> ', res.data);
+      dispatch({
+        type: actionTypes.FETCH_HEADMASTER_SCHOOL,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
+};
+
+export const fetchPendingTeachers = id => dispatch => {
+  axiosWithAuth()
+    .get(`/teacher?schoolId=${id}&account_status=Inactive`)
+    .then(res => {
+      console.log('fetchPendingTeacher action --> ', res.data);
+      dispatch({
+        type: actionTypes.FETCH_PENDING_TEACHERS,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
+};
+
+export const patchTeacherStatus = (id, status) => dispatch => {
+  axiosWithAuth()
+    .patch(`/teacher/${id}`, { account_status: `${status}` })
+    .then(res => {
+      console.log('patchTeacherStatus action --> ', res.data);
+      dispatch({
+        type: actionTypes.PATCH_TEACHER_STATUS,
+        payload: res.data,
+      });
+    })
+    .catch(err => console.dir(err));
+};
+
+export const patchSchoolTeacherId = (id, teacherId) => dispatch => {
+  let teachersArray = [];
+
+  axiosWithAuth()
+    .get(`/school/${id}`)
+    .then(res => {
+      teachersArray = res.data.teacherId.filter(value => teacherId !== value);
+      axiosWithAuth()
+        .patch(`/school/${id}`, { teacherId: teachersArray })
+        .then(res => {
+          console.log('patchSchoolTeacherId action --> ', res.data);
+          dispatch({
+            type: actionTypes.PATCH_SCHOOL_TEACHERID,
+            payload: res.data,
+          });
+        })
+        .catch(err => console.dir(err));
+    })
+    .catch(err => console.dir(err));
 };
 
 // -----------------------
 // VILLAGES
 // -----------------------
+
 
 export const fetchVillage = id => dispatch => {
   // console.log("ACTIONSindexFetchVillage --> test", process.env.REACT_APP_BASEURL)
@@ -163,11 +221,9 @@ export const editMentee = (id, data) => dispatch => {
     .then(res => {
       // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
       // window.location.replace('/profile/');
-      console.log(res);
       dispatch({ type: actionTypes.EDIT_MENTEE_SUCCESS, payload: res });
     })
     .catch(err => {
-      console.log(err);
       dispatch({ type: actionTypes.EDIT_MENTEE_FAILURE, payload: err });
     });
 };
@@ -177,11 +233,9 @@ export const addMentee = data => dispatch => {
   axiosWithAuth()
     .post('/mentee', data)
     .then(res => {
-      console.log(res);
-      dispatch({ type: actionTypes.ADD_MENTEE_SUCCESS, payload: res });
+      dispatch({ type: actionTypes.ADD_MENTEE_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      console.log(err);
       dispatch({ type: actionTypes.ADD_MENTEE_FAILURE, payload: err });
     });
 };
@@ -213,19 +267,20 @@ export const addLibrary = (id, data) => dispatch => {
 // ----------------
 
 export const editTeacherProfile = (id, data) => dispatch => {
+  dispatch({ type: actionTypes.EDIT_TEACHER_START, payload: data });
   axiosWithAuth()
     .put(`/teacher/${id}`, data)
     .then(res => {
-      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
-      window.location.replace('/profile/');
+      dispatch({ type: actionTypes.EDIT_TEACHER_SUCCESS, payload: res.data });
     })
-    .catch(err => console.dir(err));
+    .catch(err => {
+      dispatch({ type: actionTypes.EDIT_TEACHER_FAILURE, payload: err });
+    });
 };
 export const fetchTeacherProfile = id => dispatch => {
   axiosWithAuth()
     .get(`/teacher/${id}`) // change this later
     .then(res => {
-      console.log('fetchteacherProfile action --> ', res.data);
       dispatch({
         type: actionTypes.FETCH_TEACHER_PROFILE,
         payload: res.data,
