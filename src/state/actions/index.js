@@ -199,19 +199,59 @@ export const editSchool = (id, data) => dispatch => {
 };
 
 // -----------------------
+// MENTORS
+// -----------------------
+
+export const fetchMentors = () => async dispatch => {
+  dispatch({ type: actionTypes.FETCH_MENTOR_START });
+  const mentors = await axiosWithAuth().get('/mentor');
+
+  console.log('DID FETCH MENTOR');
+  dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: mentors.data });
+};
+
+export const editMatches = (mentor, menteeId) => dispatch => {
+  dispatch({ type: actionTypes.EDIT_MENTOR_START, payload: mentor });
+  axiosWithAuth()
+    .put(`/mentor/${mentor.id}`, { ...mentor, mentee: menteeId })
+    .then(res => {
+      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
+      // window.location.replace('/profile/');
+      console.log(res.data);
+      dispatch({ type: actionTypes.EDIT_MENTOR_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: actionTypes.EDIT_MENTOR_FAILURE, payload: err });
+    });
+};
+
+export const cancelMatches = mentor => dispatch => {
+  dispatch({ type: actionTypes.EDIT_MENTOR_MATCHES, payload: mentor });
+  axiosWithAuth()
+    .put(`/mentor/${mentor.id}`, { ...mentor, mentee: -1 })
+    .then(res => {
+      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
+      // window.location.replace('/profile/');
+      console.log(res.data);
+      dispatch({ type: actionTypes.EDIT_MENTOR_MATCHES, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: actionTypes.EDIT_MENTOR_FAILURE, payload: err });
+    });
+};
+
+// -----------------------
 // MENTEES
 // -----------------------
 
-export const fetchMentees = () => dispatch => {
+export const fetchMentees = () => async dispatch => {
   dispatch({ type: actionTypes.FETCH_MENTEE_START });
-  axiosWithAuth()
-    .get('/mentee')
-    .then(res => {
-      dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: res.data });
-    })
-    .catch(err =>
-      dispatch({ type: actionTypes.FETCH_MENTEE_FAILURE, payload: err })
-    );
+  const mentees = await axiosWithAuth().get('/mentee');
+
+  console.log('DID FETCH MENTEE');
+  dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: mentees.data });
 };
 
 export const editMentee = (id, data) => dispatch => {

@@ -15,9 +15,10 @@ import SchoolForm from '../School/SchoolForm.js';
 import HeadmasterProfile from './HeadmasterProfile/Profile.js';
 import ProfileForm from './HeadmasterProfile/ProfileForm.js';
 import TeacherApproval from './TeacherApproval/TeacherApproval.js';
+import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
 // import HeadmasterNav from './Drawer';
 // import TestComponent from './TestComponent';
-import { Drawer, Button } from 'antd';
+import { Drawer, Button, message } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import './HeadmasterDashboard.css';
 import {
@@ -32,9 +33,15 @@ import {
 } from '../../../state/actions/index.js';
 import Logout from '../../Logout.js';
 // import MentorPairings from './Mentees/Mentees.js';
-import Mentees from '../Mentees/Mentees';
+import MentorPairing from '../Mentor/MentorPairing';
 
 function HeadmasterDashboard(props) {
+  let {
+    headMasterProfile,
+    pendingTeachers,
+    fetchHeadmasterProfile,
+    fetchPendingTeachers,
+  } = props;
   const [visible, setVisible] = useState(true);
   const [desktop, setDesktop] = useState(true);
 
@@ -48,12 +55,21 @@ function HeadmasterDashboard(props) {
   }, []);
 
   useEffect(() => {
-    async function awaitProfile() {
-      await props.fetchHeadmasterProfile(1);
-      props.fetchPendingTeachers(props.headMasterProfile.schoolId);
-    }
-    awaitProfile();
+    fetchHeadmasterProfile(1);
   }, []);
+
+  useEffect(() => {
+    fetchPendingTeachers(headMasterProfile.schoolId);
+  }, [headMasterProfile, fetchPendingTeachers]);
+
+  useEffect(() => {
+    if (pendingTeachers.length > 0) {
+      message.warning(
+        `There are ${pendingTeachers.length} teachers awaiting approval.`,
+        7
+      );
+    }
+  }, [pendingTeachers]);
 
   const onClose = () => {
     setVisible(false);
@@ -74,8 +90,11 @@ function HeadmasterDashboard(props) {
     <div>
       <Dashboard>
         <Switch>
+
+          <Route exact path="/" component={Welcome} />
           <Route path="/mentor-pairings" component={Mentees} />
           <Route path="/teacher-approval" component={TeacherApproval} />
+
           <Route exact path="/profile" component={HeadmasterProfile} />
           <Route path="/profile/edit/:id" component={ProfileForm} />
           <Route path="/mentor-advisor" />
@@ -93,11 +112,6 @@ function HeadmasterDashboard(props) {
           <Route path="/logout" component={Logout} />
         </Switch>
       </Dashboard>
-      <div>
-        {' '}
-        You currently have {props.pendingTeachers.length} teachers waiting
-        approval.
-      </div>
       {desktop ? null : (
         // inline style to force animation
         <div style={visible ? menuMove : menuIcon}>
