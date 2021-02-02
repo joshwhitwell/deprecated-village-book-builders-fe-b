@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {
   fetchMentees,
   fetchMentors,
-  editMentor,
+  editMatches,
   cancelMatches,
 } from '../../../state/actions';
-import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import { useSelector, connect } from 'react-redux';
 import { Descriptions, Select, Button } from 'antd';
 import { Popconfirm, message } from 'antd';
@@ -16,14 +15,13 @@ import './MentorPairing.css';
 const MentorPairing = ({
   fetchMentors,
   fetchMentees,
-  editMentor,
+  editMatches,
   cancelMatches,
 }) => {
   const { Option } = Select;
   const [mentor, setMentor] = useState({});
   const [menteeId, setMenteeId] = useState(-1);
-  console.log('MENTOR: ', mentor, '\nMENTEE: ', menteeId);
-  //   const [matched, setMatched] = useState([]);
+
   const state = useSelector(state => ({ ...state }));
 
   const { mentees } = state.menteeReducer;
@@ -60,7 +58,7 @@ const MentorPairing = ({
     eachMentor.subjects.map(eachSubject => `${eachSubject}`);
 
   const handleUpdate = (mentor, menteeId) => {
-    editMentor(mentor, menteeId);
+    editMatches(mentor, menteeId);
     fetchMentors();
   };
 
@@ -164,7 +162,6 @@ const MentorPairing = ({
               <Popconfirm
                 title="Are you sure to delete this task?"
                 onConfirm={() => confirm(eachMentor)}
-                //  onCancel={cancel}
                 okText="Yes"
                 cancelText="No"
               >
@@ -185,6 +182,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   fetchMentees,
   fetchMentors,
-  editMentor,
+  editMatches,
   cancelMatches,
 })(MentorPairing);

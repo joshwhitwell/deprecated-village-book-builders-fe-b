@@ -152,7 +152,7 @@ export const fetchMentors = () => async dispatch => {
   dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: mentors.data });
 };
 
-export const editMentor = (mentor, menteeId) => dispatch => {
+export const editMatches = (mentor, menteeId) => dispatch => {
   dispatch({ type: actionTypes.EDIT_MENTOR_START, payload: mentor });
   axiosWithAuth()
     .put(`/mentor/${mentor.id}`, { ...mentor, mentee: menteeId })
