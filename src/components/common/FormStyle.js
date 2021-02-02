@@ -12,20 +12,17 @@ export const tailLayout = {
 };
 
 export const FormContainer = styled.div`
-  padding: 1rem;
-  position: relative;
-
   .ant-col {
     align-self: center;
   }
 
   .ant-col-8 {
-    max-width: 33%;
+    max-width: 60%;
     min-width: 15rem;
   }
 
   .ant-col-16 {
-    max-width: 50%;
+    max-width: 40%;
   }
 `;
 
