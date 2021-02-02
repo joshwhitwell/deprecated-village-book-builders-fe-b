@@ -12,7 +12,8 @@ import {
 import Button from '../../../common/Button';
 import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
 import TeacherDashboard from '../TeacherDashboard';
-
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const initialState = {
   first_name: '',
@@ -32,7 +33,6 @@ const initialState = {
   },
   notes: '',
 };
-
 
 const ProfileForm = props => {
   const { userId } = useSelector(state => state.authReducer);
