@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { fetchSchools } from '../../../state/actions/index';
 import { StyledSchools } from './School.styles';
 import School from './School.component';
