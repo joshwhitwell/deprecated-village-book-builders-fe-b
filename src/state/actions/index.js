@@ -53,14 +53,20 @@ export const logout = () => dispatch => {
 // -----------------------
 
 export const editHeadmasterProfile = (id, data) => dispatch => {
+  dispatch({ type: actionTypes.EDIT_HEADMASTER_START });
   axiosWithAuth()
     .put(`/headmaster/${id}`, data)
     .then(res => {
-      // ? refactor all the window.location.replace's so this doesn't force a refresh. see how login does it for example.
-      window.location.replace('/profile/');
+      dispatch({
+        type: actionTypes.EDIT_HEADMASTER_SUCCESS,
+        payload: res.data,
+      });
     })
-    .catch(err => console.dir(err));
+    .catch(err => {
+      dispatch({ typch: actionTypes.EDIT_HEADMASTER_FAILURE, payload: err });
+    });
 };
+
 export const fetchHeadmasterProfile = id => dispatch => {
   axiosWithAuth()
     .get(`/headmaster/${id}`) // change this later
@@ -137,7 +143,6 @@ export const patchSchoolTeacherId = (id, teacherId) => dispatch => {
 // -----------------------
 // VILLAGES
 // -----------------------
-
 
 export const fetchVillage = id => dispatch => {
   // console.log("ACTIONSindexFetchVillage --> test", process.env.REACT_APP_BASEURL)
