@@ -36,7 +36,12 @@ import Logout from '../../Logout.js';
 import Mentees from '../Mentees/Mentees';
 
 function HeadmasterDashboard(props) {
-  let { headMasterProfile, pendingTeachers } = props;
+  let {
+    headMasterProfile,
+    pendingTeachers,
+    fetchHeadmasterProfile,
+    fetchPendingTeachers,
+  } = props;
   const [visible, setVisible] = useState(true);
   const [desktop, setDesktop] = useState(true);
 
@@ -50,18 +55,18 @@ function HeadmasterDashboard(props) {
   }, []);
 
   useEffect(() => {
-    props.fetchHeadmasterProfile(1);
+    fetchHeadmasterProfile(1);
   }, []);
 
   useEffect(() => {
-    props.fetchPendingTeachers(headMasterProfile.schoolId);
-  }, [headMasterProfile]);
+    fetchPendingTeachers(headMasterProfile.schoolId);
+  }, [headMasterProfile, fetchPendingTeachers]);
 
   useEffect(() => {
     if (pendingTeachers.length > 0) {
       message.warning(
         `There are ${pendingTeachers.length} teachers awaiting approval.`,
-        4
+        7
       );
     }
   }, [pendingTeachers]);
