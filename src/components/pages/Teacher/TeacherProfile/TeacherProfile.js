@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { ThemeProvider } from 'styled-components';
 import { fetchTeacherProfile } from '../../../../state/actions';
 
@@ -14,8 +15,9 @@ const TeacherProfile = props => {
   const { profile } = props;
   const { fetchTeacherProfile } = props;
   useEffect(() => {
-    fetchTeacherProfile(userId - 10);
-  }, [fetchTeacherProfile, userId]);
+    props.fetchTeacherProfile(userId - 10); // change this later with login
+  }, [props, userId]);
+
 
   return (
     <>

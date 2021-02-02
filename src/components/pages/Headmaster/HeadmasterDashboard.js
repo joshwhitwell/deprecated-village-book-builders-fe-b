@@ -33,7 +33,7 @@ import {
 } from '../../../state/actions/index.js';
 import Logout from '../../Logout.js';
 // import MentorPairings from './Mentees/Mentees.js';
-import Mentees from '../Mentees/Mentees';
+import MentorPairing from '../Mentor/MentorPairing';
 
 function HeadmasterDashboard(props) {
   let {
@@ -90,6 +90,7 @@ function HeadmasterDashboard(props) {
     <div>
       <Dashboard>
         <Switch>
+
           <Route exact path="/" component={Welcome} />
           <Route path="/mentor-pairings" component={Mentees} />
           <Route path="/teacher-approval" component={TeacherApproval} />
