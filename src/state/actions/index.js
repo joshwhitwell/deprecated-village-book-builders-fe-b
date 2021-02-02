@@ -150,13 +150,6 @@ export const fetchMentors = () => async dispatch => {
 
   console.log('DID FETCH MENTOR');
   dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: mentors.data });
-  // .then(res => {
-  //   console.log('DID FETCH MENTOR');
-  //   dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: res.data });
-  // })
-  // .catch(err =>
-  //   dispatch({ type: actionTypes.FETCH_MENTOR_FAILURE, payload: err })
-  // );
 };
 
 export const editMentor = (mentor, menteeId) => dispatch => {
@@ -174,6 +167,7 @@ export const editMentor = (mentor, menteeId) => dispatch => {
       dispatch({ type: actionTypes.EDIT_MENTOR_FAILURE, payload: err });
     });
 };
+
 export const cancelMatches = mentor => dispatch => {
   dispatch({ type: actionTypes.EDIT_MENTOR_MATCHES, payload: mentor });
   axiosWithAuth()
@@ -200,14 +194,8 @@ export const fetchMentees = () => async dispatch => {
 
   console.log('DID FETCH MENTEE');
   dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: mentees.data });
-  // .then(res => {
-  //   console.log('DID FETCH MENTEE');
-  //   dispatch({ type: actionTypes.FETCH_MENTEE_SUCCESS, payload: res.data });
-  // })
-  // .catch(err =>
-  //   dispatch({ type: actionTypes.FETCH_MENTEE_FAILURE, payload: err })
-  // );
 };
+
 export const editMentee = (id, data) => dispatch => {
   dispatch({ type: actionTypes.EDIT_MENTEE_START, payload: data });
   axiosWithAuth()

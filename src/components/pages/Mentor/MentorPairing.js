@@ -106,8 +106,8 @@ const MentorPairing = ({
     >
       {mentees.filter(availableMentee).map(eachMentee => (
         <Option key={eachMentee.id} value={eachMentee.id}>{`${
-          eachMentee.availability.as_early_as
-        } to ${eachMentee.availability.as_late_as} ---- ${
+          eachMentee.general_availability.as_early_as
+        } to ${eachMentee.general_availability.as_late_as} ---- ${
           eachMentee.first_name
         } ${eachMentee.last_name} ---- ${moment(eachMentee.dob).format(
           'MMM Do YY'
