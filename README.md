@@ -27,10 +27,10 @@ You can find the deployed project at [VBB-Deployment](main.d364h8tamcqe39.amplif
 <br>
 <br>
 
-| First Header                                                                                                   | Second Header |
-| -------------------------------------------------------------------------------------------------------------- | ------------- |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="200"> ](https://www.linkedin.com/) | Content Cell  |
-| Content Cell                                                                                                   | Content Cell  |
+| First Header                                                                                                                                                 | Second Header |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- |
+| [ <img src="https://avatars.githubusercontent.com/u/36117777?s=460&u=f4f2f2021785906244edd782560db4210676a9be&v=4" width="200"> ](https://www.linkedin.com/) | Content Cell  |
+| Content Cell                                                                                                                                                 | Content Cell  |
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
