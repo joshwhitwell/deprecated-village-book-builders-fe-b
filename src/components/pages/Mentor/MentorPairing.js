@@ -21,6 +21,7 @@ const MentorPairing = ({
 }) => {
   const { Option } = Select;
   const [mentor, setMentor] = useState({});
+  const [mentee, setMentee] = useState({});
   const [menteeId, setMenteeId] = useState(-1);
 
   const state = useSelector(state => ({ ...state }));
@@ -58,14 +59,16 @@ const MentorPairing = ({
   const availableMentorSubjects = eachMentor =>
     eachMentor.subjects.map(eachSubject => `${eachSubject}`);
 
-  const handleUpdate = (mentor, menteeId) => {
-    editMatches(mentor, menteeId);
+  const handleUpdate = (mentor, menteeId, mentee) => {
+    editMatches(mentor, menteeId, mentee);
     fetchMentors();
+    fetchMentees();
   };
 
-  const handleCancel = mentor => {
-    cancelMatches(mentor);
+  const handleCancel = (mentor, menteeInfo) => {
+    cancelMatches(mentor, menteeInfo);
     fetchMentors();
+    fetchMentees();
   };
 
   const selectMentor = () => (
@@ -102,12 +105,17 @@ const MentorPairing = ({
       placeholder="Select a mentee"
       showSearch
       optionFilterProp="children"
-      onChange={value => setMenteeId(value)}
+      onChange={value => {
+        mentees.forEach(eachMentee => {
+          if (eachMentee.id === value) {
+            setMentee(eachMentee);
+          }
+        });
+        setMenteeId(value);
+      }}
     >
       {mentees.filter(availableMentee).map(eachMentee => (
         <Option key={eachMentee.id} value={eachMentee.id}>{`${
-          eachMentee.general_availability.as_early_as
-        } to ${eachMentee.general_availability.as_late_as} ---- ${
           eachMentee.first_name
         } ${eachMentee.last_name} ---- ${moment(eachMentee.dob).format(
           'MMM Do YY'
@@ -116,8 +124,8 @@ const MentorPairing = ({
     </Select>
   );
 
-  const confirm = eachMentor => {
-    handleCancel(eachMentor);
+  const confirm = (eachMentor, menteeInfo) => {
+    handleCancel(eachMentor, menteeInfo);
     message.success('Successfully Unmatched!');
   };
 
@@ -131,7 +139,7 @@ const MentorPairing = ({
           type="primary"
           shape="round"
           style={{ backgroundColor: '#ff914d', border: '#ff914d' }}
-          onClick={() => handleUpdate(mentor, menteeId)}
+          onClick={() => handleUpdate(mentor, menteeId, mentee)}
         >
           Let's Match
         </Button>
@@ -158,7 +166,6 @@ const MentorPairing = ({
                 menteeInfo = mentees[i];
               }
             }
-
             return (
               <div className="descriptions__container" key={eachMentor.id}>
                 <hr />
@@ -176,7 +183,7 @@ const MentorPairing = ({
 
                 <Popconfirm
                   title="Are you sure to delete this task?"
-                  onConfirm={() => confirm(eachMentor)}
+                  onConfirm={() => confirm(eachMentor, menteeInfo)}
                   okText="Yes"
                   cancelText="No"
                 >

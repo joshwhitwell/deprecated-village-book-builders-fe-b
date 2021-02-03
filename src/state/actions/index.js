@@ -3,6 +3,7 @@ import axios from 'axios';
 
 //utils
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
+import moment from 'moment';
 
 //action types
 
@@ -46,6 +47,35 @@ export const logout = () => dispatch => {
   dispatch({ type: actionTypes.AUTH_LOGOUT });
   window.localStorage.removeItem('token');
 };
+
+// -------------------------
+// REGRISTRATION
+// -------------------------
+
+// export const register = data => dispatch => {
+//   axios
+//   .post(`${baseURL}/user`, data)
+//   .then(res => {
+//     console.log(res)
+//     creds = {email, password, ...rest}
+//     if(res.statusText === "Created"){
+//       console.log("New account created successfully");
+//     }
+//     dispatch({
+//       type: actionTypes.AUTH_SUCCESS,
+//       payload: res.data.access_token,
+//     })
+//     login(creds)
+//   })
+//   .catch( err => {
+//     console.log(
+//       'REGISTER ACTION FAILURE--> with this data & baseURL:',
+//       data,
+//       baseURL
+//     );
+//     console.dir(err);
+//   })
+// }
 
 // -----------------------
 // HEADMASTER
@@ -202,30 +232,69 @@ export const fetchMentors = () => async dispatch => {
   dispatch({ type: actionTypes.FETCH_MENTOR_SUCCESS, payload: mentors.data });
 };
 
-export const editMatches = (mentor, menteeId) => dispatch => {
+export const editMatches = (mentor, menteeId, mentee) => async dispatch => {
   dispatch({ type: actionTypes.EDIT_MENTOR_START, payload: mentor });
-  axiosWithAuth()
-    .put(`/mentor/${mentor.id}`, { ...mentor, mentee: menteeId })
-    .then(res => {
-      dispatch({ type: actionTypes.EDIT_MENTOR_SUCCESS, payload: res.data });
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({ type: actionTypes.EDIT_MENTOR_FAILURE, payload: err });
+  dispatch({ type: actionTypes.EDIT_MENTEE_START, payload: mentor });
+  try {
+    const mentorData = await axiosWithAuth().put(`/mentor/${mentor.id}`, {
+      ...mentor,
+      mentee: menteeId,
     });
+    const menteeData = await axiosWithAuth().put(`/mentee/${mentee.id}`, {
+      ...mentee,
+      mentee_assignment: mentor.subjects,
+      mentoring_time_slot: moment(mentor.time_slots).format(
+        'MMMM Do YYYY, h:mm a'
+      ),
+    });
+    console.log(
+      'MENTORDATA: ',
+      mentorData.data,
+      '\nMENTEEDATA: ',
+      menteeData.data
+    );
+    dispatch({
+      type: actionTypes.EDIT_MENTOR_MATCHES,
+      payload: mentorData.data,
+    });
+    dispatch({
+      type: actionTypes.EDIT_MENTEE_MATCHES,
+      payload: menteeData.data,
+    });
+  } catch (err) {
+    console.log('ERROR DURING MATCHING PROCESS: ', err);
+  }
 };
 
-export const cancelMatches = mentor => dispatch => {
+export const cancelMatches = (mentor, mentee) => async dispatch => {
   dispatch({ type: actionTypes.EDIT_MENTOR_MATCHES, payload: mentor });
-  axiosWithAuth()
-    .put(`/mentor/${mentor.id}`, { ...mentor, mentee: -1 })
-    .then(res => {
-      dispatch({ type: actionTypes.EDIT_MENTOR_MATCHES, payload: res.data });
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({ type: actionTypes.EDIT_MENTOR_FAILURE, payload: err });
+  try {
+    const mentorData = await axiosWithAuth().put(`/mentor/${mentor.id}`, {
+      ...mentor,
+      mentee: -1,
     });
+    const menteeData = await axiosWithAuth().put(`/mentee/${mentee.id}`, {
+      ...mentee,
+      mentee_assignment: [],
+      mentoring_time_slot: null,
+    });
+    console.log(
+      'MENTORDATA: ',
+      mentorData.data,
+      '\nMENTEEDATA: ',
+      menteeData.data
+    );
+    dispatch({
+      type: actionTypes.EDIT_MENTOR_MATCHES,
+      payload: mentorData.data,
+    });
+    dispatch({
+      type: actionTypes.EDIT_MENTEE_MATCHES,
+      payload: menteeData.data,
+    });
+  } catch (err) {
+    console.log('ERROR DURING CANCELING MATCHING: ', err);
+  }
 };
 
 // -----------------------
