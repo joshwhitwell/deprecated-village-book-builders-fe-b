@@ -6,9 +6,6 @@ import { Form, Input } from 'antd';
 import { register } from '../../../state/actions';
 import { FormContainer, layout, tailLayout } from '../../common/FormStyle';
 
-// let React = require('react')
-// let SurveyField = require('react')
-// let React = require('react')
 
 const initialState = {
   first_name: '',
