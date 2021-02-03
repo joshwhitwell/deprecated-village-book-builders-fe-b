@@ -103,8 +103,21 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
+.teacher-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.confirm-deny-container {
+  margin-bottom: 0.25rem;
+}
 @media screen and (max-width: 800px) {
   .headmasterDashboard {
     margin-left: 0;
   }
 }
+

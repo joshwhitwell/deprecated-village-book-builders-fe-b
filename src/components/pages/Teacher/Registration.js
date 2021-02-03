@@ -6,7 +6,6 @@ import { Form, Input } from 'antd';
 import { register } from '../../../state/actions';
 import { FormContainer, layout, tailLayout } from '../../common/FormStyle';
 
-
 const initialState = {
   first_name: '',
   last_name: '',
@@ -14,7 +13,7 @@ const initialState = {
   password: '',
 };
 
-const Regristration = ({ register, registered }) => {
+const Registration = ({ register, registered }) => {
   const [theData, setTheData] = useState(initialState);
   const [form] = Form.useForm();
 
@@ -100,4 +99,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { register })(Regristration);
+export default connect(mapStateToProps, { register })(Registration);

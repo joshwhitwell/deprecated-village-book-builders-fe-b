@@ -1,13 +1,17 @@
+//dependencies
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { Drawer, Button, message } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
+
+//actions
 import {
-  Link,
-  NavLink,
-  // Redirect,
-  // BrowserRouter as Router,
-  Route,
-  Switch,
-} from 'react-router-dom';
+  fetchHeadmasterProfile,
+  fetchPendingTeachers,
+} from '../../../state/actions/index.js';
+
+//components
 import Village from '../Village/Village.component.js';
 import VillageForm from '../Village/VillageForm.js';
 import Schools from '../School/Schools.component.js';
@@ -16,10 +20,13 @@ import HeadmasterProfile from './HeadmasterProfile/Profile.js';
 import ProfileForm from './HeadmasterProfile/ProfileForm.js';
 import TeacherApproval from './TeacherApproval/TeacherApproval.js';
 import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
-// import HeadmasterNav from './Drawer';
-// import TestComponent from './TestComponent';
-import { Drawer, Button, message } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
+import Logout from '../../Logout.js';
+import Mentees from '../Mentees/Mentees';
+import MenteeSignup from '../Mentees/MenteeSignup';
+import MentorPairing from '../Mentor/MentorPairing';
+import SignupComplete from '../Mentees/SignupComplete';
+
+//styles
 import './HeadmasterDashboard.css';
 import {
   menuButton,
@@ -27,13 +34,6 @@ import {
   menuMove,
   Dashboard,
 } from './HeadmasterDashboard.style';
-import {
-  fetchHeadmasterProfile,
-  fetchPendingTeachers,
-} from '../../../state/actions/index.js';
-import Logout from '../../Logout.js';
-import Mentees from '../Mentees/Mentees';
-import MentorPairing from '../Mentor/MentorPairing';
 
 function HeadmasterDashboard(props) {
   let {
@@ -92,6 +92,12 @@ function HeadmasterDashboard(props) {
         <Switch>
           <Route exact path="/" render={() => <Welcome />} />
           <Route exact path="/mentees" component={Mentees} />
+          <Route
+            exact
+            path="/mentees/signup/complete"
+            component={SignupComplete}
+          />
+          <Route exact path="/mentees/signup" component={MenteeSignup} />
           <Route exact path="/mentor-pairings" component={MentorPairing} />
           <Route exact path="/teacher-approval" component={TeacherApproval} />
           <Route exact path="/profile" component={HeadmasterProfile} />
@@ -135,7 +141,6 @@ function HeadmasterDashboard(props) {
           height={500}
         >
           <h2>Hello, Headmaster!</h2>
-
           <NavLink to="/" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Home</button>
           </NavLink>
