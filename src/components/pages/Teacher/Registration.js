@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Button from '../../common/Button';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form, Input } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { register } from '../../../state/actions';
 import { FormContainer, layout, tailLayout } from '../../common/FormStyle';
+// import registerReducer from '../../../state/reducers'
 
 const initialState = {
   first_name: '',
@@ -16,16 +16,19 @@ const initialState = {
 const Registration = ({ register, registered }) => {
   const [theData, setTheData] = useState(initialState);
   const [form] = Form.useForm();
+  let history = useHistory();
 
   const handleChange = e => {
     setTheData({ ...theData, [e.target.name]: e.target.value });
   };
   const onSubmit = async () => {
-    register(theData);
+    console.log('test');
+    await register(theData);
+    history.push('/register_pt2');
   };
 
   return registered ? (
-    <Redirect to="/" />
+    <Redirect to="/login" />
   ) : (
     <FormContainer>
       <Form onFinish={onSubmit} form={form} {...layout}>
@@ -83,9 +86,8 @@ const Registration = ({ register, registered }) => {
             onChange={e => handleChange(e)}
           />
         </Form.Item>
-
         <Form.Item {...tailLayout}>
-          <Button buttonText="Register" type="submit" />
+          <Button htmlType="submit">Register</Button>
         </Form.Item>
       </Form>
       <h2>Register to become a teacher!</h2>
