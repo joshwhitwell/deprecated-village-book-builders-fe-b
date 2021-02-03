@@ -48,6 +48,35 @@ export const logout = () => dispatch => {
   window.localStorage.removeItem('token');
 };
 
+// -------------------------
+// REGRISTRATION
+// -------------------------
+
+// export const register = data => dispatch => {
+//   axios
+//   .post(`${baseURL}/user`, data)
+//   .then(res => {
+//     console.log(res)
+//     creds = {email, password, ...rest}
+//     if(res.statusText === "Created"){
+//       console.log("New account created successfully");
+//     }
+//     dispatch({
+//       type: actionTypes.AUTH_SUCCESS,
+//       payload: res.data.access_token,
+//     })
+//     login(creds)
+//   })
+//   .catch( err => {
+//     console.log(
+//       'REGISTER ACTION FAILURE--> with this data & baseURL:',
+//       data,
+//       baseURL
+//     );
+//     console.dir(err);
+//   })
+// }
+
 // -----------------------
 // HEADMASTER
 // -----------------------

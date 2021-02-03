@@ -13,7 +13,6 @@ import AdminDashboard from './pages/Admin/AdminDashboard';
 import ProgramDashboard from './pages/Program/ProgramDashboard';
 import MenteeDashboard from './pages/Mentees/MenteeDashboard';
 
-
 const App = ({ role, checkToken }) => {
   return (
     <div className="App">
