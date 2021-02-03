@@ -60,19 +60,20 @@ function TeacherApproval(props) {
       {props.pendingTeachers.map((teacher, ind) => {
         return (
           <div key={`${teacher.id}-${ind}`}>
-            <p>{`${teacher.first_name} ${teacher.last_name}`}</p>
-            <Label>Actions:</Label>
-            <div className="confirm-deny-container">
-              <Button onClick={e => onConfirmClick(e, teacher.id)}>
-                Confirm
-              </Button>
-              <Button
-                onClick={e =>
-                  onDenyClick(e, props.headMasterProfile.schoolId, teacher.id)
-                }
-              >
-                Deny
-              </Button>
+            <div className="teacher-container">
+              {`${teacher.first_name} ${teacher.last_name}`}
+              <span className="confirm-deny-container">
+                <Button onClick={e => onConfirmClick(e, teacher.id)}>
+                  Confirm
+                </Button>
+                <Button
+                  onClick={e =>
+                    onDenyClick(e, props.headMasterProfile.schoolId, teacher.id)
+                  }
+                >
+                  Deny
+                </Button>
+              </span>
             </div>
           </div>
         );
