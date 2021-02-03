@@ -4,6 +4,10 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
+import MenteeModal from '../Mentees/MenteeModal';
+import { fetchMentees } from '../../../state/actions/index';
+import { connect } from 'react-redux';
+import SignupComplete from '../Mentees/SignupComplete';
 
 //styles
 import '../Headmaster/HeadmasterDashboard.css';
@@ -19,9 +23,31 @@ import {
 import Logout from '../../Logout';
 import MenteeResources from '../Mentees/MenteeResources';
 
-function MenteeDashboard() {
+const MenteeDashboard = props => {
   const [visible, setVisible] = useState(true);
   const [desktop, setDesktop] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const { fetchMentees } = props;
+  const [currentMentee, setCurrentMentee] = useState({});
+
+  //opens and closes MenteeForm in MenteeModal
+  const editingHandler = () => setEditing(!editing);
+
+  //opens and closes MenteeModal
+  const moreInfoHandler = e => {
+    if (showModal) {
+      setShowModal(false);
+      setEditing(false);
+    } else {
+      setShowModal(true);
+      setCurrentMentee(props.menteeReducer.mentees[0]);
+    }
+  };
+
+  useEffect(() => {
+    fetchMentees();
+  }, [fetchMentees]);
 
   //handles responsive layout of menu drawer
   useEffect(() => {
@@ -50,8 +76,9 @@ function MenteeDashboard() {
     <div>
       <Dashboard className="testContainer">
         <Switch>
-          <Route path="/logout" component={Logout} />
+          <Route path="/mentees/signup/complete" component={SignupComplete} />
           <Route path="/mentees/resources" component={MenteeResources} />
+          <Route path="/logout" component={Logout} />
           <Route path="/" render={() => <Welcome />} />
         </Switch>
       </Dashboard>
@@ -84,13 +111,33 @@ function MenteeDashboard() {
           <NavLink to="/mentees/resources" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentee Resources</button>
           </NavLink>
+          <button
+            className="btn l2-btn menuLinks"
+            onClick={e => moreInfoHandler(e)}
+          >
+            Mentee Profile Page
+          </button>
+
           <Link to="/logout" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Logout</button>
           </Link>
         </Drawer>
       </div>
+      <MenteeModal
+        showModal={showModal}
+        editing={editing}
+        editingHandler={editingHandler}
+        moreInfoHandler={moreInfoHandler}
+        currentMentee={currentMentee}
+      />
     </div>
   );
-}
+};
 
-export default MenteeDashboard;
+const mapStateToProps = state => {
+  return {
+    menteeReducer: state.menteeReducer,
+  };
+};
+
+export default connect(mapStateToProps, { fetchMentees })(MenteeDashboard);

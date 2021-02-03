@@ -34,6 +34,15 @@ import {
   Dashboard,
 } from './HeadmasterDashboard.style';
 
+import {
+  fetchHeadmasterProfile,
+  fetchPendingTeachers,
+} from '../../../state/actions/index.js';
+import Logout from '../../Logout.js';
+import Mentees from '../Mentees/Mentees';
+import SignupComplete from '../Mentees/SignupComplete';
+import MentorPairing from '../Mentor/MentorPairing';
+
 function HeadmasterDashboard(props) {
   let {
     headMasterProfile,
@@ -91,6 +100,11 @@ function HeadmasterDashboard(props) {
         <Switch>
           <Route exact path="/" render={() => <Welcome />} />
           <Route exact path="/mentees" component={Mentees} />
+          <Route
+            exact
+            path="/mentees/signup/complete"
+            component={SignupComplete}
+          />
           <Route exact path="/mentees/signup" component={MenteeSignup} />
           <Route exact path="/mentor-pairings" component={MentorPairing} />
           <Route exact path="/teacher-approval" component={TeacherApproval} />
