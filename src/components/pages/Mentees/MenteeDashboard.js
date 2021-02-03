@@ -80,8 +80,7 @@ function MenteeDashboard() {
           width={desktop ? 300 : 500}
           height={500}
         >
-          <h2>Welcome Mentee!</h2>
-
+          <h2>Hello, Mentee!</h2>
           <NavLink to="/mentees/resources" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentee Resources</button>
           </NavLink>

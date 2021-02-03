@@ -135,7 +135,6 @@ function HeadmasterDashboard(props) {
           height={500}
         >
           <h2>Hello, Headmaster!</h2>
-
           <NavLink to="/" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Home</button>
           </NavLink>

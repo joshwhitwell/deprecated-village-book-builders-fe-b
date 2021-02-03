@@ -59,15 +59,7 @@ const TeacherDashboard = () => {
           <Route path="/mentees/signup/complete" component={SignupComplete} />
           <Route path="/mentees/signup" component={MenteeSignup} />
           <Route path="/mentees" component={Mentees} />
-          <Route
-            path="/"
-            render={() => (
-              <>
-                <h1 style={{ textAlign: 'center' }}>Welcome Teacher</h1>
-                <Welcome />
-              </>
-            )}
-          />
+          <Route path="/" render={() => <Welcome />} />
         </Switch>
       </Dashboard>
       {desktop ? null : (
@@ -94,6 +86,7 @@ const TeacherDashboard = () => {
           width={desktop ? 300 : 500}
           height={500}
         >
+          <h2>Hello, Teacher!</h2>
           <NavLink to="/" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Home</button>
           </NavLink>

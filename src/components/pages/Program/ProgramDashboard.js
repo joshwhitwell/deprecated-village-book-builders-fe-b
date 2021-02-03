@@ -83,6 +83,7 @@ function ProgramDashboard() {
           width={desktop ? 300 : 500}
           height={500}
         >
+          <h2>Hello, Admin!</h2>
           <NavLink to="/mentees" onClick={() => setVisible(true)}>
             <button className="btn l2-btn menuLinks">Mentees</button>
           </NavLink>
