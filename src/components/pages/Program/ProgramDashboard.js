@@ -7,7 +7,6 @@ import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.
 
 //styles
 import '../Headmaster/HeadmasterDashboard.css';
-
 import {
   menuButton,
   menuIcon,

@@ -12,10 +12,6 @@
   margin: 50px 0 0 0;
 }
 
-.available {
-  padding-bottom: 1%;
-}
-
 .match__button {
   margin-top: 50px;
 }
@@ -28,9 +24,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 95px;
 }
 
 .descriptions__container {
   margin-top: 40px;
   width: 93%;
+}
+
+.ant-empty-description div {
+  text-align: center;
 }

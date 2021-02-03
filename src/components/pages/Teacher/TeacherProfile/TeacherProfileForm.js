@@ -1,182 +1,183 @@
-import React, { useState, useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { useParams, Link, useHistory } from 'react-router-dom';
-import { Form, Input, Radio } from 'antd';
+//dependencies
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Form, Input, Select, Button } from 'antd';
+
+//actions
 import { editTeacherProfile } from '../../../../state/actions';
+import { fetchTeacherProfile } from '../../../../state/actions/index';
+
+//styles
 import {
   layout,
   FormContainer,
   tailLayout,
   Required,
 } from '../../../common/FormStyle';
-import Button from '../../../common/Button';
-import { axiosWithAuth } from '../../../../utils/axiosWithAuth';
 
-const initialState = {
-  first_name: '',
-  last_name: '',
-  account_status: 'Active',
-  gender: {
-    male: false,
-    female: false,
-    other: false,
-  },
-  address: '',
-  education_contact: {
-    name: '',
-    phone: '',
-    email: '',
-    jobTitle: '',
-  },
-  notes: '',
-};
+//components
+import { ComponentTitle } from '../../../common';
+import {
+  subjectOptions,
+  languageOptions,
+  countryOptions,
+  timeZoneOptions,
+} from '../../Mentees/FormOptions';
 
 const ProfileForm = props => {
-  const { userId } = useSelector(state => state.authReducer);
-  const [formData, setFormData] = useState(initialState);
-  const [value, setValue] = useState(1);
-
-  const params = useParams().id;
-  const [form] = Form.useForm();
   const history = useHistory();
+  //destructures profile from redux store
+  const { profile, fetchTeacherProfile } = props;
+  const [form] = Form.useForm();
+
+  //sets form fields on page refresh and initial render
+  useEffect(() => {
+    fetchTeacherProfile(1);
+  }, [fetchTeacherProfile]);
 
   useEffect(() => {
-    axiosWithAuth() // ! This should later become available through axiosWithAuth() only once we figure out the Auth with Stakeholder's backend
-      .get(`/teacher/${params}`)
-      .then(res => {
-        form.setFieldsValue(res.data);
-        setFormData(res.data);
-      })
-      .catch(err => console.dir(err));
-  }, [form, params]);
+    form.setFieldsValue(profile);
+  }, [form, profile]);
 
-  const onChange = e => {
-    setValue(e.target.value);
-  };
-
-  const handleSubmit = async () => {
-    props.editTeacherProfile(params, formData);
-    history.push(`/teacher/${userId - 10}`);
-  };
-
-  const handleChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleSubmit = values => {
+    props.editTeacherProfile(1, {
+      ...values,
+      classrooms: profile.classrooms,
+      account_status: profile.account_status,
+    });
+    history.push('/teacher/1');
   };
 
   return (
-    <>
-      <FormContainer>
-        <Form.Item {...tailLayout}>
-          <Link to={`/teacher/${userId - 10}`}>Go Back to your Profile</Link>
+    <FormContainer>
+      <Form onFinish={handleSubmit} form={form} {...layout}>
+        <ComponentTitle titleText="Teacher" />
+
+        <Form.Item
+          label="First Name"
+          name="first_name"
+          rules={[{ required: true, message: 'First Name is required.' }]}
+          initialValue={profile.first_name}
+        >
+          <Input type="text" />
         </Form.Item>
-        <Form onFinish={handleSubmit} form={form} {...layout}>
-          <Form.Item
-            label="First Name"
-            rules={[{ required: true, message: 'First Name is required.' }]}
+
+        <Form.Item
+          label="Last Name"
+          name="last_name"
+          rules={[{ required: true, message: 'Last Name is required.' }]}
+          initialValue={profile.last_name}
+        >
+          <Input type="text" />
+        </Form.Item>
+
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: 'Email is required.' }]}
+          initialValue={profile.email}
+        >
+          <Input type="email" />
+        </Form.Item>
+
+        <Form.Item
+          label="Phone"
+          name="phone"
+          rules={[{ required: true, message: 'Phone is required.' }]}
+          initialValue={profile.phone}
+        >
+          <Input type="tel" />
+        </Form.Item>
+
+        <Form.Item
+          label="City"
+          name="city"
+          rules={[{ required: true, message: 'Address is required.' }]}
+          initialValue={profile.city}
+        >
+          <Input type="text" />
+        </Form.Item>
+
+        <Form.Item
+          label="Country"
+          name="country"
+          initialValue={profile.country}
+          rules={[{ required: true, message: 'Country is required.' }]}
+        >
+          <Select>{countryOptions}</Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Time Zone"
+          name="time_zone"
+          initialValue={profile.time_zone}
+          rules={[{ required: true, message: 'Time zone is required.' }]}
+        >
+          <Select>{timeZoneOptions}</Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Primary Language"
+          name="first_language"
+          initialValue={profile.first_language}
+          rules={[{ required: true, message: 'First language is required.' }]}
+        >
+          <Select>{languageOptions}</Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Other Fluent Languages"
+          name="other_language"
+          initialValue={profile.other_language}
+        >
+          <Select mode="multiple" allowClear placeholder="Please select">
+            {languageOptions}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Subjects"
+          name="subjects"
+          initialValue={profile.subjects}
+          rules={[{ required: true, message: 'Subjects is required.' }]}
+        >
+          <Select mode="multiple" allowClear placeholder="Please select">
+            {subjectOptions}
+          </Select>
+        </Form.Item>
+
+        <Form.Item {...tailLayout}>
+          <Required id="requiredMsg">
+            Fields with <span id="required">&#42;</span> are required.
+          </Required>
+        </Form.Item>
+
+        <Form.Item {...tailLayout}>
+          <Button
+            type="secondary"
+            style={{ marginRight: '15px' }}
+            onClick={() => history.push('/teacher/1')}
           >
-            <Input
-              type="text"
-              name="first_name"
-              value={formData.first_name}
-              onChange={e => handleChange(e)}
-            />
-          </Form.Item>
+            Cancel
+          </Button>
 
-          <Form.Item
-            label="Last Name"
-            rules={[{ required: true, message: 'Last Name is required.' }]}
-          >
-            <Input
-              type="text"
-              name="last_name"
-              value={formData.last_name}
-              onChange={e => handleChange(e)}
-            />
-          </Form.Item>
-
-          <Form.Item label="Gender">
-            <Radio.Group onChange={onChange} value={value}>
-              <Radio value={1}>Male</Radio>
-              <Radio value={2}>Female</Radio>
-              <Radio value={3}>Other</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          {/* <Space direction="vertical" size={12} {...tailLayout}>
-            <DatePicker
-              defaultValue={moment(`${formData.dob}`, dateFormatList[0])}
-              format={dateFormat}
-            />
-          </Space> */}
-
-          <Form.Item
-            label="Address"
-            rules={[{ required: true, message: 'Address is required.' }]}
-          >
-            <Input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={e => handleChange(e)}
-            />
-          </Form.Item>
-
-          <Form.Item label="Education Contact" rules={[{ required: false }]}>
-            <Input
-              type="text"
-              name="name"
-              value={formData.phone_number}
-              onChange={e => handleChange(e)}
-            />
-
-            <Input
-              type="text"
-              name="phone"
-              value={formData.phone_number}
-              onChange={e => handleChange(e)}
-            />
-
-            <Input
-              type="text"
-              name="email"
-              value={formData.phone_number}
-              rules={[
-                { required: '@', message: 'Must be a proper Email format' },
-              ]}
-              onChange={e => handleChange(e)}
-            />
-
-            <Input
-              type="text"
-              name="jobTitle"
-              value={formData.phone_number}
-              onChange={e => handleChange(e)}
-            />
-          </Form.Item>
-
-          <Form.Item label="Notes" rules={[{ required: false }]}>
-            <Input
-              type="text"
-              name="notes"
-              value={formData.bio}
-              onChange={e => handleChange(e)}
-            />
-          </Form.Item>
-
-          <Form.Item {...tailLayout}>
-            <Button
-              className="l2-btn btn"
-              htmlType="submit"
-              buttonText="Submit"
-            />
-            <Required id="requiredMsg">
-              Fields with <span id="required">&#42;</span> are required.
-            </Required>
-          </Form.Item>
-        </Form>
-      </FormContainer>
-    </>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </FormContainer>
   );
 };
 
-export default connect(null, { editTeacherProfile })(ProfileForm);
+const mapStateToProps = state => {
+  return {
+    profile: state.teacherReducer.teacherProfile,
+  };
+};
+
+export default connect(mapStateToProps, {
+  editTeacherProfile,
+  fetchTeacherProfile,
+})(ProfileForm);

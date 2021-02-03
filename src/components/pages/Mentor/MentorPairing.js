@@ -8,6 +8,7 @@ import {
 import { useSelector, connect } from 'react-redux';
 import { Descriptions, Select, Button } from 'antd';
 import { Popconfirm, message } from 'antd';
+import { Empty } from 'antd';
 
 import moment from 'moment';
 import './MentorPairing.css';
@@ -20,6 +21,7 @@ const MentorPairing = ({
 }) => {
   const { Option } = Select;
   const [mentor, setMentor] = useState({});
+  const [mentee, setMentee] = useState({});
   const [menteeId, setMenteeId] = useState(-1);
 
   const state = useSelector(state => ({ ...state }));
@@ -57,14 +59,16 @@ const MentorPairing = ({
   const availableMentorSubjects = eachMentor =>
     eachMentor.subjects.map(eachSubject => `${eachSubject}`);
 
-  const handleUpdate = (mentor, menteeId) => {
-    editMatches(mentor, menteeId);
+  const handleUpdate = (mentor, menteeId, mentee) => {
+    editMatches(mentor, menteeId, mentee);
     fetchMentors();
+    fetchMentees();
   };
 
-  const handleCancel = mentor => {
-    cancelMatches(mentor);
+  const handleCancel = (mentor, menteeInfo) => {
+    cancelMatches(mentor, menteeInfo);
     fetchMentors();
+    fetchMentees();
   };
 
   const selectMentor = () => (
@@ -101,12 +105,17 @@ const MentorPairing = ({
       placeholder="Select a mentee"
       showSearch
       optionFilterProp="children"
-      onChange={value => setMenteeId(value)}
+      onChange={value => {
+        mentees.forEach(eachMentee => {
+          if (eachMentee.id === value) {
+            setMentee(eachMentee);
+          }
+        });
+        setMenteeId(value);
+      }}
     >
       {mentees.filter(availableMentee).map(eachMentee => (
         <Option key={eachMentee.id} value={eachMentee.id}>{`${
-          eachMentee.general_availability.as_early_as
-        } to ${eachMentee.general_availability.as_late_as} ---- ${
           eachMentee.first_name
         } ${eachMentee.last_name} ---- ${moment(eachMentee.dob).format(
           'MMM Do YY'
@@ -115,8 +124,8 @@ const MentorPairing = ({
     </Select>
   );
 
-  const confirm = eachMentor => {
-    handleCancel(eachMentor);
+  const confirm = (eachMentor, menteeInfo) => {
+    handleCancel(eachMentor, menteeInfo);
     message.success('Successfully Unmatched!');
   };
 
@@ -130,48 +139,61 @@ const MentorPairing = ({
           type="primary"
           shape="round"
           style={{ backgroundColor: '#ff914d', border: '#ff914d' }}
-          onClick={() => handleUpdate(mentor, menteeId)}
+          onClick={() => handleUpdate(mentor, menteeId, mentee)}
         >
           Let's Match
         </Button>
       </div>
-      <div className="paired">
-        {mentors.filter(matchedMentor).map(eachMentor => {
-          let menteeInfo = {};
+      {mentors.filter(matchedMentor).length === 0 ? (
+        <Empty
+          imageStyle={{
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '200%',
+            height: '50vh',
+          }}
+          description={false}
+        ></Empty>
+      ) : (
+        <div className="paired">
+          {mentors.filter(matchedMentor).map(eachMentor => {
+            let menteeInfo = {};
 
-          for (let i = 0; i < mentees.length; i++) {
-            if (mentees[i].id === eachMentor.mentee) {
-              menteeInfo = mentees[i];
+            for (let i = 0; i < mentees.length; i++) {
+              if (mentees[i].id === eachMentor.mentee) {
+                menteeInfo = mentees[i];
+              }
             }
-          }
+            return (
+              <div className="descriptions__container" key={eachMentor.id}>
+                <hr />
+                <Descriptions
+                  className="descriptions"
+                  title={`${moment(eachMentor.time_slots).format('MMM Do YY')}`}
+                >
+                  <Descriptions.Item label="Mentor">{`${eachMentor.first_name} ${eachMentor.last_name}`}</Descriptions.Item>
+                  <Descriptions.Item label="Mentee">{`${menteeInfo.first_name}`}</Descriptions.Item>
+                  <Descriptions.Item label="Language">{`${menteeInfo.first_language}`}</Descriptions.Item>
+                  <Descriptions.Item label="Time">{`${moment(
+                    eachMentor.time_slots
+                  ).format('MMM Do YY')}`}</Descriptions.Item>
+                </Descriptions>
 
-          return (
-            <div className="descriptions__container" key={eachMentor.id}>
-              <hr />
-              <Descriptions
-                className="descriptions"
-                title={`${moment(eachMentor.time_slots).format('MMM Do YY')}`}
-              >
-                <Descriptions.Item label="Mentor">{`${eachMentor.first_name} ${eachMentor.last_name}`}</Descriptions.Item>
-                <Descriptions.Item label="Mentee">{`${menteeInfo.first_name}`}</Descriptions.Item>
-                <Descriptions.Item label="Language">{`${menteeInfo.first_language}`}</Descriptions.Item>
-                <Descriptions.Item label="Time">{`${moment(
-                  eachMentor.time_slots
-                ).format('MMM Do YY')}`}</Descriptions.Item>
-              </Descriptions>
-
-              <Popconfirm
-                title="Are you sure to delete this task?"
-                onConfirm={() => confirm(eachMentor)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button>Cancel</Button>
-              </Popconfirm>
-            </div>
-          );
-        })}
-      </div>
+                <Popconfirm
+                  title="Are you sure to delete this task?"
+                  onConfirm={() => confirm(eachMentor, menteeInfo)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button>Cancel</Button>
+                </Popconfirm>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
