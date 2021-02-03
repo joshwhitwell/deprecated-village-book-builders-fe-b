@@ -5,6 +5,7 @@ import {
   FETCH_MENTEE_START,
   EDIT_MENTEE_START,
   EDIT_MENTEE_SUCCESS,
+  EDIT_MENTEE_MATCHES,
   EDIT_MENTEE_FAILURE,
   ADD_MENTEE_START,
   ADD_MENTEE_SUCCESS,
@@ -15,6 +16,7 @@ import {
 const initialState = {
   mentees: [],
   newMentee: null,
+  updatedMentee: null,
   error: '',
 };
 
@@ -34,6 +36,16 @@ const menteeReducer = (state = initialState, action) => {
       return { ...state };
     case EDIT_MENTEE_SUCCESS:
       return { ...state };
+    case EDIT_MENTEE_MATCHES:
+      return {
+        ...state,
+        mentees: state.mentees.map(eachMentee => {
+          if (eachMentee.id === action.payload.id) {
+            return action.payload;
+          }
+          return eachMentee;
+        }),
+      };
     case EDIT_MENTEE_FAILURE:
       return { ...state };
 
