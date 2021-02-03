@@ -108,6 +108,7 @@ const EditMentee = props => {
       mentoring_time_slot: null,
     };
     props.editMentee(props.currentMentee.id, formattedValues);
+    props.moreInfoHandler();
     history.push('/mentees/signup/complete');
   };
 

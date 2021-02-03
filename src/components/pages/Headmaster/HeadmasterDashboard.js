@@ -33,6 +33,7 @@ import {
 } from '../../../state/actions/index.js';
 import Logout from '../../Logout.js';
 import Mentees from '../Mentees/Mentees';
+import SignupComplete from '../Mentees/SignupComplete';
 import MentorPairing from '../Mentor/MentorPairing';
 
 function HeadmasterDashboard(props) {
@@ -90,9 +91,13 @@ function HeadmasterDashboard(props) {
     <div>
       <Dashboard>
         <Switch>
-
           <Route exact path="/" render={() => <Welcome />} />
           <Route exact path="/mentees" component={Mentees} />
+          <Route
+            exact
+            path="/mentees/signup/complete"
+            component={SignupComplete}
+          />
           <Route exact path="/mentor-pairings" component={MentorPairing} />
           <Route exact path="/teacher-approval" component={TeacherApproval} />
           <Route exact path="/profile" component={HeadmasterProfile} />
