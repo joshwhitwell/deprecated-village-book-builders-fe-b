@@ -7,6 +7,7 @@
 
 const initialState = {
     Subjects: '',
+    School_id: 1,
     Highest_Degree: '',
     Home_Country: '',
     Home_Time_Zone: '',
