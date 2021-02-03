@@ -7,6 +7,7 @@ import menteeReducer from './menteeReducer';
 import authReducer from './authReducer';
 import teacherReducer from './teacherReducer';
 import mentorReducer from './mentorReducer';
+import registerReducer from './register';
 
 export default combineReducers({
   headmasterReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   menteeReducer,
   mentorReducer,
   teacherReducer,
+  registerReducer,
 });

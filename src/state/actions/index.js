@@ -53,28 +53,32 @@ export const logout = () => dispatch => {
 // -------------------------
 
 export const register = data => dispatch => {
-  axios
-    .post(`${baseURL}/user`, data)
-    .then(res => {
-      console.log(res);
-      creds = { email, password, ...rest };
-      if (res.statusText === 'Created') {
-        console.log('New account created successfully');
-      }
-      dispatch({
-        type: actionTypes.AUTH_SUCCESS,
-        payload: res.data.access_token,
-      });
-      login(creds);
-    })
-    .catch(err => {
-      console.log(
-        'REGISTER ACTION FAILURE--> with this data & baseURL:',
-        data,
-        baseURL
-      );
-      console.dir(err);
-    });
+  // let {email, password, ...rest} = data;
+  // let creds = {email, password}
+  // axios
+  // .post(`${baseURL}/auth/register`, {...creds, role: 'teacher'})
+  // .then(res => {
+  //   if(res.statusText === "Created"){
+  //     console.log("New account created successfully");
+  //   }
+  //   dispatch({
+  //     type: actionTypes.REGISTER_SUCCESS,
+  //     payload: rest,
+  //   })
+  //   login(creds)
+  // })
+  // .catch( err => {
+  //   console.log(
+  //     'REGISTER ACTION FAILURE--> with this data & baseURL:',
+  //     data,
+  //     baseURL
+  //   );
+  //   console.dir(err);
+  // })
+  dispatch({
+    type: actionTypes.REGISTER_SUCCESS,
+    payload: data,
+  });
 };
 
 // -----------------------

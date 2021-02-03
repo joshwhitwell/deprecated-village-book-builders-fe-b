@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import '../style.css';
 // import PrivateRoute from "../utils/PrivateRoute";
 import { checkToken } from '../state/actions/index';
+import register_step_2 from '../components/pages/Teacher/RegistrationPart2';
 import Login from './pages/Login/Login';
 import Logout from './Logout';
 import HeadmasterDashboard from './pages/Headmaster/HeadmasterDashboard';
@@ -18,6 +19,8 @@ const App = ({ role, checkToken }) => {
   return (
     <div className="App">
       <Switch>
+        <Route path="/register" component={Registration} />
+        <Route path="/register_pt2" component={register_step_2} />
         <Route path="/logout" component={Logout} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Registration} />
