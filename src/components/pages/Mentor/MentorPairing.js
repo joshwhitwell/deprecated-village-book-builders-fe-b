@@ -8,6 +8,7 @@ import {
 import { useSelector, connect } from 'react-redux';
 import { Descriptions, Select, Button } from 'antd';
 import { Popconfirm, message } from 'antd';
+import { Empty } from 'antd';
 
 import moment from 'moment';
 import './MentorPairing.css';
@@ -135,43 +136,57 @@ const MentorPairing = ({
           Let's Match
         </Button>
       </div>
-      <div className="paired">
-        {mentors.filter(matchedMentor).map(eachMentor => {
-          let menteeInfo = {};
+      {mentors.filter(matchedMentor).length === 0 ? (
+        <Empty
+          imageStyle={{
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '200%',
+            height: '50vh',
+          }}
+          description={false}
+        ></Empty>
+      ) : (
+        <div className="paired">
+          {mentors.filter(matchedMentor).map(eachMentor => {
+            let menteeInfo = {};
 
-          for (let i = 0; i < mentees.length; i++) {
-            if (mentees[i].id === eachMentor.mentee) {
-              menteeInfo = mentees[i];
+            for (let i = 0; i < mentees.length; i++) {
+              if (mentees[i].id === eachMentor.mentee) {
+                menteeInfo = mentees[i];
+              }
             }
-          }
 
-          return (
-            <div className="descriptions__container" key={eachMentor.id}>
-              <hr />
-              <Descriptions
-                className="descriptions"
-                title={`${moment(eachMentor.time_slots).format('MMM Do YY')}`}
-              >
-                <Descriptions.Item label="Mentor">{`${eachMentor.first_name} ${eachMentor.last_name}`}</Descriptions.Item>
-                <Descriptions.Item label="Mentee">{`${menteeInfo.first_name}`}</Descriptions.Item>
-                <Descriptions.Item label="Language">{`${menteeInfo.first_language}`}</Descriptions.Item>
-                <Descriptions.Item label="Time">{`${moment(
-                  eachMentor.time_slots
-                ).format('MMM Do YY')}`}</Descriptions.Item>
-              </Descriptions>
+            return (
+              <div className="descriptions__container" key={eachMentor.id}>
+                <hr />
+                <Descriptions
+                  className="descriptions"
+                  title={`${moment(eachMentor.time_slots).format('MMM Do YY')}`}
+                >
+                  <Descriptions.Item label="Mentor">{`${eachMentor.first_name} ${eachMentor.last_name}`}</Descriptions.Item>
+                  <Descriptions.Item label="Mentee">{`${menteeInfo.first_name}`}</Descriptions.Item>
+                  <Descriptions.Item label="Language">{`${menteeInfo.first_language}`}</Descriptions.Item>
+                  <Descriptions.Item label="Time">{`${moment(
+                    eachMentor.time_slots
+                  ).format('MMM Do YY')}`}</Descriptions.Item>
+                </Descriptions>
 
-              <Popconfirm
-                title="Are you sure to delete this task?"
-                onConfirm={() => confirm(eachMentor)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button>Cancel</Button>
-              </Popconfirm>
-            </div>
-          );
-        })}
-      </div>
+                <Popconfirm
+                  title="Are you sure to delete this task?"
+                  onConfirm={() => confirm(eachMentor)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button>Cancel</Button>
+                </Popconfirm>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
