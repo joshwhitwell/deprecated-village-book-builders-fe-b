@@ -16,6 +16,7 @@ const initialState = {
     Email: '',
     First_Language: '',
     Other_Fluent_Languages: '',
+    account_status: "Inactive"
 }
 
 const register_step_2 = ({step_2, stepped_2}) => {
