@@ -6,6 +6,8 @@
  import { Form, Input } from 'antd';
 
 const initialState = {
+    schoolId: 1,
+    account_status: "Inactive",
     Subjects: '',
     Highest_Degree: '',
     Home_Country: '',
