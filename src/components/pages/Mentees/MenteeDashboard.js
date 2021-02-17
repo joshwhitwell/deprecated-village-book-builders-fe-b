@@ -20,7 +20,7 @@ import {
 } from '../Headmaster/HeadmasterDashboard.style';
 
 //components
-import Logout from '../../Logout';
+import Logout from '../Authentication/Logout';
 import MenteeResources from '../Mentees/MenteeResources';
 
 const MenteeDashboard = props => {

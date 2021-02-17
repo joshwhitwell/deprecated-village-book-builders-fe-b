@@ -2,12 +2,12 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import '../style.css';
+import '../styles/style.css';
 // import PrivateRoute from "../utils/PrivateRoute";
 import { checkToken } from '../state/actions/index';
 import register_step_2 from '../components/pages/Teacher/RegistrationPart2';
-import Login from './pages/Login/Login';
-import Logout from './Logout';
+import Login from './pages/Authentication/Login';
+import Logout from './pages/Authentication/Logout';
 import HeadmasterDashboard from './pages/Headmaster/HeadmasterDashboard';
 import TeacherDashboard from './pages/Teacher/TeacherDashboard';
 import AdminDashboard from './pages/Admin/AdminDashboard';

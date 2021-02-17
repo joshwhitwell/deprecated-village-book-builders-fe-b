@@ -8,21 +8,21 @@ This repository contains the source code for the Village Book Builders (VBB) cli
 
 ## Tech Stack
 
-* Languages: JavaScript | HTML | CSS
-* Framework: React.js
-* State Management: Redux
-* Styling: Ant Design | Styled Components
-* Authentication: JSON Web Tokens
-* Build: Craco
-* Linting & Code Styled: ESLint | Prettier
-* Testing: Jest | React Testing Library
+- Languages: JavaScript | HTML | CSS
+- Framework: React.js
+- State Management: Redux
+- Styling: Ant Design | Styled Components
+- Authentication: JSON Web Tokens
+- Build: Craco
+- Linting & Code Styled: ESLint | Prettier
+- Testing: Jest | React Testing Library
 
 ## Features
 
-* Authenticated login process for registered VBB users (program administrators, school headmasters, students, program mentors)
-* Multi-step registration and onboarding process for new VBB students and teachers
-* Custom dashboard pages and user profile components for headmasters, teachers, students, and program admins
-* Intuitive booking interface for scheduling and managing mentorship assignments
+- Authenticated login process for registered VBB users (program administrators, school headmasters, students, program mentors)
+- Multi-step registration and onboarding process for new VBB students and teachers
+- Custom dashboard pages and user profile components for headmasters, teachers, students, and program admins
+- Intuitive booking interface for scheduling and managing mentorship assignments
 
 ## Installation
 
@@ -81,4 +81,5 @@ Remember that this project is licensed under the MIT license, and by submitting 
 - You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
 
 # License
+
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)

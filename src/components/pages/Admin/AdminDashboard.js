@@ -5,7 +5,7 @@ import Libraries from './Libraries';
 import EditLibrary from './EditLibrary';
 import AddLibrary from './AddLibrary';
 import './AdminDashboard.css';
-import Logout from '../../Logout.js';
+import Logout from '../Authentication/Logout.js';
 
 export default function AdminDashboard() {
   return (
