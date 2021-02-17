@@ -20,9 +20,13 @@ This repository contains the source code for the Village Book Builders (VBB) cli
 ## Features
 
 * Authenticated login process for registered VBB users (program administrators, school headmasters, students, program mentors)
+![Login](/src/assets/markdown_images/login.png)
 * Multi-step registration and onboarding process for new VBB students and teachers
+![Registration](/src/assets/markdown_images/registration.png)
 * Custom dashboard pages and user profile components for headmasters, teachers, students, and program admins
+![Dashboard](/src/assets/markdown_images/dashboard.png)
 * Intuitive booking interface for scheduling and managing mentorship assignments
+![Login](/src/assets/markdown_images/matching.png)
 
 ## Installation
 
