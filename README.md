@@ -6,6 +6,14 @@ Village Book Builders is a non-profit organization empowering villages around th
 
 This repository contains the source code for the Village Book Builders (VBB) client-facing web application. The application is a multi-role platform that allows authenticated users to access and manage data and resources pertaining to the VBB mentor program. The application is architected using a React framework, bootstrapped using Create-React-App, and connects to a mock back-end built using JSON Server that simulates the models and behaviors of the VBB API without querying the actual production database. For more information about back-end API see the back-end repo [here](https://github.com/joshwhitwell/village-book-builders-server).
 
+## Installation
+
+- Fork and clone the repository to your local machine
+- Run: `npm install` to download project dependencies
+- Create a .env file in the foot directory of your local repo and add the following variable(s):
+- -`REACT_APP_BASE_URL=[base URL of the back end server]`
+- Run: `npm start` to start your local development server
+
 ## Tech Stack
 
 * Languages: JavaScript | HTML | CSS
@@ -33,14 +41,6 @@ This repository contains the source code for the Village Book Builders (VBB) cli
 
 * Intuitive booking interface for scheduling and managing mentorship assignments
 &emsp;&emsp;&emsp;![Login](/src/assets/markdown_images/matching.png)
-
-## Installation
-
-- Fork and clone the repository to your local machine
-- Run: `npm install` to download project dependencies
-- Create a .env file in the foot directory of your local repo and add the following variable(s):
-- -`REACT_APP_BASE_URL=[base URL of the back end server]`
-- Run: `npm start` to start your local development server
 
 ## Contributing
 
