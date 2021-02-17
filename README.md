@@ -1,12 +1,12 @@
-## Village Book Builders
+# Village Book Builders
 
 Village Book Builders is a non-profit organization empowering villages around the world to end the cycle of poverty through education. They build library spaces where children can foster deeper relationships with learning. They also help people bring social responsibility in-house by connecting volunteers, students, and working professionals to serve as mentors to children in developing communities all over the globe.
 
-# Project Overview
+## Project Overview
 
 This repository contains the source code for the Village Book Builders (VBB) client-facing web application. The application is a multi-role platform that allows authenticated users to access and manage data and resources pertaining to the VBB mentor program. The application is architected using a React framework, bootstrapped using Create-React-App, and connects to a mock back-end built using JSON Server that simulates the models and behaviors of the VBB API without querying the actual production database. For more information about back-end API see the back-end repo [here](https://github.com/joshwhitwell/village-book-builders-server).
 
-# Tech Stack
+## Tech Stack
 
 * Languages: JavaScript | HTML | CSS
 * Framework: React.js
@@ -17,14 +17,14 @@ This repository contains the source code for the Village Book Builders (VBB) cli
 * Linting & Code Styled: ESLint | Prettier
 * Testing: Jest | React Testing Library
 
-# Features
+## Features
 
 * Authenticated login process for registered VBB users (program administrators, school headmasters, students, program mentors)
 * Multi-step registration and onboarding process for new VBB students and teachers
 * Custom dashboard pages and user profile components for headmasters, teachers, students, and program admins
 * Intuitive booking interface for scheduling and managing mentorship assignments
 
-# Installation
+## Installation
 
 - Fork and clone the repository to your local machine
 - Run: `npm install` to download project dependencies
@@ -40,9 +40,6 @@ This repository contains the source code for the Village Book Builders (VBB) cli
 |                        [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Jahteo)                        |                    [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/ferror18)                    |                    [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/yirano)                    |                    [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/jidelson)                    |                    [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/kima-92)                    |
 | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/josh-glantzhucks/) |        [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)        |       [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)       |        [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)        |       [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)        |
 
-<br>
-<br>
-
 ## Contributors for Version 1.1
 
 |                                                               Josh Whitwell                                                                |                                                                              Joon Kim                                                                               |                                                                          Beau Bradley                                                                           |                                                                            Rohith Sachdeva                                                                             |                                                          Andre Jeon                                                           |                                                                             Henry Davis                                                                             |
@@ -51,20 +48,13 @@ This repository contains the source code for the Village Book Builders (VBB) cli
 |                         [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Joshwhitwell)                          |                                      [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Sunkist5691)                                       |                                      [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/devbeau)                                       |                                      [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/RohithSachdeva)                                       |                    [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/andre-jeon)                    |                                      [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/HenryRDavis)                                       |
 | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/joshua-whitwell-425846132/) |                      [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/joon5691/)                      |                  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/beaubradweb/)                   |                     [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/rohithsachdeva)                     |  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/andrejeon/)   |                  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/its-henry-davis/)                   |
 
-<br>
-<br>
-
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
-![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
-
-# Contributing
+## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
 Please note we have a [code of conduct](./CODE_OF_CONDUCT.md). Please follow it in all your interactions with the project.
 
-## Issue/Bug Request
+### Issue/Bug Request
 
 **If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
 
