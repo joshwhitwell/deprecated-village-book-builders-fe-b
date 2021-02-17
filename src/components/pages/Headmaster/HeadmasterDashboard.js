@@ -20,7 +20,7 @@ import HeadmasterProfile from './HeadmasterProfile/Profile.js';
 import ProfileForm from './HeadmasterProfile/ProfileForm.js';
 import TeacherApproval from './TeacherApproval/TeacherApproval.js';
 import { ReactComponent as Welcome } from '../../../assets/images/Welcome-Image.svg';
-import Logout from '../../Logout.js';
+import Logout from '../Authentication/Logout.js';
 import Mentees from '../Mentees/Mentees';
 import MenteeSignup from '../Mentees/MenteeSignup';
 import MentorPairing from '../Mentor/MentorPairing';

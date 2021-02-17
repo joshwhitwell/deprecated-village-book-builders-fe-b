@@ -16,14 +16,14 @@ This repository contains the source code for the Village Book Builders (VBB) cli
 
 ## Tech Stack
 
-* Languages: JavaScript | HTML | CSS
-* Framework: React.js
-* State Management: Redux
-* Styling: Ant Design | Styled Components
-* Authentication: JSON Web Tokens
-* Build: Craco
-* Linting & Code Styled: ESLint | Prettier
-* Testing: Jest | React Testing Library
+- Languages: JavaScript | HTML | CSS
+- Framework: React.js
+- State Management: Redux
+- Styling: Ant Design | Styled Components
+- Authentication: JSON Web Tokens
+- Build: Craco
+- Linting & Code Styled: ESLint | Prettier
+- Testing: Jest | React Testing Library
 
 ## Features
 
@@ -40,6 +40,7 @@ This repository contains the source code for the Village Book Builders (VBB) cli
 &emsp;&emsp;&emsp;![Dashboard](/src/assets/markdown_images/dashboard.png)
 
 * Intuitive booking interface for scheduling and managing mentorship assignments
+
 &emsp;&emsp;&emsp;![Login](/src/assets/markdown_images/matching.png)
 
 ## Contributing
